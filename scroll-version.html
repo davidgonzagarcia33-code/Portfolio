@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cremallera con Scroll - Portfolio Intro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: white;
+        }
+
+        /* Sección de intro con cremallera - ocupa toda la pantalla */
+        .intro-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        /* Contenedor principal de la cremallera */
+        .zipper-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* El contenido detrás de la cremallera */
+        .behind-zipper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* Placeholder del muñeco - aquí iría tu SVG */
+        .mascota {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            opacity: 0;
+            transform: scale(0.3) rotate(-20deg);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition-delay: 0.3s;
+        }
+
+        .mascota.visible {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Paneles de la cremallera */
+        .zipper-panel {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #0a0a0a;
+            transition: transform 0.1s linear;
+            will-change: transform;
+        }
+
+        .zipper-panel.left {
+            left: 0;
+            border-right: 3px solid #333;
+        }
+
+        .zipper-panel.right {
+            right: 0;
+            border-left: 3px solid #333;
+        }
+
+        /* Dientes SVG estilizados */
+        .teeth {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-top: 60px;
+        }
+
+        .zipper-panel.left .teeth {
+            right: -5px;
+        }
+
+        .zipper-panel.right .teeth {
+            left: -5px;
+        }
+
+        .tooth {
+            height: 16px;
+            background: linear-gradient(90deg, #888, #ccc, #888);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .zipper-panel.left .tooth {
+            width: 25px;
+            margin-left: auto;
+            border-radius: 2px 8px 8px 2px;
+        }
+
+        .zipper-panel.right .tooth {
+            width: 25px;
+            border-radius: 8px 2px 2px 8px;
+        }
+
+        /* Tirador central */
+        .zipper-pull {
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            transform: translateX(-50%);
+            z-index: 10;
+            transition: top 0.1s linear;
+            will-change: top;
+        }
+
+        .pull-body {
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(180deg, #ddd, #999, #777);
+            border-radius: 10px 10px 15px 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5),
+                        inset 0 2px 5px rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pull-body::before {
+            content: '↓';
+            font-size: 20px;
+            color: #444;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        .pull-ring {
+            width: 30px;
+            height: 40px;
+            border: 5px solid;
+            border-image: linear-gradient(180deg, #ccc, #888) 1;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: transparent;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        /* Indicador de scroll */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            transition: opacity 0.5s;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Contenido principal del portfolio */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            min-height: 300vh; /* Espacio para scroll */
+        }
+
+        .scroll-spacer {
+            height: 100vh;
+        }
+
+        .portfolio-section {
+            min-height: 100vh;
+            padding: 100px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-section h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: #888;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 300;
+            width: 0%;
+            transition: width 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Intro con cremallera -->
+    <section class="intro-section" id="introSection">
+        <div class="zipper-wrapper">
+            <!-- Contenido detrás -->
+            <div class="behind-zipper">
+                <div class="mascota" id="mascota">🧑‍🎨</div>
+                <div class="hero-content" id="heroContent">
+                    <h1>Tu Nombre</h1>
+                    <p>Multidiseñador · Murcia</p>
+                </div>
+            </div>
+
+            <!-- Panel izquierdo -->
+            <div class="zipper-panel left" id="panelLeft">
+                <div class="teeth" id="teethLeft"></div>
+            </div>
+
+            <!-- Panel derecho -->
+            <div class="zipper-panel right" id="panelRight">
+                <div class="teeth" id="teethRight"></div>
+            </div>
+
+            <!-- Tirador -->
+            <div class="zipper-pull" id="zipperPull">
+                <div class="pull-body"></div>
+                <div class="pull-ring"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+        <span>↓</span>
+        Haz scroll para abrir
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="scroll-spacer"></div>
+        
+        <section class="portfolio-section">
+            <h2>Mis Proyectos</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Proyecto 1</h3>
+                    <p>Descripción del proyecto de diseño</p>
+                </div>
+                <div class="project-card">
+                    <h3>Proyecto 2</h3>
+                    <p>Otro trabajo creativo</p>
+                </div>
+                <div class="project-card">
+                    <h3>Proyecto 3</h3>
+                    <p>Más diseños increíbles</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Generar dientes
+        function generateTeeth() {
+            const leftTeeth = document.getElementById('teethLeft');
+            const rightTeeth = document.getElementById('teethRight');
+            const count = Math.ceil(window.innerHeight / 20);
+
+            for (let i = 0; i < count; i++) {
+                const toothL = document.createElement('div');
+                toothL.className = 'tooth';
+                leftTeeth.appendChild(toothL);
+
+                const toothR = document.createElement('div');
+                toothR.className = 'tooth';
+                rightTeeth.appendChild(toothR);
+            }
+        }
+
+        // Elementos
+        const panelLeft = document.getElementById('panelLeft');
+        const panelRight = document.getElementById('panelRight');
+        const zipperPull = document.getElementById('zipperPull');
+        const mascota = document.getElementById('mascota');
+        const heroContent = document.getElementById('heroContent');
+        const introSection = document.getElementById('introSection');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        const progressBar = document.getElementById('progressBar');
+
+        // Animación basada en scroll
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // Progreso de 0 a 1 durante el primer viewport
+            const progress = Math.min(scrollY / windowHeight, 1);
+            
+            // Actualizar barra de progreso
+            progressBar.style.width = `${progress * 100}%`;
+
+            // Mover paneles hacia los lados
+            const panelOffset = progress * 100;
+            panelLeft.style.transform = `translateX(-${panelOffset}%)`;
+            panelRight.style.transform = `translateX(${panelOffset}%)`;
+
+            // Mover tirador hacia abajo
+            const pullTop = 50 + (progress * (windowHeight - 150));
+            zipperPull.style.top = `${pullTop}px`;
+
+            // Mostrar contenido cuando está suficientemente abierto
+            if (progress > 0.5) {
+                mascota.classList.add('visible');
+                heroContent.classList.add('visible');
+                scrollIndicator.classList.add('hidden');
+            } else {
+                mascota.classList.remove('visible');
+                heroContent.classList.remove('visible');
+                scrollIndicator.classList.remove('hidden');
+            }
+
+            // Ocultar intro completamente cuando termina
+            if (progress >= 1) {
+                introSection.style.pointerEvents = 'none';
+            } else {
+                introSection.style.pointerEvents = 'auto';
+            }
+        }
+
+        // Event listeners
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', () => {
+            document.getElementById('teethLeft').innerHTML = '';
+            document.getElementById('teethRight').innerHTML = '';
+            generateTeeth();
+        });
+
+        // Inicializar
+        generateTeeth();
+        handleScroll();
+    </script>
+</body>
+</html>

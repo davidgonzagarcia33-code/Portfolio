@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Cremallera - Demo Real</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            height: 700px;
+        }
+
+        /* El monstruo está detrás de todo */
+        .monstruo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 400px;
+            height: auto;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+        }
+
+        .container.abierto .monstruo {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Cremallera cerrada - lados */
+        .cremallera-cerrada {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .lado-cerrado {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+        }
+
+        .lado-cerrado img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lado-izq-cerrado {
+            left: 0;
+            transform-origin: left center;
+        }
+
+        .lado-der-cerrado {
+            right: 0;
+            transform-origin: right center;
+        }
+
+        /* Cuando está abierto, los lados cerrados se separan */
+        .container.abierto .lado-izq-cerrado {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .container.abierto .lado-der-cerrado {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        /* Tiradores de la cremallera cerrada */
+        .tirador-cerrado {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            z-index: 15;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+
+        .tirador-cerrado img {
+            width: 100%;
+            height: auto;
+        }
+
+        .tirador-arr-cerrado {
+            top: 5%;
+        }
+
+        .tirador-abajo-cerrado {
+            bottom: 5%;
+        }
+
+        /* Cuando está abierto, los tiradores se mueven */
+        .container.abierto .tirador-arr-cerrado {
+            transform: translateX(-50%) translateY(-150%);
+            opacity: 0;
+        }
+
+        .container.abierto .tirador-abajo-cerrado {
+            transform: translateX(-50%) translateY(150%);
+            opacity: 0;
+        }
+
+        /* Cremallera abierta - aparece después */
+        .cremallera-abierta {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .container.abierto .cremallera-abierta {
+            opacity: 1;
+            transition: opacity 0.5s ease 0.4s;
+        }
+
+        .lado-abierto {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 55%;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+        }
+
+        .lado-abierto img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lado-izq-abierto {
+            left: -5%;
+            transform: translateX(-20px);
+        }
+
+        .lado-der-abierto {
+            right: -5%;
+            transform: translateX(20px);
+        }
+
+        .container.abierto .lado-izq-abierto {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .container.abierto .lado-der-abierto {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Tiradores abiertos */
+        .tirador-abierto {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            z-index: 8;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.6s, transform 0.6s ease 0.5s;
+        }
+
+        .tirador-abierto img {
+            width: 100%;
+            height: auto;
+        }
+
+        .tirador-arr-abierto {
+            top: -2%;
+            transform: translateX(-50%) translateY(-30px);
+        }
+
+        .tirador-abajo-abierto {
+            bottom: -2%;
+            transform: translateX(-50%) translateY(30px);
+        }
+
+        .container.abierto .tirador-arr-abierto {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .container.abierto .tirador-abajo-abierto {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Controles */
+        .controles {
+            position: fixed;
+            bottom: 30px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-abrir {
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            color: #000;
+        }
+
+        .btn-abrir:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-cerrar {
+            background: linear-gradient(135deg, #333 0%, #111 100%);
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-cerrar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Título */
+        .titulo {
+            position: fixed;
+            top: 30px;
+            color: #fff;
+            font-size: 24px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Instrucciones */
+        .instrucciones {
+            position: fixed;
+            top: 80px;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="titulo">Tu Portfolio</h1>
+    <p class="instrucciones">Haz clic en "Abrir" para revelar al monstruo</p>
+
+    <div class="container" id="cremallera">
+        <!-- Monstruo (detrás de todo) -->
+        <img class="monstruo" src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/montruo.svg" alt="Monstruo">
+
+        <!-- Cremallera cerrada -->
+        <div class="cremallera-cerrada">
+            <!-- Lados cerrados -->
+            <div class="lado-cerrado lado-izq-cerrado">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/lado izq.svg" alt="Lado izquierdo cerrado">
+            </div>
+            <div class="lado-cerrado lado-der-cerrado">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/lado der.svg" alt="Lado derecho cerrado">
+            </div>
+
+            <!-- Tiradores cerrados -->
+            <div class="tirador-cerrado tirador-arr-cerrado">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/cremalera arr.svg" alt="Tirador arriba">
+            </div>
+            <div class="tirador-cerrado tirador-abajo-cerrado">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/cremalera abajo.svg" alt="Tirador abajo">
+            </div>
+        </div>
+
+        <!-- Cremallera abierta (aparece después) -->
+        <div class="cremallera-abierta">
+            <!-- Lados abiertos con las manos del monstruo -->
+            <div class="lado-abierto lado-izq-abierto">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/lado izq.svg" alt="Lado izquierdo abierto">
+            </div>
+            <div class="lado-abierto lado-der-abierto">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/lado der.svg" alt="Lado derecho abierto">
+            </div>
+
+            <!-- Tiradores abiertos -->
+            <div class="tirador-abierto tirador-arr-abierto">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/cremallera top.svg" alt="Tirador arriba abierto">
+            </div>
+            <div class="tirador-abierto tirador-abajo-abierto">
+                <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/cremallera abajo.svg" alt="Tirador abajo abierto">
+            </div>
+        </div>
+    </div>
+
+    <div class="controles">
+        <button class="btn btn-abrir" onclick="abrir()">Abrir</button>
+        <button class="btn btn-cerrar" onclick="cerrar()">Cerrar</button>
+    </div>
+
+    <script>
+        const cremallera = document.getElementById('cremallera');
+
+        function abrir() {
+            cremallera.classList.add('abierto');
+        }
+
+        function cerrar() {
+            cremallera.classList.remove('abierto');
+        }
+
+        // También permitir clic en la cremallera para alternar
+        cremallera.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'BUTTON') {
+                cremallera.classList.toggle('abierto');
+            }
+        });
+    </script>
+</body>
+</html>

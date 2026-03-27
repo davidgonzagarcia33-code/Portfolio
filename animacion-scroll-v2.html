@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Cremallera Animada v2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            height: 500vh;
+            position: relative;
+        }
+
+        .animation-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .zipper-container {
+            position: relative;
+            width: 300px;
+            height: 80vh;
+            max-height: 700px;
+        }
+
+        /* Monstruo detrás */
+        .monster {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: auto;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        /* Resplandor */
+        .glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        /* Cremallera cerrada */
+        .zipper-closed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        /* Lados de la cremallera - posicionados para formar el rombo */
+        .zipper-side {
+            position: absolute;
+            height: 100%;
+        }
+
+        .zipper-side img {
+            height: 100%;
+            width: auto;
+        }
+
+        .zipper-left {
+            right: 50%;
+            margin-right: -25px; /* Ajustar para que los dientes se toquen */
+            transform-origin: right center;
+        }
+
+        .zipper-right {
+            left: 50%;
+            margin-left: -25px; /* Ajustar para que los dientes se toquen */
+            transform-origin: left center;
+        }
+
+        /* Tiradores centrados */
+        .zipper-pull {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+        }
+
+        .zipper-pull img {
+            height: auto;
+        }
+
+        .zipper-pull-top {
+            top: 5%;
+            width: 90px;
+        }
+
+        .zipper-pull-top img {
+            width: 100%;
+        }
+
+        .zipper-pull-bottom {
+            bottom: 5%;
+            width: 80px;
+        }
+
+        .zipper-pull-bottom img {
+            width: 100%;
+        }
+
+        /* Cremallera abierta */
+        .zipper-open {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            opacity: 0;
+        }
+
+        .zipper-open-side {
+            position: absolute;
+            height: 100%;
+        }
+
+        .zipper-open-side img {
+            height: 100%;
+            width: auto;
+        }
+
+        .zipper-open-left {
+            right: 55%;
+        }
+
+        .zipper-open-right {
+            left: 55%;
+        }
+
+        /* Indicador de scroll */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scroll-indicator span {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+            40% { transform: rotate(45deg) translateY(8px); }
+            60% { transform: rotate(45deg) translateY(4px); }
+        }
+
+        /* Barra de progreso */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: #fff;
+            width: 0%;
+            z-index: 1000;
+        }
+
+        /* Contenido */
+        .content-section {
+            position: relative;
+            z-index: 5;
+            min-height: 100vh;
+            padding: 100px 50px;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 5px;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            max-width: 500px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="scroll-container" id="scrollContainer">
+        <div class="animation-wrapper" id="animationWrapper">
+            <div class="zipper-container" id="zipperContainer">
+                
+                <div class="glow" id="glow"></div>
+                
+                <img class="monster" id="monster" 
+                     src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/montruo.svg" 
+                     alt="Monstruo">
+
+                <!-- Cremallera abierta -->
+                <div class="zipper-open" id="zipperOpen">
+                    <div class="zipper-open-side zipper-open-left" id="openLeft">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/lado izq.svg" alt="">
+                    </div>
+                    <div class="zipper-open-side zipper-open-right" id="openRight">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame abierto/lado der.svg" alt="">
+                    </div>
+                </div>
+
+                <!-- Cremallera cerrada -->
+                <div class="zipper-closed" id="zipperClosed">
+                    <div class="zipper-side zipper-left" id="zipperLeft">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/Recurso 1.svg" alt="">
+                    </div>
+                    <div class="zipper-side zipper-right" id="zipperRight">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/Recurso 2.svg" alt="">
+                    </div>
+                    <div class="zipper-pull zipper-pull-top" id="pullTop">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/Recurso 4.svg" alt="">
+                    </div>
+                    <div class="zipper-pull zipper-pull-bottom" id="pullBottom">
+                        <img src="file:///C:/Users/Usuario/Desktop/CV Y PORTFOLIO/PORTFOLIO 2026/animacion/frame cerrado/Recurso 3.svg" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+    </div>
+
+    <div class="content-section" id="contentSection">
+        <h1>BIENVENIDO</h1>
+        <p>
+            Soy un multidiseñador murciano apasionado por crear experiencias visuales únicas. 
+            Explora mi portfolio y descubre mis trabajos.
+        </p>
+    </div>
+
+    <script>
+        const scrollContainer = document.getElementById('scrollContainer');
+        const animationWrapper = document.getElementById('animationWrapper');
+        const monster = document.getElementById('monster');
+        const glow = document.getElementById('glow');
+        const zipperClosed = document.getElementById('zipperClosed');
+        const zipperOpen = document.getElementById('zipperOpen');
+        const zipperLeft = document.getElementById('zipperLeft');
+        const zipperRight = document.getElementById('zipperRight');
+        const pullTop = document.getElementById('pullTop');
+        const pullBottom = document.getElementById('pullBottom');
+        const openLeft = document.getElementById('openLeft');
+        const openRight = document.getElementById('openRight');
+        const progressBar = document.getElementById('progressBar');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+
+        // Easing functions
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function easeOutExpo(t) {
+            return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        }
+
+        function easeOutQuart(t) {
+            return 1 - Math.pow(1 - t, 4);
+        }
+
+        function updateAnimation() {
+            const scrollTop = window.scrollY;
+            const scrollHeight = scrollContainer.offsetHeight - window.innerHeight;
+            const progress = Math.min(Math.max(scrollTop / scrollHeight, 0), 1);
+            
+            progressBar.style.width = (progress * 100) + '%';
+
+            // Ocultar indicador
+            if (progress > 0.02) {
+                scrollIndicator.classList.add('hidden');
+            } else {
+                scrollIndicator.classList.remove('hidden');
+            }
+
+            // === FASE 1: Tiradores se separan (0% - 35%) ===
+            const pullProgress = easeOutQuart(Math.min(Math.max(progress / 0.35, 0), 1));
+            
+            // Tirador superior sube
+            const pullTopY = -120 * pullProgress;
+            pullTop.style.transform = `translateX(-50%) translateY(${pullTopY}px)`;
+            pullTop.style.opacity = 1 - pullProgress * 0.9;
+            
+            // Tirador inferior baja
+            const pullBottomY = 120 * pullProgress;
+            pullBottom.style.transform = `translateX(-50%) translateY(${pullBottomY}px)`;
+            pullBottom.style.opacity = 1 - pullProgress * 0.9;
+
+            // === FASE 2: Lados se abren (15% - 60%) ===
+            const sidesProgress = easeOutExpo(Math.min(Math.max((progress - 0.15) / 0.45, 0), 1));
+            
+            // Lado izquierdo se mueve a la izquierda
+            const leftOffset = 80 * sidesProgress;
+            zipperLeft.style.transform = `translateX(${-leftOffset}px)`;
+            zipperLeft.style.opacity = 1 - sidesProgress * 0.7;
+            
+            // Lado derecho se mueve a la derecha
+            const rightOffset = 80 * sidesProgress;
+            zipperRight.style.transform = `translateX(${rightOffset}px)`;
+            zipperRight.style.opacity = 1 - sidesProgress * 0.7;
+
+            // === FASE 3: Cremallera abierta aparece (35% - 70%) ===
+            const openProgress = easeInOutCubic(Math.min(Math.max((progress - 0.35) / 0.35, 0), 1));
+            zipperOpen.style.opacity = openProgress;
+            
+            // Lados abiertos entran desde fuera
+            const openLeftX = -30 + 30 * openProgress;
+            const openRightX = 30 - 30 * openProgress;
+            openLeft.style.transform = `translateX(${openLeftX}px)`;
+            openRight.style.transform = `translateX(${openRightX}px)`;
+
+            // === FASE 4: Monstruo aparece (30% - 75%) ===
+            const monsterProgress = easeOutExpo(Math.min(Math.max((progress - 0.30) / 0.45, 0), 1));
+            monster.style.opacity = monsterProgress;
+            monster.style.filter = `blur(${8 - 8 * monsterProgress}px)`;
+            const monsterScale = 0.6 + 0.4 * monsterProgress;
+            monster.style.transform = `translate(-50%, -50%) scale(${monsterScale})`;
+
+            // === Resplandor ===
+            const glowProgress = easeOutCubic(Math.min(Math.max((progress - 0.45) / 0.35, 0), 1));
+            glow.style.opacity = glowProgress * 0.6;
+            glow.style.transform = `translate(-50%, -50%) scale(${1 + glowProgress * 0.5})`;
+
+            // === Fade out al final (90% - 100%) ===
+            if (progress >= 0.9) {
+                const fadeOut = (progress - 0.9) / 0.1;
+                animationWrapper.style.opacity = 1 - fadeOut;
+            } else {
+                animationWrapper.style.opacity = 1;
+            }
+        }
+
+        // Throttle scroll
+        let ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateAnimation();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', updateAnimation);
+        
+        // Init
+        updateAnimation();
+    </script>
+</body>
+</html>

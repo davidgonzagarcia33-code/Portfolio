@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>About - David González</title>
+    <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 0; text-decoration: none;
+        }
+        .nav-logo-box {
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-logo-box img { width: 80px; height: auto; }
+        .nav-logo-name {
+            height: 100px; width: auto; filter: invert(1); margin-left: -35px;
+        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 13px;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+
+        .music-toggle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            letter-spacing: -2px;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+        .music-toggle:hover { color: #EEFF00; }
+
+        /* ===== HERO ANIMADO ===== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 60px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-name { text-align: center; overflow: hidden; }
+        .hero-line { overflow: hidden; display: block; }
+
+        .hero-line-inner {
+            display: block;
+            font-family: 'Druk Wide Bold', sans-serif;
+            font-size: clamp(4rem, 12vw, 11rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            text-transform: uppercase;
+            transform: translateY(105%);
+        }
+
+        .hero-subtitle { margin-top: 40px; overflow: hidden; }
+
+        .hero-subtitle-inner {
+            display: block;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: rgba(238,255,0,0.85);
+            transform: translateY(105%);
+        }
+
+        .hero-desc { margin-top: 30px; overflow: hidden; max-width: 600px; text-align: center; }
+
+        .hero-desc-inner {
+            display: block;
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.5);
+            transform: translateY(105%);
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            opacity: 0;
+        }
+        .hero-scroll-indicator span {
+            font-size: 11px; letter-spacing: 4px;
+            text-transform: uppercase; color: rgba(255,255,255,0.3);
+        }
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.8; transform: scaleY(1.2); }
+        }
+
+        /* ===== DRAGGABLE SECTION ===== */
+        .draggable-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 50px;
+        }
+
+        .drag-item {
+            position: absolute;
+            cursor: grab;
+            transition: box-shadow 0.2s ease;
+            z-index: 1;
+        }
+
+        .drag-item:active { cursor: grabbing; }
+
+        .drag-item.card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .drag-item.card:hover {
+            border-color: rgba(238,255,0,0.2);
+            box-shadow: 0 0 30px rgba(238,255,0,0.05);
+        }
+
+        .drag-item .card-number {
+            font-size: 0.7rem;
+            color: rgba(238,255,0,0.5);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .drag-item h3 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .drag-item p {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .drag-item.pill {
+            padding: 14px 30px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .drag-item.pill:hover {
+            border-color: rgba(238,255,0,0.5);
+            color: rgba(238,255,0,0.85);
+        }
+
+        .section-float-label {
+            position: absolute;
+            font-size: 0.7rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(238,255,0,0.5);
+        }
+
+        /* ===== CONTACTO ===== */
+        .contact-block {
+            position: relative;
+            z-index: 5;
+            padding: 80px 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-title { overflow: hidden; }
+
+        .contact-title-inner {
+            display: block;
+            font-family: 'Druk Wide Bold', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            transform: translateY(105%);
+        }
+
+        .contact-sub {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.9;
+            margin: 30px 0 50px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .contact-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .contact-btn {
+            padding: 16px 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+        }
+        .contact-btn:hover { background: #fff; color: #000; }
+        .contact-btn.primary { background: rgba(238,255,0,0.85); color: #000; border-color: rgba(238,255,0,0.85); }
+        .contact-btn.primary:hover { background: #fff; border-color: #fff; }
+
+        .footer {
+            padding: 30px 60px;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section { padding: 100px 20px 40px; }
+            .hero-line-inner {
+                font-size: clamp(2.4rem, 12.5vw, 3.6rem);
+                letter-spacing: -0.01em;
+                line-height: 0.95;
+            }
+            .hero-subtitle-inner { font-size: 0.85rem; letter-spacing: 3px; }
+            .draggable-section { min-height: auto; padding: 20px; }
+            .drag-item { position: relative !important; left: auto !important; top: auto !important; width: 100% !important; margin-bottom: 15px; cursor: default; }
+            .contact-block { padding: 60px 20px; }
+            .contact-title-inner {
+                font-size: clamp(1.8rem, 8.5vw, 2.6rem);
+                letter-spacing: 3px;
+            }
+            .contact-sub { font-size: 0.95rem; line-height: 1.7; margin: 18px 0 30px; }
+            .contact-btns { flex-direction: column; gap: 15px; }
+            .contact-btn { width: 100%; text-align: center; padding: 14px 24px; }
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 50px; }
+            .nav-logo-name { height: 60px; margin-left: -18px; }
+            .nav-links { gap: 24px; }
+            .nav-links a { font-size: 11px; letter-spacing: 1px; }
+            .section-float-label { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="animacion-scroll-v6.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
+            <img src="nombre.png" alt="David González" class="nav-logo-name">
+        </a>
+        <div class="nav-links">
+            <span id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música">&#9654;</span>
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- HERO ANIMADO -->
+    <section class="hero-section">
+        <div class="hero-name">
+            <div class="hero-line"><span class="hero-line-inner">David</span></div>
+            <div class="hero-line"><span class="hero-line-inner">González</span></div>
+        </div>
+        <div class="hero-subtitle">
+            <span class="hero-subtitle-inner">Multidiseñador & Publicista</span>
+        </div>
+        <div class="hero-desc">
+            <span class="hero-desc-inner">Creando experiencias visuales únicas desde Murcia</span>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS + HERRAMIENTAS ARRASTRABLES -->
+    <div class="draggable-section" id="draggableSection">
+        <span class="section-float-label" style="left: 50px; top: 30px;">Servicios</span>
+        <span class="section-float-label" style="left: 50px; top: 620px;">Herramientas</span>
+
+        <!-- Servicios -->
+        <div class="drag-item card" style="left: 100px; top: 80px; width: 280px;">
+            <div class="card-number">01</div>
+            <h3>Branding</h3>
+            <p>Identidad visual, logotipos, sistemas de marca y guías de estilo.</p>
+        </div>
+        <div class="drag-item card" style="left: 500px; top: 50px; width: 280px;">
+            <div class="card-number">02</div>
+            <h3>Dirección Creativa</h3>
+            <p>Conceptualización y dirección de campañas publicitarias.</p>
+        </div>
+        <div class="drag-item card" style="left: 900px; top: 100px; width: 280px;">
+            <div class="card-number">03</div>
+            <h3>Diseño Gráfico</h3>
+            <p>Cartelería, packaging, editorial y piezas para medios digitales.</p>
+        </div>
+        <div class="drag-item card" style="left: 200px; top: 320px; width: 280px;">
+            <div class="card-number">04</div>
+            <h3>Motion & Video</h3>
+            <p>Animación, edición de vídeo y contenido audiovisual.</p>
+        </div>
+        <div class="drag-item card" style="left: 600px; top: 350px; width: 280px;">
+            <div class="card-number">05</div>
+            <h3>Social Media</h3>
+            <p>Contenido visual y estrategia creativa para plataformas digitales.</p>
+        </div>
+        <div class="drag-item card" style="left: 1000px; top: 300px; width: 280px;">
+            <div class="card-number">06</div>
+            <h3>Publicidad</h3>
+            <p>Conceptos publicitarios, campañas ATL/BTL y comunicación de marca.</p>
+        </div>
+        <div class="drag-item card" style="left: 400px; top: 520px; width: 280px;">
+            <div class="card-number">07</div>
+            <h3>Desarrollo Web Front-End</h3>
+            <p>Diseño y desarrollo de páginas web interactivas y experiencias digitales.</p>
+        </div>
+
+        <!-- Herramientas -->
+        <div class="drag-item pill" style="left: 120px; top: 660px;">Photoshop</div>
+        <div class="drag-item pill" style="left: 350px; top: 690px;">Illustrator</div>
+        <div class="drag-item pill" style="left: 580px; top: 650px;">InDesign</div>
+        <div class="drag-item pill" style="left: 780px; top: 680px;">After Effects</div>
+        <div class="drag-item pill" style="left: 1020px; top: 660px;">Premiere Pro</div>
+        <div class="drag-item pill" style="left: 300px; top: 750px;">Inteligencia Artificial</div>
+    </div>
+
+    <!-- CONTACTO -->
+    <section class="contact-block">
+        <div class="contact-title">
+            <span class="contact-title-inner">Hablemos</span>
+        </div>
+        <p class="contact-sub">¿Tienes un proyecto en mente? Me encantaría saber más sobre él y cómo puedo ayudarte a hacerlo realidad.</p>
+        <div class="contact-btns">
+            <a href="mailto:hola@davidgonzalez.es" class="contact-btn primary">Email</a>
+            <a href="https://www.instagram.com/d4vidd33/" target="_blank" class="contact-btn">Instagram</a>
+            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" class="contact-btn">LinkedIn</a>
+            <a href="https://www.behance.net/davigonzalez35" target="_blank" class="contact-btn">Behance</a>
+        </div>
+    </section>
+
+    <footer class="footer">© 2026 David González</footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== HERO ANIMATION =====
+        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+        tl.to('.hero-line-inner', { y: 0, duration: 1.4, stagger: 0.15, delay: 0.3 })
+          .to('.hero-subtitle-inner', { y: 0, duration: 1 }, '-=0.6')
+          .to('.hero-desc-inner', { y: 0, duration: 1 }, '-=0.6')
+          .to('.hero-scroll-indicator', { opacity: 1, duration: 0.8 }, '-=0.4');
+
+        // ===== DRAG & DROP =====
+        var dragItem = null;
+        var startX, startY, startLeft, startTop;
+
+        function startDrag(target, pageX, pageY) {
+            dragItem = target;
+            startX = pageX;
+            startY = pageY;
+            startLeft = dragItem.offsetLeft;
+            startTop = dragItem.offsetTop;
+            dragItem.style.zIndex = 9999;
+        }
+        function moveDrag(pageX, pageY) {
+            if (dragItem) {
+                dragItem.style.left = (startLeft + pageX - startX) + 'px';
+                dragItem.style.top = (startTop + pageY - startY) + 'px';
+            }
+        }
+        function endDrag() {
+            if (dragItem) dragItem.style.zIndex = '';
+            dragItem = null;
+        }
+
+        document.addEventListener('mousedown', function(e) {
+            var target = e.target.closest('.drag-item');
+            if (target) {
+                startDrag(target, e.pageX, e.pageY);
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('mousemove', function(e) {
+            if (dragItem) moveDrag(e.pageX, e.pageY);
+        });
+        document.addEventListener('mouseup', endDrag);
+
+        document.addEventListener('touchstart', function(e) {
+            if (window.innerWidth < 768) return; /* En móvil los items están en columna, no se arrastran */
+            var target = e.target.closest('.drag-item');
+            if (target && e.touches.length === 1) {
+                startDrag(target, e.touches[0].pageX, e.touches[0].pageY);
+            }
+        }, { passive: true });
+        document.addEventListener('touchmove', function(e) {
+            if (dragItem && e.touches.length === 1) {
+                moveDrag(e.touches[0].pageX, e.touches[0].pageY);
+                e.preventDefault();
+            }
+        }, { passive: false });
+        document.addEventListener('touchend', endDrag);
+        document.addEventListener('touchcancel', endDrag);
+
+        // ===== SCROLL ANIMATIONS =====
+        gsap.utils.toArray('.drag-item').forEach((el, i) => {
+            gsap.from(el, {
+                opacity: 0, y: 40, duration: 0.6, delay: i * 0.08, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 90%' }
+            });
+        });
+
+        const contactTl = gsap.timeline({
+            scrollTrigger: { trigger: '.contact-block', start: 'top 75%' }
+        });
+        contactTl.to('.contact-title-inner', { y: 0, duration: 1.2, ease: 'power4.out' })
+            .to('.contact-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+            .to('.contact-btns', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>

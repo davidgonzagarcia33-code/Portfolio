@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; margin: 0; padding: 50px; }
+        .item {
+            position: absolute;
+            cursor: grab;
+            border: 2px solid red;
+        }
+        .item img {
+            width: 200px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="item" id="item1" style="left:100px; top:100px;">
+        <img src="portfolio/1.png" draggable="false">
+    </div>
+    <div class="item" id="item2" style="left:400px; top:200px;">
+        <img src="portfolio/2.jpg" draggable="false">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var items = document.querySelectorAll('.item');
+            var dragging = null;
+            var offsetX, offsetY;
+
+            items.forEach(function(item) {
+                item.addEventListener('mousedown', function(e) {
+                    dragging = item;
+                    offsetX = e.clientX - item.getBoundingClientRect().left;
+                    offsetY = e.clientY - item.getBoundingClientRect().top;
+                    item.style.cursor = 'grabbing';
+                    item.style.zIndex = 9999;
+                    e.preventDefault();
+                });
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (dragging) {
+                    dragging.style.left = (e.clientX - offsetX) + 'px';
+                    dragging.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (dragging) {
+                    dragging.style.cursor = 'grab';
+                    dragging = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

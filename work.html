@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>Work - David González</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Navegación */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            transition: background 0.5s ease;
+        }
+
+        .nav.transparent {
+            background: transparent;
+            backdrop-filter: none;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            text-decoration: none;
+        }
+
+        .nav-logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-box img {
+            width: 80px;
+            height: auto;
+        }
+
+        .nav-logo-name {
+            height: 100px;
+            width: auto;
+            filter: invert(1);
+            margin-left: -35px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        .music-toggle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            letter-spacing: -2px;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+
+        .music-toggle:hover {
+            color: #EEFF00;
+        }
+
+        /* Header */
+        .page-header {
+            position: relative;
+            z-index: 10;
+            padding: 180px 60px 80px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .page-header h1 {
+            font-size: 4rem;
+            font-weight: 200;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        /* Lista de proyectos */
+        .projects-list {
+            position: relative;
+            z-index: 10;
+            padding: 0 60px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-item:hover::before {
+            left: 100%;
+        }
+
+        .project-item:hover {
+            padding-left: 30px;
+        }
+
+        .project-item:hover .project-title {
+            transform: translateX(20px);
+        }
+
+        .project-item:hover .project-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .project-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: transform 0.4s ease;
+        }
+
+        .project-client {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+
+        .project-tag {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .project-arrow {
+            font-size: 2rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s ease;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Preview de imagen al hover (pequeño, flotante) */
+        .project-preview {
+            position: fixed;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 220px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 500;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .project-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-preview.active {
+            opacity: 1;
+        }
+
+        /* Vídeo fullscreen de fondo */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .video-bg.active {
+            opacity: 1;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: object-fit 0s;
+        }
+
+        .video-bg video.contain {
+            object-fit: contain;
+        }
+
+        /* Cuando el vídeo BG está activo, oscurecer un poco para legibilidad */
+        .video-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* Footer */
+        .page-footer {
+            position: relative;
+            z-index: 10;
+            padding: 80px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 50px;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Galería estilo páginas de libro - el mouse abre/cierra el abanico */
+        .work-gallery {
+            padding: 60px 0 80px;
+            background: transparent;
+        }
+        .gallery-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 8px;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+        .poster-track {
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 50px 0 100px;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            perspective: 1200px;
+        }
+        .poster-track::-webkit-scrollbar { display: none; }
+        .poster-track::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 120px; height: 100%;
+            background: linear-gradient(to left, #000 20%, transparent);
+            pointer-events: none;
+        }
+        .poster-track::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 80px; height: 100%;
+            background: linear-gradient(to right, #000 30%, transparent);
+            pointer-events: none;
+        }
+        .poster-track:active { cursor: grabbing; }
+        .poster-track-inner {
+            display: flex;
+            padding: 20px 80px 20px 80px;
+            transform-style: preserve-3d;
+        }
+        .poster-item {
+            flex-shrink: 0;
+            width: clamp(160px, 18vw, 260px);
+            aspect-ratio: 3/4;
+            margin-right: -85px;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.9), -2px 0 8px rgba(0,0,0,0.5);
+            transform-origin: left center;
+            transition: box-shadow 0.25s ease, z-index 0.2s;
+        }
+        .poster-item img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .poster-item.fan-active {
+            z-index: 50;
+            box-shadow: 4px 0 30px rgba(0,0,0,0.95), -4px 0 15px rgba(0,0,0,0.6);
+        }
+        .poster-track.grabbing .poster-item {
+            pointer-events: none;
+        }
+        .poster-drag-hint {
+            position: absolute;
+            bottom: 25px; right: 100px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.35);
+            animation: hintBlink 2s ease-in-out infinite;
+        }
+        .poster-drag-hint.hidden { display: none; }
+        .poster-item { cursor: pointer; }
+        @keyframes hintBlink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Lightbox - popup grande para ver gráficas en detalle */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.97);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: zoom-out;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            cursor: default;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+        /* Responsive móvil */
+        @media (max-width: 768px) {
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 50px; }
+            .nav-logo-name { height: 60px; margin-left: -18px; }
+            .nav-links { gap: 24px; }
+            .nav-links a { font-size: 11px; letter-spacing: 1px; }
+
+            .page-header {
+                padding: 120px 20px 40px;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+            .projects-list {
+                padding: 0 20px;
+            }
+            .project-item {
+                padding: 30px 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .project-title {
+                font-size: 1.5rem;
+            }
+            .project-preview {
+                display: none;
+            }
+            .page-footer {
+                padding: 40px 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .work-gallery { padding: 30px 0 60px; }
+            .gallery-title { padding-left: 20px; font-size: 1.4rem; letter-spacing: 4px; }
+            .poster-track {
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                cursor: grab;
+                padding: 20px 0;
+            }
+            .poster-track::after,
+            .poster-track::before { display: none; }
+            .poster-track-inner {
+                flex-direction: row;
+                padding: 0 20px;
+                gap: 0;
+            }
+            .poster-item {
+                width: 75%;
+                min-width: 200px;
+                margin-right: 10px;
+                flex-shrink: 0;
+                transform: none !important;
+            }
+            .poster-item:hover { transform: none !important; border: none; }
+            .poster-drag-hint {
+                display: block;
+                bottom: 15px;
+                right: 20px;
+                font-size: 10px;
+            }
+            .lightbox { padding: 50px 20px 80px; }
+            .lightbox-close { top: 20px; right: 20px; font-size: 13px; padding: 12px; }
+            .lightbox img { max-height: 75vh; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="nav">
+        <a href="animacion-scroll-v6.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
+            <img src="nombre.png" alt="David González" class="nav-logo-name">
+        </a>
+        <div class="nav-links">
+            <span id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música">&#9654;</span>
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1>_Work_</h1>
+    </header>
+
+    <!-- Lista de proyectos -->
+    <section class="projects-list">
+        <a href="proyecto-blackout.html" class="project-item" data-video="blackout-spot.mp4">
+            <div class="project-info">
+                <h2 class="project-title">BLACKOUT SMASHBURGER</h2>
+                <span class="project-client">← El Palmar</span>
+                <div class="project-tags">
+                    <span class="project-tag">Dirección de Contenido</span>
+                    <span class="project-tag">Branding</span>
+                    <span class="project-tag">Fotografía</span>
+                </div>
+            </div>
+            <span class="project-arrow">→</span>
+        </a>
+
+        <a href="proyecto-heinz.html" class="project-item" data-video="heinz-video.mp4">
+            <div class="project-info">
+                <h2 class="project-title">HEINZ</h2>
+                <span class="project-client">← Marca</span>
+                <div class="project-tags">
+                    <span class="project-tag">Dirección de Contenido</span>
+                    <span class="project-tag">Tipografía</span>
+                </div>
+            </div>
+            <span class="project-arrow">→</span>
+        </a>
+
+        <a href="proyecto-foam.html" class="project-item" data-video="foam-video.mp4" data-fit="contain">
+            <div class="project-info">
+                <h2 class="project-title">FOAM GUM</h2>
+                <span class="project-client">← Evento</span>
+                <div class="project-tags">
+                    <span class="project-tag">Diseño Gráfico</span>
+                    <span class="project-tag">Cartelería</span>
+                </div>
+            </div>
+            <span class="project-arrow">→</span>
+        </a>
+
+    </section>
+
+    <!-- Stacked poster scroll - todas las gráficas -->
+    <section class="work-gallery">
+        <h2 class="gallery-title">Gráficas</h2>
+        <div class="poster-track" id="workPosterTrack">
+            <div class="poster-track-inner" id="workPosterTrackInner"></div>
+            <span class="poster-drag-hint" id="workDragHint">mueve el ratón para abrir · arrastra para ver más</span>
+        </div>
+    </section>
+
+    <!-- Preview flotante (para imágenes) -->
+    <div class="project-preview" id="preview">
+        <img src="" alt="Preview" id="previewImg">
+    </div>
+
+    <!-- Vídeo fullscreen de fondo -->
+    <div class="video-bg" id="videoBg">
+        <video src="" muted loop playsinline id="bgVideo"></video>
+    </div>
+
+    <!-- Imagen/GIF fullscreen de fondo -->
+    <div class="video-bg" id="imgBg">
+        <img src="" alt="" id="bgImg" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+
+    <!-- Lightbox gráficas -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
+        <img src="" alt="Gráfica ampliada" id="lightboxImg">
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <span class="footer-text">© 2026 DAVID GONZÁLEZ</span>
+        <a href="animacion-scroll-v6.html" class="back-link">← Volver al inicio</a>
+    </footer>
+
+    <script>
+        const projectItems = document.querySelectorAll('.project-item');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const videoBg = document.getElementById('videoBg');
+        const bgVideo = document.getElementById('bgVideo');
+        const imgBg = document.getElementById('imgBg');
+        const bgImg = document.getElementById('bgImg');
+        const nav = document.querySelector('.nav');
+
+        function hideAll() {
+            preview.classList.remove('active');
+            videoBg.classList.remove('active');
+            imgBg.classList.remove('active');
+            bgVideo.pause();
+            nav.classList.remove('transparent');
+        }
+
+        projectItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const videoSrc = item.getAttribute('data-video');
+                const imgSrc = item.getAttribute('data-img');
+                const bgSrc = item.getAttribute('data-bg');
+
+                hideAll();
+
+                if (videoSrc) {
+                    bgVideo.src = videoSrc;
+                    const fitMode = item.getAttribute('data-fit');
+                    bgVideo.classList.toggle('contain', fitMode === 'contain');
+                    bgVideo.play();
+                    videoBg.classList.add('active');
+                    nav.classList.add('transparent');
+                } else if (bgSrc) {
+                    bgImg.src = bgSrc;
+                    imgBg.classList.add('active');
+                    nav.classList.add('transparent');
+                } else if (imgSrc) {
+                    previewImg.src = imgSrc;
+                    preview.classList.add('active');
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                hideAll();
+            });
+
+            item.addEventListener('mousemove', (e) => {
+                if (item.getAttribute('data-img')) {
+                    preview.style.top = e.clientY + 'px';
+                    preview.style.transform = 'translateY(-50%)';
+                }
+            });
+        });
+
+        // Stacked poster scroll - todas las gráficas
+        (function() {
+            var images = [
+                'biocop/mockup 1.jpg','biocop/mockup 2.jpg','biocop/mockup 3.jpg',
+                'blackout/1.1.jpg','blackout/1.2.jpg','blackout/1.3.jpg','blackout/2.png','blackout/2025.1.png','blackout/ey2.png','blackout/señal 1.jpg','blackout/señal 2.jpg','blackout/señal 3.jpg',
+                'heinz/portada.jpg','heinz/grafica-1.jpg','heinz/grafica-2.jpg','heinz/grafica3.jpg','heinz/3.jpg','heinz/4.jpg','heinz/3-prueba.jpg','heinz/4.1.jpg','heinz/grafica-1.1.jpg','heinz/grafica-2.2.jpg','heinz/grafica-3.2.jpg','heinz/grafica-3.3.jpg','heinz/1.jpg','heinz/fin.jpg',
+                'Ropa/cromas.png','Ropa/cromas2.png','Ropa/ey.png','Ropa/ey2.png','Ropa/Sin título-1.png','Ropa/Sin título-1.1.png','Ropa/Sin título-1.2.png','Ropa/Sin título-1.2.1.png','Ropa/Sin título-1.2.2.png',
+                'foam/grafica-4.png','foam/grafica-3.png','foam/grafica-2.png','foam/coche.png','foam/foam-logo.png','grafica1.png',
+                'camiseta logo maria.jpg','FINI.png','GRAFICA-2.jpg','GRAFICA-4 .1.jpg','IMG_9241.JPG','Juntosparasiempre.png','MORBO.png','My homies did everything.jpg','my homies... poster.png','nofear-color.png','POSTER BLANCO Y NEGRO YUNMORBO.jpg','POSTER My homies.jpg','RESILIENCIA.jpg','valle-du-soleil-(1).jpg','WITHOUT-LIGHT.jpg','Sin-título-1-[Recuperado].png'
+            ];
+            var inner = document.getElementById('workPosterTrackInner');
+            images.forEach(function(src) {
+                var div = document.createElement('div');
+                div.className = 'poster-item';
+                var img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Gráfica';
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.onerror = function() { this.parentElement.style.display = 'none'; };
+                div.appendChild(img);
+                inner.appendChild(div);
+            });
+
+            var track = document.getElementById('workPosterTrack');
+            var inner = document.getElementById('workPosterTrackInner');
+            var hint = document.getElementById('workDragHint');
+            var items = inner.querySelectorAll('.poster-item');
+            var isDown = false, startX, scrollLeft, justDragged = false;
+            var dragThreshold = 6;
+            var mouseX = null;
+            var fanSensitivity = 0.22;
+            var maxRotation = 42;
+
+            var lb = document.getElementById('lightbox');
+            var lbImg = document.getElementById('lightboxImg');
+            var lbClose = document.getElementById('lightboxClose');
+            function openLightbox(src) {
+                lbImg.src = src;
+                lb.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lb.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            if (lbClose) lbClose.addEventListener('click', closeLightbox);
+            if (lb) lb.addEventListener('click', function(e) {
+                if (e.target === lb || e.target === lbImg) closeLightbox();
+            });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+            inner.addEventListener('click', function(e) {
+                var poster = e.target.closest('.poster-item');
+                if (!poster || justDragged) return;
+                var img = poster.querySelector('img');
+                if (img && img.src) openLightbox(img.src);
+            });
+
+            function updateFan() {
+                if (mouseX === null) return;
+                var trackRect = track.getBoundingClientRect();
+                items.forEach(function(item) {
+                    var r = item.getBoundingClientRect();
+                    var itemCenterX = r.left - trackRect.left + r.width / 2;
+                    var diff = mouseX - itemCenterX;
+                    var rot = Math.max(-maxRotation, Math.min(maxRotation, diff * fanSensitivity));
+                    item.style.transform = 'perspective(800px) rotateY(' + rot + 'deg)';
+                    item.classList.toggle('fan-active', Math.abs(rot) < 15);
+                });
+            }
+
+            track.addEventListener('mousemove', function(e) {
+                if (isDown) return;
+                var rect = track.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                updateFan();
+            });
+            track.addEventListener('mouseleave', function() {
+                mouseX = null;
+                items.forEach(function(item) {
+                    item.style.transform = 'perspective(800px) rotateY(0deg)';
+                    item.classList.remove('fan-active');
+                });
+            });
+
+            track.addEventListener('mousedown', function(e) {
+                isDown = true;
+                justDragged = false;
+                mouseX = null;
+                items.forEach(function(item) {
+                    item.style.transform = 'perspective(800px) rotateY(0deg)';
+                    item.classList.remove('fan-active');
+                });
+                startX = e.clientX - track.getBoundingClientRect().left;
+                scrollLeft = track.scrollLeft;
+                if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
+            });
+            track.addEventListener('mouseleave', function() {
+                isDown = false;
+                track.classList.remove('grabbing');
+            });
+            track.addEventListener('mouseup', function() {
+                isDown = false;
+                track.classList.remove('grabbing');
+            });
+            track.addEventListener('mousemove', function(e) {
+                if (!isDown) return;
+                e.preventDefault();
+                var x = e.clientX - track.getBoundingClientRect().left;
+                if (Math.abs(x - startX) > dragThreshold) {
+                    justDragged = true;
+                    track.classList.add('grabbing');
+                }
+                track.scrollLeft = scrollLeft - (x - startX);
+            });
+            track.addEventListener('touchstart', function(e) {
+                justDragged = false;
+                startX = e.touches[0].clientX - track.getBoundingClientRect().left;
+                scrollLeft = track.scrollLeft;
+                if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
+            }, { passive: true });
+            track.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                var x = e.touches[0].clientX - track.getBoundingClientRect().left;
+                if (Math.abs(x - startX) > dragThreshold) justDragged = true;
+                track.scrollLeft = scrollLeft - (x - startX);
+            }, { passive: false });
+            track.addEventListener('touchend', function() {
+                setTimeout(function() { }, 300);
+            });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>
