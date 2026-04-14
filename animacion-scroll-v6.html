@@ -12,7 +12,7 @@
     <meta property="og:title" content="David González — Portfolio Creativo">
     <meta property="og:description" content="Multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="perfil.svg">
+    <meta property="og:image" content="og-image.svg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="canonical" href="https://portfolio-iota-gilt-47.vercel.app/">
@@ -648,26 +648,26 @@
                 letter-spacing: 2px;
             }
 
-            /* Hero text debajo */
+            /* Hero text en móvil */
             .hero-text {
                 position: fixed;
-                top: 72px;
+                top: 60px;
                 bottom: auto;
                 left: 50%;
                 right: auto;
                 transform: translateX(-50%);
-                width: 90%;
+                width: 92%;
                 max-width: none;
                 text-align: center;
                 z-index: 30;
             }
 
             .hero-title {
-                font-size: clamp(1.05rem, 6.8vw, 1.55rem);
-                letter-spacing: 0.12em !important;
-                line-height: 1;
-                margin-bottom: 6px;
-                white-space: normal;
+                font-size: clamp(0.85rem, 5.5vw, 1.3rem) !important;
+                letter-spacing: 0.06em !important;
+                line-height: 1.1;
+                margin-bottom: 4px;
+                white-space: nowrap;
             }
 
             .hero-svg {
@@ -677,17 +677,18 @@
             }
 
             .hero-text p {
-                font-size: 0.72rem;
-                line-height: 1.35;
-                max-width: 320px;
-                opacity: 0.85;
-                margin: 0;
-                position: fixed;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 14%;
-                width: 90%;
+                font-size: 0.65rem;
+                line-height: 1.4;
+                max-width: 280px;
+                opacity: 0.8;
+                margin: 4px auto 0;
+                position: static;
+                width: 100%;
                 padding: 0 10px;
+            }
+
+            .content-header {
+                display: none !important;
             }
 
             /* Contenido / Portfolio */

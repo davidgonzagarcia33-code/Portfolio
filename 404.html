@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <title>404 — David González</title>
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #050505;
+            color: #fff;
+            font-family: 'Barlow Condensed', 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            overflow: hidden;
+        }
+        .code {
+            font-family: 'Druk Wide Bold', 'Bebas Neue', sans-serif;
+            font-size: clamp(6rem, 20vw, 14rem);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #EEFF00;
+            line-height: 1;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+        .msg {
+            font-family: 'DM Mono', monospace;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: rgba(255,255,255,0.5);
+            font-style: italic;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+        .back {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 14px 36px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .back:hover {
+            background: #EEFF00;
+            color: #000;
+            border-color: #EEFF00;
+        }
+        .grain {
+            position: fixed;
+            inset: -200%;
+            width: 400%;
+            height: 400%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+        .content { position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="content">
+        <div class="code">404</div>
+        <p class="msg">Esta página no existe o ha sido movida.</p>
+        <a href="animacion-scroll-v6.html" class="back">Volver al portfolio</a>
+    </div>
+</body>
+</html>
