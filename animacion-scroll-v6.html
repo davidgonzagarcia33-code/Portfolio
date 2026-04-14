@@ -7,12 +7,20 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <meta name="robots" content="index, follow">
-    <title>Portfolio - Cremallera Animada v6</title>
+    <title>David González — Portfolio Creativo</title>
+    <meta name="description" content="Portfolio de David González, multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta property="og:title" content="David González — Portfolio Creativo">
+    <meta property="og:description" content="Multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="perfil.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://portfolio-iota-gilt-47.vercel.app/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Barlow+Condensed:wght@300;400;600;700&family=Syne:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <style>
         :root {
             --acid: #EEFF00;
@@ -426,6 +434,9 @@
             z-index: 10001;
             transition: opacity 0.3s ease;
             text-transform: uppercase;
+            background: none;
+            border: none;
+            padding: 0;
         }
 
         .lightbox-close:hover {
@@ -457,6 +468,8 @@
             padding: 20px;
             transition: color 0.2s ease;
             user-select: none;
+            background: none;
+            border: none;
         }
 
         .lightbox-nav:hover {
@@ -480,18 +493,6 @@
             color: rgba(255,255,255,0.4);
         }
 
-        .debug {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 10px;
-            font-size: 11px;
-            font-family: 'DM Mono', monospace;
-            z-index: 9999;
-            border: 1px solid #222;
-            color: rgba(255,255,255,0.4);
-        }
 
         /* Navegación */
         .nav {
@@ -581,6 +582,10 @@
             letter-spacing: -2px;
             transition: color 0.2s ease;
             user-select: none;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
         }
 
         .music-toggle:hover {
@@ -715,9 +720,6 @@
                 border-radius: 4px;
             }
 
-            .debug {
-                display: none;
-            }
             .lightbox-close,
             .lightbox-nav {
                 cursor: pointer;
@@ -737,7 +739,7 @@
             <img src="nombre.png" alt="David González" class="nav-logo-name">
         </div>
         <div class="nav-links">
-            <span id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música">&#9654;</span>
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
             <a href="about.html">About</a>
         </div>
@@ -810,7 +812,7 @@
 
     <div class="content-section" id="contentSection">
         <div class="content-header">
-            <h1>Bienvenido</h1>
+            <h2>Bienvenido</h2>
             <p>
                 Soy un multidiseñador y publicista murciano apasionado por crear experiencias visuales únicas. 
                 Explora mi portfolio y descubre mis trabajos.
@@ -818,30 +820,29 @@
         </div>
 
         <div class="portfolio-container" id="portfolioContainer">
-            <div class="portfolio-item" data-delay="0"    style="left: 200px;  top: 30px;   width: 350px;"><img src="coche.png" alt="Coche" draggable="false"></div>
-            <div class="portfolio-item" data-delay="80"   style="left: 1200px; top: 400px;  width: 320px;"><img src="exodus.png" alt="Exodus" draggable="false"></div>
+            <div class="portfolio-item" data-delay="0"    style="left: 200px;  top: 30px;   width: 350px;"><img src="coche.png" alt="Gráfica Foam Gum — coche" loading="lazy" decoding="async" draggable="false"></div>
+            <div class="portfolio-item" data-delay="80"   style="left: 1200px; top: 400px;  width: 320px;"><img src="exodus.png" alt="Gráfica Exodus" loading="lazy" decoding="async" draggable="false"></div>
             <div class="portfolio-item video-item" data-delay="120" style="left: 600px;  top: 80px;   width: 300px;"><video src="video1.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="200"  style="left: 1000px; top: 40px;   width: 300px;"><img src="no-future.png" alt="No Future" draggable="false"></div>
+            <div class="portfolio-item" data-delay="200"  style="left: 1000px; top: 40px;   width: 300px;"><img src="no-future.png" alt="Gráfica No Future" loading="lazy" decoding="async" draggable="false"></div>
             <div class="portfolio-item video-item" data-delay="60"  style="left: 150px;  top: 400px;  width: 340px;"><video src="video2.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="160"  style="left: 550px;  top: 450px;  width: 420px;"><img src="grafica1.png" alt="Gráfica FOAM" draggable="false"></div>
-            <div class="portfolio-item" data-delay="240"  style="left: 1050px; top: 380px;  width: 280px;"><img src="loveless.png" alt="Loveless" draggable="false"></div>
-            <div class="portfolio-item" data-delay="100"  style="left: 100px;  top: 780px;  width: 350px;"><img src="poster-morillas.png" alt="Poster Morillas" draggable="false"></div>
+            <div class="portfolio-item" data-delay="160"  style="left: 550px;  top: 450px;  width: 420px;"><img src="grafica1.png" alt="Gráfica Foam Gum" loading="lazy" decoding="async" draggable="false"></div>
+            <div class="portfolio-item" data-delay="240"  style="left: 1050px; top: 380px;  width: 280px;"><img src="loveless.png" alt="Gráfica Loveless" loading="lazy" decoding="async" draggable="false"></div>
+            <div class="portfolio-item" data-delay="100"  style="left: 100px;  top: 780px;  width: 350px;"><img src="poster-morillas.png" alt="Póster Morillas" loading="lazy" decoding="async" draggable="false"></div>
             <div class="portfolio-item video-item" data-delay="180" style="left: 530px;  top: 820px;  width: 500px;"><video src="duendeskualvideo.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
             <div class="portfolio-item video-item" data-delay="260" style="left: 1100px; top: 750px;  width: 320px;"><video src="video3.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="40"   style="left: 150px;  top: 1100px; width: 320px;"><img src="nofear-color.png" alt="No Fear" draggable="false"></div>
+            <div class="portfolio-item" data-delay="40"   style="left: 150px;  top: 1100px; width: 320px;"><img src="nofear-color.png" alt="Gráfica No Fear" loading="lazy" decoding="async" draggable="false"></div>
         </div>
     </div>
 
-    <div class="debug" id="debug"></div>
 
     <!-- Lightbox Gallery -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightboxClose">[ cerrar ]</span>
-        <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galería de imágenes">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar galería">[ cerrar ]</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Imagen anterior">&#10094;</button>
         <div class="lightbox-content">
-            <img src="" alt="Gallery Image" id="lightboxImg">
+            <img src="" alt="Gráfica del portfolio" id="lightboxImg">
         </div>
-        <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Imagen siguiente">&#10095;</button>
         <div class="lightbox-counter" id="lightboxCounter">1 / 10</div>
     </div>
 
@@ -1246,7 +1247,6 @@
             }
         });
 
-        document.querySelectorAll('.video-item video').forEach(v => v.play());
 
         let lastScrollY = 0;
         const revealThreshold = window.innerHeight * 0.3;
@@ -1284,10 +1284,8 @@
         var lightbox = document.getElementById('lightbox');
         var lightboxImg = document.getElementById('lightboxImg');
         var lightboxCounter = document.getElementById('lightboxCounter');
-        var galleryTrigger = document.getElementById('galleryTrigger');
-
-        function openLightbox() {
-            currentImageIndex = 0;
+        function openLightbox(index) {
+            currentImageIndex = index || 0;
             updateLightboxImage();
             lightbox.classList.add('active');
         }
@@ -1311,10 +1309,15 @@
             updateLightboxImage();
         }
 
-        galleryTrigger.addEventListener('click', function(e) {
-            if (!dragItem) {
-                openLightbox();
-            }
+        document.querySelectorAll('.portfolio-item img').forEach(function(img) {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', function() {
+                if (!dragItem) {
+                    var src = this.src.split('/').pop();
+                    var idx = galleryImages.indexOf(src);
+                    openLightbox(idx >= 0 ? idx : 0);
+                }
+            });
         });
 
         document.getElementById('lightboxClose').addEventListener('click', closeLightbox);

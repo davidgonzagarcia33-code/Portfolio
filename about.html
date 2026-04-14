@@ -6,10 +6,16 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
-    <title>About - David González</title>
+    <title>About — David González</title>
+    <meta name="description" content="Sobre David González: multidiseñador y publicista murciano. Servicios de dirección creativa, branding, diseño gráfico y contenido audiovisual.">
+    <meta property="og:title" content="About — David González">
+    <meta property="og:description" content="Multidiseñador y publicista murciano. Dirección creativa, branding y contenido audiovisual.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="perfil.svg">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
@@ -57,6 +63,10 @@
             letter-spacing: -2px;
             transition: color 0.2s ease;
             user-select: none;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
         }
         .music-toggle:hover { color: #EEFF00; }
 
@@ -304,7 +314,7 @@
             <img src="nombre.png" alt="David González" class="nav-logo-name">
         </a>
         <div class="nav-links">
-            <span id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música">&#9654;</span>
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
             <a href="about.html">About</a>
         </div>
@@ -387,9 +397,9 @@
         <p class="contact-sub">¿Tienes un proyecto en mente? Me encantaría saber más sobre él y cómo puedo ayudarte a hacerlo realidad.</p>
         <div class="contact-btns">
             <a href="mailto:hola@davidgonzalez.es" class="contact-btn primary">Email</a>
-            <a href="https://www.instagram.com/d4vidd33/" target="_blank" class="contact-btn">Instagram</a>
-            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" class="contact-btn">LinkedIn</a>
-            <a href="https://www.behance.net/davigonzalez35" target="_blank" class="contact-btn">Behance</a>
+            <a href="https://www.instagram.com/d4vidd33/" target="_blank" rel="noopener noreferrer" class="contact-btn">Instagram</a>
+            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" rel="noopener noreferrer" class="contact-btn">LinkedIn</a>
+            <a href="https://www.behance.net/davigonzalez35" target="_blank" rel="noopener noreferrer" class="contact-btn">Behance</a>
         </div>
     </section>
 

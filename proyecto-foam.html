@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
-    <title>Foam Gum - David González</title>
+    <title>Foam Gum — David González</title>
+    <meta name="description" content="Proyecto Foam Gum: dirección creativa y diseño gráfico por David González. Concepto visual, cartelería y contenido.">
+    <meta property="og:title" content="Foam Gum — David González">
+    <meta property="og:description" content="Dirección creativa y diseño gráfico para Foam Gum.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
     <style>
@@ -47,7 +52,7 @@
             transition: opacity 0.3s ease;
         }
         .nav-links a:hover { opacity: 0.6; }
-        .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; }
+        .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; background: none; border: none; padding: 0; font-family: inherit; }
         .music-toggle:hover { color: #EEFF00; }
 
         .project-hero {
@@ -210,7 +215,7 @@
             <img src="nombre.png" alt="David González" class="nav-logo-name">
         </a>
         <div class="nav-links">
-            <span id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música">&#9654;</span>
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
             <a href="about.html">About</a>
         </div>
@@ -219,7 +224,7 @@
     <section class="project-hero">
         <div class="project-hero-content">
             <div class="project-hero-video">
-                <video src="foam-video.mp4" muted loop playsinline autoplay></video>
+                <video src="foam-video.mp4" muted loop playsinline autoplay preload="metadata"></video>
             </div>
             <div class="project-info">
                 <h1>Foam Gum</h1>
@@ -242,7 +247,7 @@
                 <div class="poster-item"><img src="foam/grafica-2.png" alt="Foam Gum" loading="lazy" decoding="async"></div>
                 <div class="poster-item"><img src="foam/coche.png" alt="Foam Gum" loading="lazy" decoding="async"></div>
             </div>
-            <span class="poster-drag-hint" id="dragHint">drag →</span>
+            <span class="poster-drag-hint" id="dragHint">arrastra →</span>
         </div>
     </section>
 
