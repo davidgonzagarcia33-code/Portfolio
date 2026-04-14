@@ -1,0 +1,6 @@
+# Archivos de diseño (no necesarios para la web)
+*.psd
+Ropa/
+
+# Carpeta de vídeos duplicada
+videos/
