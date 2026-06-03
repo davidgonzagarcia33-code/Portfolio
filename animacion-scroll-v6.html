@@ -78,6 +78,7 @@
             90% { transform: translate(10%,5%); }
         }
 
+        /* ── MEJORA 1: CURSOR PERSONALIZADO ── */
         .cursor {
             position: fixed;
             width: 10px;
@@ -87,15 +88,68 @@
             pointer-events: none;
             z-index: 99999;
             mix-blend-mode: difference;
-            transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
             transform: translate(-50%, -50%);
+            will-change: left, top;
+            transition: width 0.22s cubic-bezier(0.22,1,0.36,1),
+                        height 0.22s cubic-bezier(0.22,1,0.36,1),
+                        background 0.22s ease,
+                        border 0.22s ease,
+                        mix-blend-mode 0s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
+        .cursor-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            color: #000;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Hover sobre imágenes y vídeos del portfolio */
+        .cursor.cursor-hover-media {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            mix-blend-mode: difference;
+        }
+
+        /* Hover sobre la cremallera */
+        .cursor.cursor-hover-zipper {
+            width: 68px;
+            height: 68px;
+            background: var(--acid);
+            mix-blend-mode: normal;
+        }
+        .cursor.cursor-hover-zipper .cursor-label {
+            opacity: 1;
+        }
+
+        /* Hover sobre links y botones */
+        .cursor.cursor-hover-link {
+            width: 36px;
+            height: 36px;
+        }
+        .cursor.cursor-hover-link .cursor-label {
+            opacity: 1;
+        }
+
+        /* Agarrando */
         .cursor.grabbing {
             width: 40px;
             height: 40px;
             background: transparent;
             border: 2px solid var(--acid);
+            mix-blend-mode: normal;
         }
 
         .progress-bar {
@@ -732,7 +786,7 @@
     </style>
 </head>
 <body>
-    <div class="cursor" id="cursor"></div>
+    <div class="cursor" id="cursor"><span class="cursor-label" id="cursorLabel"></span></div>
 
     <nav class="nav">
         <div class="nav-logo">
@@ -848,12 +902,62 @@
     </div>
 
     <script>
-        // Cursor custom
+        // ── MEJORA 1: CURSOR PERSONALIZADO con lerp ──
         const cursorEl = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => {
-            cursorEl.style.left = e.clientX + 'px';
-            cursorEl.style.top  = e.clientY + 'px';
-        });
+        const cursorLabel = document.getElementById('cursorLabel');
+
+        (function initCursor() {
+            // Solo en dispositivos de puntero fino (no táctil)
+            if (!window.matchMedia('(pointer: fine)').matches) return;
+
+            let mouseX = 0, mouseY = 0;
+            let curX = 0, curY = 0;
+            let initialized = false;
+            const LERP = 0.15;
+
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!initialized) {
+                    curX = mouseX;
+                    curY = mouseY;
+                    initialized = true;
+                }
+            });
+
+            (function animateCursor() {
+                curX += (mouseX - curX) * LERP;
+                curY += (mouseY - curY) * LERP;
+                cursorEl.style.left = curX + 'px';
+                cursorEl.style.top  = curY + 'px';
+                requestAnimationFrame(animateCursor);
+            })();
+
+            function setCursorState(state, label) {
+                cursorEl.classList.remove('cursor-hover-media', 'cursor-hover-zipper', 'cursor-hover-link');
+                if (state) cursorEl.classList.add(state);
+                cursorLabel.textContent = label || '';
+            }
+
+            // Hover: imágenes y vídeos del portfolio
+            document.querySelectorAll('.portfolio-item img, .portfolio-item video').forEach(el => {
+                el.addEventListener('mouseenter', () => setCursorState('cursor-hover-media', ''));
+                el.addEventListener('mouseleave', () => setCursorState(null, ''));
+            });
+
+            // Hover: cremallera
+            const zipContainer = document.querySelector('.zipper-container');
+            if (zipContainer) {
+                zipContainer.addEventListener('mouseenter', () => setCursorState('cursor-hover-zipper', 'DRAG ↑'));
+                zipContainer.addEventListener('mouseleave', () => setCursorState(null, ''));
+            }
+
+            // Hover: links y botones
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => setCursorState('cursor-hover-link', '→'));
+                el.addEventListener('mouseleave', () => setCursorState(null, ''));
+            });
+        })();
 
         // Sonido sintético de cremallera (Web Audio API)
         let audioCtx = null;
