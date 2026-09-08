@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Barlow+Condensed:wght@300;400;600;700&family=Syne:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <style>
         :root {
             --acid: #EEFF00;
@@ -40,11 +41,11 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         body {
-            background: #050505;
+            background: #000;
             font-family: 'Barlow Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--white);
             overflow-x: hidden;
@@ -162,226 +163,193 @@
             z-index: 1000;
         }
 
-        .scroll-container {
-            height: 100vh;
+        /* ── CURSOR-TRACKING HERO ── */
+        .cursor-hero {
             position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            z-index: 5;
         }
 
-        .zipper-container {
+        .cursor-hero video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: contain;
+            object-position: center 55%;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            background: #000;
+        }
+
+        .hero-ui {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            padding: clamp(20px, 4vw, 48px);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        .hero-ui a,
+        .hero-ui button {
+            pointer-events: auto;
             cursor: none;
         }
 
-        .zipper-handle {
-            display: none;
-        }
-
-        .zipper-hint {
-            position: absolute;
-            top: 5%;
-            left: 130%;
-            transform: translateX(-50%);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--acid);
-            z-index: 20;
-            animation: hintPulse 2s ease-in-out infinite;
-            white-space: nowrap;
-        }
-
-        .zipper-hint::before {
-            content: '↑ ';
-            display: inline-block;
-            animation: arrowBounce 1s ease-in-out infinite;
-        }
-
-        @keyframes arrowBounce {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(-4px); }
-        }
-
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.3; }
-            50%       { opacity: 1; }
-        }
-
-        .glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(238,255,0,0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .zip-ripple {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 300px;
-            height: 300px;
-            border: 2px solid var(--acid);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .zip-ripple.fire {
-            animation: rippleFire 0.6s ease-out forwards;
-        }
-
-        @keyframes rippleFire {
-            0%   { transform: translate(-50%,-50%) scale(0);   opacity: 0.8; }
-            100% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; }
-        }
-
-        .animation-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+        .hero-top {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: flex-start;
-            padding-left: 10%;
-            z-index: 5;
+            gap: 24px;
         }
 
-        .zipper-container {
-            position: relative;
-            width: 550px;
-            height: 95vh;
-            max-height: 950px;
-        }
-
-        .frame {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 100%;
-            z-index: 5;
-            opacity: 0;
-            transition: opacity 0.04s ease;
-        }
-
-        .frame img {
-            height: 100%;
-            width: auto;
-        }
-
-        .frame.active {
-            opacity: 1;
-        }
-
-        /* Indicador de scroll */
-        .scroll-indicator {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-            transition: opacity 0.5s ease;
-        }
-
-        .scroll-indicator.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .scroll-indicator span {
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .scroll-arrow {
-            width: 24px;
-            height: 24px;
-            border-right: 2px solid rgba(255, 255, 255, 0.5);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-            transform: rotate(45deg);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
-            40% { transform: rotate(45deg) translateY(8px); }
-            60% { transform: rotate(45deg) translateY(4px); }
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.2); }
-            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.35); }
-        }
-
-        /* Texto fijo al lado de la animación */
-        .hero-text {
-            position: fixed;
-            top: 50%;
-            right: 3%;
-            transform: translateY(-50%);
-            z-index: 1;
-            width: 65%;
-            max-width: 950px;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            text-align: center;
-        }
-
-        .hero-text h1 {
-            font-size: 6rem;
-            margin-bottom: 30px;
-            font-weight: 200;
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .hero-svg {
-            width: 100%;
-            height: auto;
-            margin-bottom: 30px;
-        }
-
-        .hero-title {
-            font-family: 'Druk Wide Bold', 'Syne', sans-serif;
-            font-size: clamp(6rem, 15vw, 14rem);
-            font-weight: 700;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            line-height: 0.95;
-            margin-bottom: 22px;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .hero-title .char {
-            display: inline-block;
-            position: relative;
-            will-change: transform;
-        }
-
-        .hero-text p {
+        .hero-brand {
             font-family: 'DM Mono', monospace;
-            font-style: italic;
-            font-size: 0.95rem;
-            line-height: 1.9;
-            color: rgba(255,255,255,0.55);
-            letter-spacing: 0.5px;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .hero-nav a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .hero-nav a:hover {
+            color: var(--acid);
+        }
+
+        .hero-nav .sep {
+            opacity: 0.35;
+            margin: 0 4px;
+        }
+
+        .hero-cta-top {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #000;
+            background: var(--white);
+            border: none;
+            text-decoration: none;
+            padding: 12px 18px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .hero-cta-top:hover {
+            background: var(--acid);
+            color: #000;
+        }
+
+        .hero-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: clamp(24px, 5vw, 80px);
+            z-index: 2;
+        }
+
+        .hero-copy-left {
+            max-width: min(520px, 42vw);
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.35);
+            padding: 8px 12px;
+            margin-bottom: 18px;
+        }
+
+        .hero-headline {
+            font-family: 'Druk Wide Bold', 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-shadow: 0 2px 30px rgba(0,0,0,0.55);
+        }
+
+        .hero-copy-right {
+            max-width: min(320px, 34vw);
+            text-align: left;
+        }
+
+        .hero-support {
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.72);
+            margin-bottom: 22px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #000;
+            background: var(--white);
+            text-decoration: none;
+            padding: 14px 20px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .hero-cta:hover {
+            background: var(--acid);
+            transform: translateY(-2px);
+        }
+
+        .music-toggle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: -2px;
+            transition: color 0.2s ease;
+            user-select: none;
+            background: none;
+            border: none;
+            padding: 0 8px 0 0;
+            font-family: inherit;
+        }
+
+        .music-toggle:hover {
+            color: var(--acid);
+        }
+
+        .music-toggle.is-playing {
+            color: var(--acid);
         }
 
         .content-section {
@@ -390,7 +358,7 @@
             min-height: 200vh;
             padding: 50px;
             padding-top: 100px;
-            background: transparent;
+            background: #000;
         }
 
         .content-header {
@@ -548,103 +516,8 @@
         }
 
 
-        /* Navegación */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0px;
-        }
-
-        .nav-logo-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: none;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-logo-box:hover {
-            transform: scale(3);
-            z-index: 9999;
-        }
-
-        .nav-logo-box img {
-            width: 80px;
-            height: auto;
-        }
-
-        .nav-logo-text {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            cursor: url('cursor.png'), pointer;
-        }
-
-        .nav-logo-name {
-            height: 100px;
-            width: auto;
-            filter: invert(1);
-            cursor: none;
-            margin-left: -35px;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-logo-name:hover {
-            transform: scale(3);
-            z-index: 9999;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-family: 'DM Mono', monospace;
-            font-size: 11px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: color 0.2s ease;
-            cursor: none;
-        }
-
-        .nav-links a:hover {
-            color: var(--acid);
-        }
-
-        .music-toggle {
-            font-size: 10px;
-            color: rgba(255,255,255,0.4);
-            cursor: none;
-            letter-spacing: -2px;
-            transition: color 0.2s ease;
-            user-select: none;
-            background: none;
-            border: none;
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .music-toggle:hover {
-            color: var(--acid);
-        }
+        /* Nav antigua oculta en home (UI va dentro del hero) */
+        .nav { display: none; }
 
         /* ========== RESPONSIVE MÓVIL ========== */
         @media (max-width: 768px) {
@@ -654,91 +527,64 @@
             .cursor {
                 display: none !important;
             }
-            .nav {
-                padding: 10px 15px;
+
+            .hero-ui {
+                padding: 18px 16px 22px;
             }
 
-            .nav-logo-box img {
-                width: 50px;
+            .hero-top {
+                flex-wrap: wrap;
+                gap: 12px;
             }
 
-            .nav-logo-name {
-                height: 60px;
-                margin-left: -20px;
+            .hero-brand {
+                font-size: 11px;
+                letter-spacing: 0.14em;
             }
 
-            .nav-links {
+            .hero-nav {
+                order: 3;
+                width: 100%;
+                justify-content: flex-start;
+                font-size: 10px;
+            }
+
+            .hero-cta-top {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .hero-bottom {
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 20px;
             }
 
-            .nav-links a {
-                font-size: 11px;
-                letter-spacing: 1px;
+            .hero-copy-left,
+            .hero-copy-right {
+                max-width: 100%;
             }
 
-            /* Cremallera centrada y más pequeña */
-            .animation-wrapper {
-                padding-left: 0;
-                justify-content: center;
-            }
-            .zipper-container {
-                width: 250px;
-                height: 60vh;
-                max-height: 500px;
-                cursor: default;
+            .hero-headline {
+                font-size: clamp(1.8rem, 9vw, 2.6rem);
             }
 
-            .glow {
-                width: 200px;
-                height: 200px;
-            }
-
-            .zipper-hint {
-                top: auto;
-                bottom: -8%;
-                left: 50%;
-                transform: translateX(-50%);
-                font-size: 9px;
-                letter-spacing: 2px;
-            }
-
-            /* Hero text en móvil */
-            .hero-text {
-                position: fixed;
-                top: 60px;
-                bottom: auto;
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-                width: 92%;
-                max-width: none;
-                text-align: center;
-                z-index: 30;
-            }
-
-            .hero-title {
-                font-size: clamp(0.85rem, 5.5vw, 1.3rem) !important;
-                letter-spacing: 0.06em !important;
-                line-height: 1.1;
-                margin-bottom: 4px;
-                white-space: nowrap;
-            }
-
-            .hero-svg {
-                width: 80%;
-                margin: 0 auto 15px;
-                display: block;
-            }
-
-            .hero-text p {
-                font-size: 0.65rem;
-                line-height: 1.4;
+            .hero-support {
+                font-size: 12px;
                 max-width: 280px;
-                opacity: 0.8;
-                margin: 4px auto 0;
-                position: static;
+            }
+
+            /* Cursor hero en móvil */
+            .cursor-hero video {
                 width: 100%;
-                padding: 0 10px;
+                height: 100%;
+                max-width: none;
+                object-fit: contain;
+                object-position: center 45%;
+            }
+
+            .hero-bottom {
+                padding-bottom: 8px;
             }
 
             .content-header {
@@ -788,81 +634,36 @@
 <body>
     <div class="cursor" id="cursor"><span class="cursor-label" id="cursorLabel"></span></div>
 
-    <nav class="nav">
-        <div class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
-            <img src="nombre.png" alt="David González" class="nav-logo-name">
-        </div>
-        <div class="nav-links">
-            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
-            <a href="work.html">Work</a>
-            <a href="about.html">About</a>
-        </div>
-    </nav>
+    <!-- ── CURSOR-TRACKING HERO ── -->
+    <div class="cursor-hero" id="cursorHero">
+        <video id="trackingVideo" src="character-tracking.mp4?v=2" muted playsinline preload="auto"></video>
 
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- Texto hero fijo -->
-    <div class="hero-text" id="heroText">
-        <h1 class="hero-title" id="heroTitle">Bienvenido</h1>
-        <p>Soy un multidiseñador y publicista murciano apasionado por crear experiencias visuales únicas. Explora mi portfolio y descubre mis trabajos.</p>
-    </div>
-
-    <div class="scroll-container" id="scrollContainer">
-        <div class="animation-wrapper" id="animationWrapper">
-            <div class="zipper-container" id="zipperContainer">
-                <div class="glow" id="glow"></div>
-                <div class="zip-ripple" id="zipRipple"></div>
-
-                <!-- Frame 0: Cremallera cerrada -->
-                <div class="frame active" id="frame0">
-                    <img src="frame0.svg" alt="Frame 0">
+        <div class="hero-ui">
+            <div class="hero-top">
+                <a href="animacion-scroll-v6.html" class="hero-brand">David González</a>
+                <div class="hero-nav">
+                    <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+                    <a href="animacion-scroll-v6.html">Home</a>
+                    <span class="sep">/</span>
+                    <a href="work.html">Work</a>
+                    <span class="sep">/</span>
+                    <a href="about.html">About</a>
                 </div>
+                <a href="work.html" class="hero-cta-top">Ver trabajos</a>
+            </div>
 
-                <!-- Frame 1: Cremallera abriéndose 1 -->
-                <div class="frame" id="frame1">
-                    <img src="frame1.svg" alt="Frame 1">
+            <div></div>
+
+            <div class="hero-bottom">
+                <div class="hero-copy-left">
+                    <span class="hero-eyebrow"># Multidiseñador &amp; Publicista</span>
+                    <h1 class="hero-headline">Murcia<br>Design<br>Mafia</h1>
                 </div>
-
-                <!-- Frame 2: Recurso 8 -->
-                <div class="frame" id="frame2">
-                    <img src="frame2.svg" alt="Frame 2">
+                <div class="hero-copy-right">
+                    <p class="hero-support">Dirección creativa, branding y piezas visuales con actitud. Deja de scrollear en Instagram o TikTok y échale un ojo a mis trabajos.</p>
                 </div>
-
-                <!-- Frame 3: Recurso 9 -->
-                <div class="frame" id="frame3">
-                    <img src="frame3.svg" alt="Frame 3">
-                </div>
-
-                <!-- Frame 4: Bolsillo abriéndose 1 -->
-                <div class="frame" id="frame4">
-                    <img src="frame6.svg" alt="Frame 4">
-                </div>
-
-                <!-- Frame 5: Bolsillo abriéndose 2 -->
-                <div class="frame" id="frame5">
-                    <img src="frame7.svg" alt="Frame 5">
-                </div>
-
-                <!-- Frame 6: Bolsillo abriéndose 3 -->
-                <div class="frame" id="frame6">
-                    <img src="frame10.svg" alt="Frame 6">
-                </div>
-
-                <!-- Frame 7: Monstruo completo -->
-                <div class="frame" id="frame7">
-                    <img src="frame11.svg" alt="Frame 7">
-                </div>
-
-                <!-- Handle arrastrable -->
-                <div class="zipper-handle" id="zipperHandle"></div>
-                <span class="zipper-hint" id="zipperHint">↑ Agarra la cremallera y arrastra hacia arriba</span>
-
             </div>
         </div>
-    </div>
-
-    <div class="scroll-indicator" id="scrollIndicator" style="display:none;">
     </div>
 
     <div class="content-section" id="contentSection">
@@ -884,7 +685,7 @@
             <div class="portfolio-item" data-delay="240"  style="left: 1050px; top: 380px;  width: 280px;"><img src="loveless.png" alt="Gráfica Loveless" loading="lazy" decoding="async" draggable="false"></div>
             <div class="portfolio-item" data-delay="100"  style="left: 100px;  top: 780px;  width: 350px;"><img src="poster-morillas.png" alt="Póster Morillas" loading="lazy" decoding="async" draggable="false"></div>
             <div class="portfolio-item video-item" data-delay="180" style="left: 530px;  top: 820px;  width: 500px;"><video src="duendeskualvideo.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item video-item" data-delay="260" style="left: 1100px; top: 750px;  width: 320px;"><video src="video3.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
+            <div class="portfolio-item video-item" data-delay="260" style="left: 1100px; top: 750px;  width: 320px;"><video src="foam-video.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
             <div class="portfolio-item" data-delay="40"   style="left: 150px;  top: 1100px; width: 320px;"><img src="nofear-color.png" alt="Gráfica No Fear" loading="lazy" decoding="async" draggable="false"></div>
         </div>
     </div>
@@ -934,7 +735,7 @@
             })();
 
             function setCursorState(state, label) {
-                cursorEl.classList.remove('cursor-hover-media', 'cursor-hover-zipper', 'cursor-hover-link');
+                cursorEl.classList.remove('cursor-hover-media', 'cursor-hover-link');
                 if (state) cursorEl.classList.add(state);
                 cursorLabel.textContent = label || '';
             }
@@ -945,77 +746,12 @@
                 el.addEventListener('mouseleave', () => setCursorState(null, ''));
             });
 
-            // Hover: cremallera
-            const zipContainer = document.querySelector('.zipper-container');
-            if (zipContainer) {
-                zipContainer.addEventListener('mouseenter', () => setCursorState('cursor-hover-zipper', 'DRAG ↑'));
-                zipContainer.addEventListener('mouseleave', () => setCursorState(null, ''));
-            }
-
             // Hover: links y botones
             document.querySelectorAll('a, button').forEach(el => {
                 el.addEventListener('mouseenter', () => setCursorState('cursor-hover-link', '→'));
                 el.addEventListener('mouseleave', () => setCursorState(null, ''));
             });
         })();
-
-        // Sonido sintético de cremallera (Web Audio API)
-        let audioCtx = null;
-        let lastZipSoundTime = 0;
-
-        function getAudioCtx() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            return audioCtx;
-        }
-
-        function playZipTick(intensity) {
-            try {
-                const ctx = getAudioCtx();
-                if (ctx.state === 'suspended') ctx.resume();
-                const now = ctx.currentTime;
-                const bufferSize = Math.floor(ctx.sampleRate * 0.015);
-                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                const data = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
-                }
-                const source = ctx.createBufferSource();
-                source.buffer = buffer;
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.value = 3500 + intensity * 2000;
-                filter.Q.value = 1.5;
-                const gainNode = ctx.createGain();
-                gainNode.gain.setValueAtTime(0.18 + intensity * 0.12, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
-                source.connect(filter);
-                filter.connect(gainNode);
-                gainNode.connect(ctx.destination);
-                source.start(now);
-            } catch(e) {}
-        }
-
-        function playZipFinal() {
-            try {
-                const ctx = getAudioCtx();
-                if (ctx.state === 'suspended') ctx.resume();
-                const osc = ctx.createOscillator();
-                const gainNode = ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(800, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.25);
-                gainNode.gain.setValueAtTime(0.06, ctx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-                osc.connect(gainNode);
-                gainNode.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.25);
-            } catch(e) {}
-        }
-
-        function hapticTick() {
-            if (navigator.vibrate) navigator.vibrate(2);
-        }
 
         let bgMusicStarted = false;
         function playBgMusic() {
@@ -1024,212 +760,115 @@
             if (typeof startBgMusic === 'function') startBgMusic();
         }
 
-        function stopBgMusic() {
-            bgMusicStarted = false;
-            if (typeof stopPersistentMusic === 'function') stopPersistentMusic();
-        }
-
-        const scrollContainer = document.getElementById('scrollContainer');
-        const animationWrapper = document.getElementById('animationWrapper');
-        const glow = document.getElementById('glow');
-        const zipRipple = document.getElementById('zipRipple');
-        const progressBar = document.getElementById('progressBar');
-        const scrollIndicator = document.getElementById('scrollIndicator');
-        const debug = document.getElementById('debug');
-        const heroTitle = document.getElementById('heroTitle');
-
-        // ====== HERO TITLE (GSAP) letras flotantes + parallax ======
-        (function initHeroTitle() {
-            if (!heroTitle || typeof gsap === 'undefined') return;
-            // En móvil lo dejamos estático arriba (mejor legibilidad y rendimiento).
-            if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) return;
-
-            const original = heroTitle.textContent || '';
-            heroTitle.textContent = '';
-
-            original.split('').forEach((ch) => {
-                const span = document.createElement('span');
-                span.className = 'char';
-                span.innerHTML = ch === ' ' ? '&nbsp;' : ch;
-                heroTitle.appendChild(span);
-            });
-
-            const chars = heroTitle.querySelectorAll('.char');
-            if (!chars.length) return;
-
-            chars.forEach((char) => {
-                const randomX = (Math.random() - 0.5) * 80;
-                const randomY = (Math.random() - 0.5) * 120;
-                const randomRotate = (Math.random() - 0.5) * 40;
-
-                gsap.set(char, { x: randomX, y: randomY, rotation: randomRotate });
-                char.dataset.origX = String(randomX);
-                char.dataset.origY = String(randomY);
-                char.dataset.depth = String(Math.random() * 1.5 + 0.2);
-
-                gsap.to(char, {
-                    y: `+=${(Math.random() * 30) + 10}`,
-                    rotation: `+=${(Math.random() * 15) - 7.5}`,
-                    duration: (Math.random() * 3) + 2,
-                    yoyo: true,
-                    repeat: -1,
-                    ease: 'sine.inOut'
-                });
-            });
-
-            // Optimización: quickTo por letra (evita 1000 gsap.to en mousemove)
-            const quickX = [];
-            const quickY = [];
-            chars.forEach((char) => {
-                quickX.push(gsap.quickTo(char, 'x', { duration: 1.2, ease: 'power3.out', overwrite: 'auto' }));
-                quickY.push(gsap.quickTo(char, 'y', { duration: 1.2, ease: 'power3.out', overwrite: 'auto' }));
-            });
-
-            let mouseX = 0;
-            let mouseY = 0;
-            let rafId = null;
-
-            function tick() {
-                rafId = null;
-                chars.forEach((char, i) => {
-                    const depth = parseFloat(char.dataset.depth || '1');
-                    const origX = parseFloat(char.dataset.origX || '0');
-                    const origY = parseFloat(char.dataset.origY || '0');
-                    quickX[i](origX - (mouseX * 80 * depth));
-                    quickY[i](origY - (mouseY * 80 * depth));
-                });
-            }
-
-            window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-                if (rafId == null) rafId = requestAnimationFrame(tick);
-            });
-        })();
-
-        // Array de frames
-        const frames = [
-            document.getElementById('frame0'),
-            document.getElementById('frame1'),
-            document.getElementById('frame2'),
-            document.getElementById('frame3'),
-            document.getElementById('frame4'),
-            document.getElementById('frame5'),
-            document.getElementById('frame6'),
-            document.getElementById('frame7')
-        ];
-
-        const totalFrames = frames.length;
-        let currentFrame = 0;
-        const heroText = document.getElementById('heroText');
-        const zipperHandle = document.getElementById('zipperHandle');
-        const zipperHint = document.getElementById('zipperHint');
-        const zipperContainer = document.querySelector('.zipper-container');
-
-        let zipperProgress = 0;
-        let isDraggingZipper = false;
-        let dragStartY = 0;
-        let dragStartProgress = 0;
+        // ── CURSOR-TRACKING VIDEO ──
+        const trackingVideo = document.getElementById('trackingVideo');
         let portfolioRevealed = false;
 
-        function easeOutCubic(t) {
-            return 1 - Math.pow(1 - t, 3);
-        }
+        (function initCursorTracking() {
+            if (!trackingVideo) return;
 
-        function triggerRipple() {
-            zipRipple.classList.remove('fire');
-            void zipRipple.offsetWidth;
-            zipRipple.classList.add('fire');
-        }
+            const video = trackingVideo;
+            video.pause();
+            video.muted = true;
+            video.playsInline = true;
 
-        function updateAnimation(progress) {
-            progress = Math.max(0, Math.min(1, progress));
-            progressBar.style.width = (progress * 100) + '%';
+            let duration = 0;
+            let targetT = 0.5;   // 0..1
+            let smoothT = 0.5;
+            let seeking = false;
+            const EASE = 0.22;
 
-            if (progress > 0.02) {
-                scrollIndicator.classList.add('hidden');
-                zipperHint.style.opacity = '0';
-                zipperHint.style.transition = 'opacity 0.3s ease';
-            } else {
-                zipperHint.style.opacity = '';
-                if (bgMusicStarted) stopBgMusic();
+            function shortestDelta(from, to) {
+                let d = to - from;
+                if (d > 0.5) d -= 1;
+                if (d < -0.5) d += 1;
+                return d;
             }
 
-            const frameProgress = Math.min(progress / 0.85, 1);
-            const targetFrame = Math.min(Math.floor(frameProgress * totalFrames), totalFrames - 1);
+            function pointerToProgress(clientX, clientY) {
+                if (!duration) return;
+                const rect = video.getBoundingClientRect();
+                const cx = rect.left + rect.width * 0.5;
+                const cy = rect.top + rect.height * 0.42;
+                const dx = clientX - cx;
+                const dy = clientY - cy;
 
-            if (targetFrame !== currentFrame) {
-                const now = performance.now();
-                if (now - lastZipSoundTime > 30) {
-                    playZipTick(frameProgress);
-                    hapticTick();
-                    lastZipSoundTime = now;
+                // Ángulo: 0 derecha, PI/2 abajo, ±PI izquierda, -PI/2 arriba
+                // + offset para alinear la mirada del vídeo con el cursor
+                let ang = Math.atan2(dy, dx);
+                let t = (ang + Math.PI) / (Math.PI * 2);
+                t = (t + 0.75) % 1; // fase: arriba ≈ inicio del ciclo
+                targetT = t;
+            }
+
+            function tick() {
+                smoothT = (smoothT + shortestDelta(smoothT, targetT) * EASE + 1) % 1;
+
+                if (!seeking && duration) {
+                    const next = smoothT * duration;
+                    if (Math.abs(next - video.currentTime) > 0.01) {
+                        seeking = true;
+                        try {
+                            video.currentTime = next;
+                        } catch (err) {
+                            seeking = false;
+                        }
+                    }
                 }
-                frames[currentFrame].classList.remove('active');
-                frames[targetFrame].classList.add('active');
+                requestAnimationFrame(tick);
+            }
 
-                if (targetFrame === totalFrames - 1 && currentFrame !== totalFrames - 1) {
-                    triggerRipple();
-                    playZipFinal();
+            video.addEventListener('seeked', () => {
+                seeking = false;
+            });
+
+            function ready() {
+                duration = video.duration || 0;
+                if (!duration) return;
+                smoothT = 0.5;
+                targetT = 0.5;
+                video.currentTime = duration * 0.5;
+                requestAnimationFrame(tick);
+            }
+
+            if (video.readyState >= 1) ready();
+            else video.addEventListener('loadedmetadata', ready, { once: true });
+
+            window.addEventListener('pointermove', (e) => {
+                pointerToProgress(e.clientX, e.clientY);
+            }, { passive: true });
+
+            // Touch: seguir el dedo
+            window.addEventListener('touchmove', (e) => {
+                if (!e.touches[0]) return;
+                pointerToProgress(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: true });
+        })();
+
+        // ── Scroll: ocultar hero hint, revelar portfolio ──
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollTrigger.create({
+            trigger: '#contentSection',
+            start: 'top 90%',
+            onEnter: () => {
+                if (!portfolioRevealed) {
+                    portfolioRevealed = true;
+                    revealPortfolio();
                     playBgMusic();
                 }
-                currentFrame = targetFrame;
+                const hint = document.getElementById('scrollHint');
+                if (hint) hint.style.opacity = '0';
+            },
+            onLeaveBack: () => {
+                if (portfolioRevealed) {
+                    portfolioRevealed = false;
+                    hidePortfolio();
+                }
+                const hint = document.getElementById('scrollHint');
+                if (hint) hint.style.opacity = '';
             }
-
-            const glowProgress = easeOutCubic(Math.min(Math.max((progress - 0.4) / 0.4, 0), 1));
-            glow.style.opacity = glowProgress * 0.8;
-            glow.style.transform = `translate(-50%,-50%) scale(${1 + glowProgress * 0.4})`;
-
-            const handlePos = 95 - (progress * 85);
-            zipperHandle.style.bottom = 'auto';
-            zipperHandle.style.top = handlePos + '%';
-
-            if (progress >= 0.99 && !portfolioRevealed) {
-                portfolioRevealed = true;
-                revealPortfolio();
-            }
-
-            debug.innerHTML = `progress: ${(progress * 100).toFixed(1)}%<br>frame: ${currentFrame + 1}/${totalFrames}`;
-        }
-
-        function onZipperStart(e) {
-            isDraggingZipper = true;
-            dragStartY = e.clientY || e.touches[0].clientY;
-            dragStartProgress = zipperProgress;
-            cursorEl.classList.add('grabbing');
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        function onZipperMove(e) {
-            if (!isDraggingZipper) return;
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            if (clientY === undefined) return;
-            const containerHeight = zipperContainer.offsetHeight;
-            const deltaY = dragStartY - clientY;
-            const deltaProgress = deltaY / (containerHeight * 0.8);
-            
-            zipperProgress = Math.max(0, Math.min(1, dragStartProgress + deltaProgress));
-            updateAnimation(zipperProgress);
-        }
-
-        function onZipperEnd() {
-            isDraggingZipper = false;
-            cursorEl.classList.remove('grabbing');
-        }
-
-        document.addEventListener('mousemove', onZipperMove);
-        document.addEventListener('touchmove', onZipperMove, { passive: false });
-        document.addEventListener('mouseup', onZipperEnd);
-        document.addEventListener('touchend', onZipperEnd);
-        document.addEventListener('touchstart', function(e) {
-            if (isDraggingZipper) return;
-            if (!e.target.closest('.nav') && !e.target.closest('.lightbox') && !e.target.closest('.portfolio-item')) {
-                onZipperStart(e);
-            }
-        }, { passive: false });
-
-        updateAnimation(0);
+        });
 
         // ====== PERF: reproducir vídeos solo cuando sean visibles ======
         (function lazyPlayVideos() {
@@ -1315,11 +954,10 @@
         var startX, startY, startLeft, startTop;
 
         document.addEventListener('mousedown', function(e) {
-            if (isDraggingZipper) return;
             if (e.target.closest('.nav') || e.target.closest('.lightbox')) return;
 
             var target = e.target.closest('.portfolio-item');
-            if (target && zipperProgress >= 0.99) {
+            if (target && portfolioRevealed) {
                 dragItem = target;
                 startX = e.pageX;
                 startY = e.pageY;
@@ -1329,14 +967,10 @@
                 dragItem.style.transform  = 'rotate(0deg) scale(1.03)';
                 dragItem.style.transition = 'transform 0.15s ease';
                 e.preventDefault();
-                return;
             }
-
-            onZipperStart(e);
         });
 
         document.addEventListener('mousemove', function(e) {
-            if (isDraggingZipper) return;
             if (dragItem) {
                 dragItem.style.left = (startLeft + e.pageX - startX) + 'px';
                 dragItem.style.top  = (startTop  + e.pageY - startY) + 'px';
@@ -1352,26 +986,6 @@
             }
         });
 
-
-        let lastScrollY = 0;
-        const revealThreshold = window.innerHeight * 0.3;
-        const hideThreshold   = window.innerHeight * 0.1;
-
-        window.addEventListener('scroll', function() {
-            const scrollY = window.scrollY;
-
-            if (!portfolioRevealed && scrollY > revealThreshold) {
-                portfolioRevealed = true;
-                revealPortfolio();
-            }
-
-            if (portfolioRevealed && scrollY < hideThreshold && lastScrollY >= hideThreshold) {
-                portfolioRevealed = false;
-                hidePortfolio();
-            }
-
-            lastScrollY = scrollY;
-        });
 
         // ========== LIGHTBOX GALLERY ==========
         var galleryImages = [
