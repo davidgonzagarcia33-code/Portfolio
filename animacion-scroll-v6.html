@@ -20,8 +20,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Barlow+Condensed:wght@300;400;600;700&family=Syne:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <style>
         :root {
             --acid: #EEFF00;
@@ -48,7 +46,7 @@
             background: #000;
             font-family: 'Barlow Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--white);
-            overflow-x: hidden;
+            overflow: hidden;
             cursor: none;
         }
 
@@ -79,7 +77,7 @@
             90% { transform: translate(10%,5%); }
         }
 
-        /* ── MEJORA 1: CURSOR PERSONALIZADO ── */
+        /* ── CURSOR PERSONALIZADO ── */
         .cursor {
             position: fixed;
             width: 10px;
@@ -94,7 +92,6 @@
             transition: width 0.22s cubic-bezier(0.22,1,0.36,1),
                         height 0.22s cubic-bezier(0.22,1,0.36,1),
                         background 0.22s ease,
-                        border 0.22s ease,
                         mix-blend-mode 0s;
             display: flex;
             align-items: center;
@@ -116,26 +113,6 @@
             user-select: none;
         }
 
-        /* Hover sobre imágenes y vídeos del portfolio */
-        .cursor.cursor-hover-media {
-            width: 60px;
-            height: 60px;
-            background: #fff;
-            mix-blend-mode: difference;
-        }
-
-        /* Hover sobre la cremallera */
-        .cursor.cursor-hover-zipper {
-            width: 68px;
-            height: 68px;
-            background: var(--acid);
-            mix-blend-mode: normal;
-        }
-        .cursor.cursor-hover-zipper .cursor-label {
-            opacity: 1;
-        }
-
-        /* Hover sobre links y botones */
         .cursor.cursor-hover-link {
             width: 36px;
             height: 36px;
@@ -144,24 +121,6 @@
             opacity: 1;
         }
 
-        /* Agarrando */
-        .cursor.grabbing {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: 2px solid var(--acid);
-            mix-blend-mode: normal;
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: var(--acid);
-            width: 0%;
-            z-index: 1000;
-        }
 
         /* ── CURSOR-TRACKING HERO ── */
         .cursor-hero {
@@ -253,17 +212,39 @@
             font-size: 11px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: #000;
-            background: var(--white);
-            border: none;
+            color: var(--white);
+            background: transparent;
+            border: 2px solid var(--white);
             text-decoration: none;
-            padding: 12px 18px;
-            transition: background 0.2s ease, color 0.2s ease;
+            padding: 12px 20px;
+            border-radius: 3px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            display: inline-block;
+            transition: color 0.35s ease;
+        }
+
+        .hero-cta-top::after {
+            content: "";
+            background: var(--white);
+            position: absolute;
+            z-index: -1;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: -100%;
+            right: 100%;
+            transition: all 0.35s ease;
         }
 
         .hero-cta-top:hover {
-            background: var(--acid);
             color: #000;
+        }
+
+        .hero-cta-top:hover::after {
+            left: 0;
+            right: 0;
         }
 
         .hero-bottom {
@@ -299,6 +280,13 @@
             text-transform: uppercase;
             color: var(--white);
             text-shadow: 0 2px 30px rgba(0,0,0,0.55);
+        }
+
+        .hero-surname {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 0.01em;
         }
 
         .hero-copy-right {
@@ -351,170 +339,6 @@
         .music-toggle.is-playing {
             color: var(--acid);
         }
-
-        .content-section {
-            position: relative;
-            z-index: 10;
-            min-height: 200vh;
-            padding: 50px;
-            padding-top: 100px;
-            background: #000;
-        }
-
-        .content-header {
-            display: none;
-        }
-
-        .content-section h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            font-weight: 200;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            max-width: 500px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Portfolio draggable */
-        .portfolio-container {
-            position: relative;
-            width: 100%;
-            height: 150vh;
-            margin-top: 50px;
-        }
-
-        .portfolio-item {
-            position: absolute;
-            cursor: none;
-            z-index: 1;
-            user-select: none;
-            opacity: 0;
-        }
-
-        .portfolio-item.entered {
-            transition: box-shadow 0.2s ease;
-        }
-
-        .portfolio-item:active {
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-
-        .portfolio-item:hover { z-index: 100; }
-
-        .portfolio-item:hover img,
-        .portfolio-item:hover video {
-            box-shadow: 0 12px 50px rgba(238,255,0,0.15), 0 0 0 1px rgba(238,255,0,0.2);
-            filter: brightness(1.05) contrast(1.02);
-        }
-
-        .portfolio-item img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            -webkit-user-drag: none;
-            transition: box-shadow 0.3s ease, filter 0.3s ease;
-        }
-
-        .portfolio-item video {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            -webkit-user-drag: none;
-            border-radius: 2px;
-            transition: box-shadow 0.3s ease, filter 0.3s ease;
-        }
-
-        .lightbox {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.96);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            font-family: 'DM Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 4px;
-            color: var(--acid);
-            cursor: none;
-            z-index: 10001;
-            transition: opacity 0.3s ease;
-            text-transform: uppercase;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-
-        .lightbox-close:hover {
-            opacity: 0.5;
-        }
-
-        .lightbox-content {
-            max-width: 85%;
-            max-height: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 40px;
-            color: var(--white);
-            cursor: none;
-            padding: 20px;
-            transition: color 0.2s ease;
-            user-select: none;
-            background: none;
-            border: none;
-        }
-
-        .lightbox-nav:hover {
-            color: var(--acid);
-        }
-
-        .lightbox-prev {
-            left: 30px;
-        }
-
-        .lightbox-next {
-            right: 30px;
-        }
-
-        .lightbox-counter {
-            position: absolute;
-            bottom: 30px;
-            font-family: 'DM Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.4);
-        }
-
 
         /* Nav antigua oculta en home (UI va dentro del hero) */
         .nav { display: none; }
@@ -586,52 +410,71 @@
             .hero-bottom {
                 padding-bottom: 8px;
             }
+        }
+        /* ── PANTALLA DE CARGA ── */
+        .loader-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
 
-            .content-header {
-                display: none !important;
-            }
+        .loader-screen.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-            /* Contenido / Portfolio */
-            .content-section {
-                padding: 20px;
-                min-height: auto;
-            }
+        .loader-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(60px, 15vw, 200px);
+            color: var(--white);
+            letter-spacing: 0.08em;
+            line-height: 1;
+            user-select: none;
+        }
 
-            .portfolio-container {
-                height: auto;
-                min-height: auto;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                padding-bottom: 40px;
-            }
+        .loader-bar-wrap {
+            width: clamp(200px, 40vw, 500px);
+            height: 3px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 2px;
+            margin-top: 28px;
+            overflow: hidden;
+        }
 
-            .portfolio-item {
-                position: relative !important;
-                left: auto !important;
-                top: auto !important;
-                width: 100% !important;
-                cursor: default;
-            }
+        .loader-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--white);
+            border-radius: 2px;
+            transition: width 0.15s linear;
+        }
 
-            .portfolio-item video,
-            .portfolio-item img {
-                width: 100%;
-                height: auto;
-                border-radius: 4px;
-            }
-
-            .lightbox-close,
-            .lightbox-nav {
-                cursor: pointer;
-                padding: 15px;
-            }
-            .lightbox-close { top: 20px; right: 20px; }
-            .lightbox-content img { max-height: 70vh; }
+        .loader-percent {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.5);
+            margin-top: 14px;
+            user-select: none;
         }
     </style>
 </head>
 <body>
+    <!-- ── PANTALLA DE CARGA ── -->
+    <div class="loader-screen" id="loaderScreen">
+        <div class="loader-text">LOADING</div>
+        <div class="loader-bar-wrap">
+            <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <div class="loader-percent" id="loaderPercent">000</div>
+    </div>
     <div class="cursor" id="cursor"><span class="cursor-label" id="cursorLabel"></span></div>
 
     <!-- ── CURSOR-TRACKING HERO ── -->
@@ -657,7 +500,7 @@
             <div class="hero-bottom">
                 <div class="hero-copy-left">
                     <span class="hero-eyebrow"># Multidiseñador &amp; Publicista</span>
-                    <h1 class="hero-headline">Murcian<br>Creative<br>Boy</h1>
+                    <h1 class="hero-headline">David<br><span class="hero-surname">González</span></h1>
                 </div>
                 <div class="hero-copy-right">
                     <p class="hero-support">Dirección creativa, branding y piezas visuales con actitud. Deja de scrollear en Instagram o TikTok y échale un ojo a mis trabajos.</p>
@@ -666,49 +509,80 @@
         </div>
     </div>
 
-    <div class="content-section" id="contentSection">
-        <div class="content-header">
-            <h2>Bienvenido</h2>
-            <p>
-                Soy un multidiseñador y publicista murciano apasionado por crear experiencias visuales únicas. 
-                Explora mi portfolio y descubre mis trabajos.
-            </p>
-        </div>
-
-        <div class="portfolio-container" id="portfolioContainer">
-            <div class="portfolio-item" data-delay="0"    style="left: 200px;  top: 30px;   width: 350px;"><img src="coche.png" alt="Gráfica Foam Gum — coche" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item" data-delay="80"   style="left: 1200px; top: 400px;  width: 320px;"><img src="exodus.png" alt="Gráfica Exodus" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item video-item" data-delay="120" style="left: 600px;  top: 80px;   width: 300px;"><video src="video1.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="200"  style="left: 1000px; top: 40px;   width: 300px;"><img src="no-future.png" alt="Gráfica No Future" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item video-item" data-delay="60"  style="left: 150px;  top: 400px;  width: 340px;"><video src="video2.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="160"  style="left: 550px;  top: 450px;  width: 420px;"><img src="grafica1.png" alt="Gráfica Foam Gum" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item" data-delay="240"  style="left: 1050px; top: 380px;  width: 280px;"><img src="loveless.png" alt="Gráfica Loveless" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item" data-delay="100"  style="left: 100px;  top: 780px;  width: 350px;"><img src="poster-morillas.png" alt="Póster Morillas" loading="lazy" decoding="async" draggable="false"></div>
-            <div class="portfolio-item video-item" data-delay="180" style="left: 530px;  top: 820px;  width: 500px;"><video src="duendeskualvideo.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item video-item" data-delay="260" style="left: 1100px; top: 750px;  width: 320px;"><video src="foam-video.mp4" muted loop playsinline preload="none" draggable="false"></video></div>
-            <div class="portfolio-item" data-delay="40"   style="left: 150px;  top: 1100px; width: 320px;"><img src="nofear-color.png" alt="Gráfica No Fear" loading="lazy" decoding="async" draggable="false"></div>
-        </div>
-    </div>
-
-
-    <!-- Lightbox Gallery -->
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galería de imágenes">
-        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar galería">[ cerrar ]</button>
-        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Imagen anterior">&#10094;</button>
-        <div class="lightbox-content">
-            <img src="" alt="Gráfica del portfolio" id="lightboxImg">
-        </div>
-        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Imagen siguiente">&#10095;</button>
-        <div class="lightbox-counter" id="lightboxCounter">1 / 10</div>
-    </div>
-
     <script>
+        // ── PANTALLA DE CARGA ──
+        (function initLoader() {
+            const screen  = document.getElementById('loaderScreen');
+            const bar     = document.getElementById('loaderBar');
+            const pctEl   = document.getElementById('loaderPercent');
+
+            const resources = [
+                ...Array.from(document.querySelectorAll('img[src]')).map(i => i.src),
+                ...Array.from(document.querySelectorAll('video[src]')).map(v => v.src)
+            ];
+            const total = Math.max(resources.length, 1);
+            let loaded = 0;
+            let fakeProgress = 0;
+            let done = false;
+
+            function update(pct) {
+                const p = Math.min(100, Math.round(pct));
+                bar.style.width = p + '%';
+                pctEl.textContent = String(p).padStart(3, '0');
+            }
+
+            function finish() {
+                if (done) return;
+                done = true;
+                update(100);
+                setTimeout(() => {
+                    screen.classList.add('loaded');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            function onLoad() {
+                loaded++;
+                const real = (loaded / total) * 100;
+                if (real > fakeProgress) {
+                    fakeProgress = real;
+                    update(fakeProgress);
+                }
+                if (loaded >= total) finish();
+            }
+
+            resources.forEach(src => {
+                if (src.includes('.mp4')) {
+                    const v = document.createElement('video');
+                    v.preload = 'auto';
+                    v.muted = true;
+                    v.oncanplaythrough = onLoad;
+                    v.onerror = onLoad;
+                    v.src = src;
+                } else {
+                    const img = new Image();
+                    img.onload = onLoad;
+                    img.onerror = onLoad;
+                    img.src = src;
+                }
+            });
+
+            const fakeInterval = setInterval(() => {
+                if (done) { clearInterval(fakeInterval); return; }
+                fakeProgress += (100 - fakeProgress) * 0.035;
+                update(fakeProgress);
+                if (fakeProgress >= 98) { clearInterval(fakeInterval); finish(); }
+            }, 60);
+
+            window.addEventListener('load', finish);
+            setTimeout(finish, 8000);
+        })();
+
         // ── MEJORA 1: CURSOR PERSONALIZADO con lerp ──
         const cursorEl = document.getElementById('cursor');
         const cursorLabel = document.getElementById('cursorLabel');
 
         (function initCursor() {
-            // Solo en dispositivos de puntero fino (no táctil)
             if (!window.matchMedia('(pointer: fine)').matches) return;
 
             let mouseX = 0, mouseY = 0;
@@ -735,34 +609,19 @@
             })();
 
             function setCursorState(state, label) {
-                cursorEl.classList.remove('cursor-hover-media', 'cursor-hover-link');
+                cursorEl.classList.remove('cursor-hover-link');
                 if (state) cursorEl.classList.add(state);
                 cursorLabel.textContent = label || '';
             }
 
-            // Hover: imágenes y vídeos del portfolio
-            document.querySelectorAll('.portfolio-item img, .portfolio-item video').forEach(el => {
-                el.addEventListener('mouseenter', () => setCursorState('cursor-hover-media', ''));
-                el.addEventListener('mouseleave', () => setCursorState(null, ''));
-            });
-
-            // Hover: links y botones
             document.querySelectorAll('a, button').forEach(el => {
                 el.addEventListener('mouseenter', () => setCursorState('cursor-hover-link', '→'));
                 el.addEventListener('mouseleave', () => setCursorState(null, ''));
             });
         })();
 
-        let bgMusicStarted = false;
-        function playBgMusic() {
-            if (bgMusicStarted) return;
-            bgMusicStarted = true;
-            if (typeof startBgMusic === 'function') startBgMusic();
-        }
-
         // ── CURSOR-TRACKING VIDEO ──
         const trackingVideo = document.getElementById('trackingVideo');
-        let portfolioRevealed = false;
 
         (function initCursorTracking() {
             if (!trackingVideo) return;
@@ -773,7 +632,7 @@
             video.playsInline = true;
 
             let duration = 0;
-            let targetT = 0.5;   // 0..1
+            let targetT = 0.5;
             let smoothT = 0.5;
             let seeking = false;
             const EASE = 0.22;
@@ -792,12 +651,9 @@
                 const cy = rect.top + rect.height * 0.42;
                 const dx = clientX - cx;
                 const dy = clientY - cy;
-
-                // Ángulo: 0 derecha, PI/2 abajo, ±PI izquierda, -PI/2 arriba
-                // + offset para alinear la mirada del vídeo con el cursor
                 let ang = Math.atan2(dy, dx);
                 let t = (ang + Math.PI) / (Math.PI * 2);
-                t = (t + 0.75) % 1; // fase: arriba ≈ inicio del ciclo
+                t = (t + 0.75) % 1;
                 targetT = t;
             }
 
@@ -838,224 +694,11 @@
                 pointerToProgress(e.clientX, e.clientY);
             }, { passive: true });
 
-            // Touch: seguir el dedo
             window.addEventListener('touchmove', (e) => {
                 if (!e.touches[0]) return;
                 pointerToProgress(e.touches[0].clientX, e.touches[0].clientY);
             }, { passive: true });
         })();
-
-        // ── Scroll: ocultar hero hint, revelar portfolio ──
-        gsap.registerPlugin(ScrollTrigger);
-
-        ScrollTrigger.create({
-            trigger: '#contentSection',
-            start: 'top 90%',
-            onEnter: () => {
-                if (!portfolioRevealed) {
-                    portfolioRevealed = true;
-                    revealPortfolio();
-                    playBgMusic();
-                }
-                const hint = document.getElementById('scrollHint');
-                if (hint) hint.style.opacity = '0';
-            },
-            onLeaveBack: () => {
-                if (portfolioRevealed) {
-                    portfolioRevealed = false;
-                    hidePortfolio();
-                }
-                const hint = document.getElementById('scrollHint');
-                if (hint) hint.style.opacity = '';
-            }
-        });
-
-        // ====== PERF: reproducir vídeos solo cuando sean visibles ======
-        (function lazyPlayVideos() {
-            const videos = Array.from(document.querySelectorAll('.portfolio-item video'));
-            if (!videos.length) return;
-
-            function tryPlay(v) {
-                if (!v) return;
-                // En iOS/Android autoplay puede fallar: como mínimo evitamos descargar todo de golpe.
-                v.play().catch(function() {});
-            }
-
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        const v = entry.target;
-                        if (entry.isIntersecting) {
-                            tryPlay(v);
-                        } else {
-                            v.pause();
-                        }
-                    });
-                }, { threshold: 0.2 });
-                videos.forEach(v => io.observe(v));
-            } else {
-                // Fallback: intenta reproducir una vez
-                videos.forEach(tryPlay);
-            }
-        })();
-
-        // ========== REVEAL / HIDE PORTFOLIO — CAOS CONTROLADO ==========
-        function revealPortfolio() {
-            const items = document.querySelectorAll('.portfolio-item');
-            items.forEach((item) => {
-                const delay = parseInt(item.dataset.delay) || 0;
-                const dirX  = (Math.random() - 0.5) * 160;
-                const dirY  = -80 - Math.random() * 120;
-                const rot   = (Math.random() - 0.5) * 14;
-                const scale = 0.75 + Math.random() * 0.15;
-
-                item.style.opacity   = '0';
-                item.style.transform = `translate(${dirX}px, ${dirY}px) rotate(${rot}deg) scale(${scale})`;
-                item.style.transition = 'none';
-
-                setTimeout(() => {
-                    item.style.transition = `
-                        opacity 0.55s cubic-bezier(0.22,1,0.36,1),
-                        transform 0.65s cubic-bezier(0.22,1,0.36,1)
-                    `;
-                    const finalRot = (Math.random() - 0.5) * 4;
-                    item.style.opacity   = '1';
-                    item.style.transform = `rotate(${finalRot}deg)`;
-
-                    setTimeout(() => item.classList.add('entered'), 700);
-                }, delay);
-            });
-        }
-
-        function hidePortfolio() {
-            const items = document.querySelectorAll('.portfolio-item');
-            items.forEach((item) => {
-                const delay = parseInt(item.dataset.delay) || 0;
-                const dirX  = (Math.random() - 0.5) * 160;
-                const dirY  = 80 + Math.random() * 120;
-                const rot   = (Math.random() - 0.5) * 14;
-                const scale = 0.75 + Math.random() * 0.15;
-
-                item.classList.remove('entered');
-
-                setTimeout(() => {
-                    item.style.transition = `
-                        opacity 0.45s cubic-bezier(0.55,0,1,0.45),
-                        transform 0.55s cubic-bezier(0.55,0,1,0.45)
-                    `;
-                    item.style.opacity   = '0';
-                    item.style.transform = `translate(${dirX}px, ${dirY}px) rotate(${rot}deg) scale(${scale})`;
-                }, delay);
-            });
-        }
-
-        // ========== DRAG & DROP ==========
-        var dragItem = null;
-        var startX, startY, startLeft, startTop;
-
-        document.addEventListener('mousedown', function(e) {
-            if (e.target.closest('.nav') || e.target.closest('.lightbox')) return;
-
-            var target = e.target.closest('.portfolio-item');
-            if (target && portfolioRevealed) {
-                dragItem = target;
-                startX = e.pageX;
-                startY = e.pageY;
-                startLeft = dragItem.offsetLeft;
-                startTop = dragItem.offsetTop;
-                dragItem.style.zIndex     = 9999;
-                dragItem.style.transform  = 'rotate(0deg) scale(1.03)';
-                dragItem.style.transition = 'transform 0.15s ease';
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('mousemove', function(e) {
-            if (dragItem) {
-                dragItem.style.left = (startLeft + e.pageX - startX) + 'px';
-                dragItem.style.top  = (startTop  + e.pageY - startY) + 'px';
-            }
-        });
-
-        document.addEventListener('mouseup', function() {
-            if (dragItem) {
-                const rot = (Math.random() - 0.5) * 5;
-                dragItem.style.transition = 'transform 0.2s ease';
-                dragItem.style.transform  = `rotate(${rot}deg) scale(1)`;
-                dragItem = null;
-            }
-        });
-
-
-        // ========== LIGHTBOX GALLERY ==========
-        var galleryImages = [
-            '1.png',
-            '2.jpg',
-            '5.png',
-            '6.png',
-            '7.png',
-            '8.png',
-            'grafica1.png',
-            'duende.png'
-        ];
-        
-        var currentImageIndex = 0;
-        var lightbox = document.getElementById('lightbox');
-        var lightboxImg = document.getElementById('lightboxImg');
-        var lightboxCounter = document.getElementById('lightboxCounter');
-        function openLightbox(index) {
-            currentImageIndex = index || 0;
-            updateLightboxImage();
-            lightbox.classList.add('active');
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-        }
-
-        function updateLightboxImage() {
-            lightboxImg.src = galleryImages[currentImageIndex];
-            lightboxCounter.textContent = (currentImageIndex + 1) + ' / ' + galleryImages.length;
-        }
-
-        function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-            updateLightboxImage();
-        }
-
-        function prevImage() {
-            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-            updateLightboxImage();
-        }
-
-        document.querySelectorAll('.portfolio-item img').forEach(function(img) {
-            img.style.cursor = 'pointer';
-            img.addEventListener('click', function() {
-                if (!dragItem) {
-                    var src = this.src.split('/').pop();
-                    var idx = galleryImages.indexOf(src);
-                    openLightbox(idx >= 0 ? idx : 0);
-                }
-            });
-        });
-
-        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-        document.getElementById('lightboxNext').addEventListener('click', nextImage);
-        document.getElementById('lightboxPrev').addEventListener('click', prevImage);
-
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (lightbox.classList.contains('active')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowRight') nextImage();
-                if (e.key === 'ArrowLeft') prevImage();
-            }
-        });
     </script>
     <script src="persistent-music.js"></script>
 </body>

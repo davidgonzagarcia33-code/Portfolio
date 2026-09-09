@@ -44,10 +44,7 @@
         .nav-logo-box {
             display: flex; align-items: center; justify-content: center;
         }
-        .nav-logo-box img { width: 80px; height: auto; }
-        .nav-logo-name {
-            height: 100px; width: auto; filter: invert(1); margin-left: -35px;
-        }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
         .nav-links { display: flex; gap: 40px; }
         .nav-links a {
             color: #fff; text-decoration: none; font-size: 13px;
@@ -299,8 +296,7 @@
             .contact-btns { flex-direction: column; gap: 15px; }
             .contact-btn { width: 100%; text-align: center; padding: 14px 24px; }
             .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 50px; }
-            .nav-logo-name { height: 60px; margin-left: -18px; }
+            .nav-logo-box img { width: 40px; }
             .nav-links { gap: 24px; }
             .nav-links a { font-size: 11px; letter-spacing: 1px; }
             .section-float-label { font-size: 10px; }
@@ -310,8 +306,7 @@
 <body>
     <nav class="nav">
         <a href="animacion-scroll-v6.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
-            <img src="nombre.png" alt="David González" class="nav-logo-name">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>

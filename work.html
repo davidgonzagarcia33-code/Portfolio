@@ -67,15 +67,9 @@
         }
 
         .nav-logo-box img {
-            width: 80px;
+            width: 50px;
             height: auto;
-        }
-
-        .nav-logo-name {
-            height: 100px;
-            width: auto;
-            filter: invert(1);
-            margin-left: -35px;
+            border-radius: 50%;
         }
 
         .nav-links {
@@ -123,11 +117,11 @@
         }
 
         .page-header h1 {
-            font-size: 4rem;
-            font-weight: 200;
-            letter-spacing: 15px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 10px;
             text-transform: uppercase;
-            font-style: italic;
         }
 
         /* Lista de proyectos */
@@ -186,9 +180,10 @@
         }
 
         .project-title {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
             text-transform: uppercase;
             transition: transform 0.4s ease;
         }
@@ -446,8 +441,7 @@
         /* Responsive móvil */
         @media (max-width: 768px) {
             .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 50px; }
-            .nav-logo-name { height: 60px; margin-left: -18px; }
+            .nav-logo-box img { width: 40px; }
             .nav-links { gap: 24px; }
             .nav-links a { font-size: 11px; letter-spacing: 1px; }
 
@@ -518,8 +512,7 @@
     <!-- Navegación -->
     <nav class="nav">
         <a href="animacion-scroll-v6.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
-            <img src="nombre.png" alt="David González" class="nav-logo-name">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>

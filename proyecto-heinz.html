@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>Heinz — David González</title>
@@ -17,13 +17,15 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
+
         body {
-            background: #000;
+            background: #E34113;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* ── NAV ── */
         .nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -32,8 +34,6 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
         }
         .nav-logo {
             display: flex; align-items: center; gap: 0; text-decoration: none;
@@ -41,10 +41,7 @@
         .nav-logo-box {
             display: flex; align-items: center; justify-content: center;
         }
-        .nav-logo-box img { width: 80px; height: auto; }
-        .nav-logo-name {
-            height: 100px; width: auto; filter: invert(1); margin-left: -35px;
-        }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
         .nav-links { display: flex; gap: 40px; }
         .nav-links a {
             color: #fff; text-decoration: none; font-size: 13px;
@@ -55,110 +52,148 @@
         .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; background: none; border: none; padding: 0; font-family: inherit; }
         .music-toggle:hover { color: #EEFF00; }
 
-        .project-hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 60px 60px;
-        }
-        .project-hero-content {
-            display: flex; align-items: center; gap: 80px; max-width: 1200px;
-        }
-        .project-hero-video {
-            width: 450px; flex-shrink: 0; border-radius: 8px; overflow: hidden;
-            aspect-ratio: 9/16;
-        }
-        .project-hero-video video {
-            width: 100%; height: 100%; display: block; object-fit: cover;
-        }
-        .project-info h1 {
-            font-size: 3.5rem; font-weight: 200; letter-spacing: 8px;
-            text-transform: uppercase; margin-bottom: 30px;
-        }
-        .project-info p {
-            font-size: 1.1rem; line-height: 1.8;
-            color: rgba(255,255,255,0.7); max-width: 500px; margin-bottom: 20px;
-        }
-        .project-tags { display: flex; gap: 15px; margin-top: 30px; }
-        .tag {
-            padding: 8px 20px; border: 1px solid rgba(255,255,255,0.3);
-            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+        /* ── ZOOM TUNNEL ── */
+        .zoom-tunnel {
+            height: 700vh;
+            position: relative;
         }
 
-        .project-gallery {
-            padding: 60px 0 120px;
-            background: transparent;
-        }
-        .gallery-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 8px;
-            padding-left: 60px;
-            margin-bottom: 40px;
-        }
-        .poster-track {
-            position: relative;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 40px 0 80px;
-            cursor: grab;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .poster-track::-webkit-scrollbar { display: none; }
-        .poster-track::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 150px; height: 100%;
-            background: linear-gradient(to left, #000, transparent);
-            pointer-events: none;
-        }
-        .poster-track:active { cursor: grabbing; }
-        .poster-track-inner {
-            display: flex;
-            padding-left: 60px;
-            padding-right: 100px;
-        }
-        .poster-item {
-            flex-shrink: 0;
-            width: clamp(180px, 20vw, 300px);
-            aspect-ratio: 3/4;
-            margin-right: -70px;
-            border-radius: 4px;
+        .zoom-viewport {
+            position: sticky;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
-            box-shadow: -10px 0 40px rgba(0,0,0,0.8);
-            transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
-            transform: rotate(var(--rot, 0deg));
+            background: #E34113;
         }
-        .poster-item img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
-        }
-        .poster-item:hover {
-            transform: translateY(-50px) rotate(0deg) scale(1.06);
-            z-index: 100;
-            border: 2px solid #EEFF00;
-            box-shadow: -10px 0 60px rgba(0,0,0,0.9);
-        }
-        .poster-track.grabbing .poster-item {
-            pointer-events: none;
-        }
-        .poster-drag-hint {
+
+        /* Patrón de fondo */
+        .zoom-bg-pattern {
             position: absolute;
-            bottom: 20px; right: 80px;
+            inset: -20%;
+            z-index: 0;
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+        }
+        .zoom-bg-pattern img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        /* Cada tarjeta gráfica */
+        .zoom-card {
+            position: absolute;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            will-change: transform, opacity;
+            transform-origin: center center;
+        }
+        .zoom-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+        }
+
+        /* Título central fijo */
+        .zoom-title {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            text-align: center;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+        .zoom-title h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            letter-spacing: 0.08em;
+            color: #000;
+            line-height: 0.9;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .zoom-title .subtitle {
+            font-family: 'DM Mono', monospace;
+            font-size: clamp(10px, 1.2vw, 14px);
+            letter-spacing: 4px;
+            color: rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+
+        /* Texto descriptivo entre título y cards */
+        .zoom-description {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            max-width: 700px;
+            padding: 0 30px;
+            opacity: 0;
+            will-change: opacity;
+            z-index: 5;
+        }
+        .zoom-description p {
+            font-family: 'DM Mono', monospace;
+            font-size: clamp(12px, 1.4vw, 16px);
+            line-height: 1.9;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Tags info */
+        .zoom-info {
+            position: absolute;
+            bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            display: flex; gap: 15px;
+            will-change: opacity;
+        }
+        .zoom-info .tag {
+            padding: 8px 20px;
+            border: 1px solid rgba(0,0,0,0.3);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.6);
+            font-family: 'DM Mono', monospace;
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 100px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
             font-family: 'DM Mono', monospace;
             font-size: 11px;
             letter-spacing: 3px;
-            color: rgba(255,255,255,0.4);
-            animation: hintBlink 2s ease-in-out infinite;
+            color: rgba(0,0,0,0.35);
+            text-transform: uppercase;
+            animation: hintBounce 2s ease-in-out infinite;
+            pointer-events: none;
         }
-        .poster-drag-hint.hidden { display: none; }
-        .poster-item { cursor: pointer; }
-        @keyframes hintBlink {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+        @keyframes hintBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.35; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 0.8; }
         }
+
+        /* Botón volver */
+        .back-btn {
+            position: fixed; bottom: 40px; left: 40px;
+            padding: 15px 30px; background: #000; color: #fff;
+            text-decoration: none; font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.3s ease; z-index: 1000;
+            border: 1px solid transparent;
+        }
+        .back-btn:hover {
+            background: #fff; color: #000;
+        }
+
+        /* Lightbox */
         .lightbox {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.97); z-index: 9999;
@@ -173,47 +208,22 @@
         }
         .lightbox-close:hover { opacity: 1; }
 
-        .back-btn {
-            position: fixed; bottom: 40px; left: 40px;
-            padding: 15px 30px; background: #fff; color: #000;
-            text-decoration: none; font-size: 13px; font-weight: 600;
-            letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.3s ease; z-index: 1000;
-        }
-        .back-btn:hover {
-            background: #000; color: #fff; border: 1px solid #fff;
-        }
-
         @media (max-width: 768px) {
             .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 50px; }
-            .nav-logo-name { height: 60px; margin-left: -18px; }
+            .nav-logo-box img { width: 40px; }
             .nav-links { gap: 24px; }
             .nav-links a { font-size: 11px; }
-            .project-hero { padding: 100px 20px 40px; }
-            .project-hero-content { flex-direction: column; gap: 30px; }
-            .project-hero-video { width: 100%; }
-            .project-info h1 { font-size: 1.8rem; }
-            .project-gallery { padding: 30px 20px 80px; }
-            .gallery-title { padding-left: 20px; font-size: 1.4rem; }
-            .poster-track { overflow-x: auto; -webkit-overflow-scrolling: touch; cursor: grab; padding: 20px 0; }
-            .poster-track::after { display: none; }
-            .poster-track-inner { flex-direction: row; padding: 0 20px; gap: 15px; flex-wrap: nowrap; }
-            .poster-item { width: 70%; min-width: 180px; margin-right: 0; flex-shrink: 0; transform: none !important; }
-            .poster-item:hover { transform: none !important; }
-            .poster-drag-hint { display: block; font-size: 10px; }
+            .zoom-tunnel { height: 500vh; }
+            .zoom-card { border-radius: 6px; }
+            .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
-            .lightbox { padding: 40px 15px 60px; }
-            .lightbox-close { top: 15px; right: 15px; padding: 12px; }
-            .lightbox img { max-height: 70vh; }
         }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="animacion-scroll-v6.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="Perfil"></div>
-            <img src="nombre.png" alt="David González" class="nav-logo-name">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -222,36 +232,71 @@
         </div>
     </nav>
 
-    <section class="project-hero">
-        <div class="project-hero-content">
-            <div class="project-hero-video">
-                <video src="heinz-video.mp4" muted loop playsinline autoplay preload="metadata"></video>
-            </div>
-            <div class="project-info">
-                <h1>Heinz</h1>
-                <p>Propuesta creativa de tipografía y dirección de contenido para Heinz. Diseño de fuente tipográfica personalizada y gráficas publicitarias para la marca.</p>
-                <div class="project-tags">
-                    <span class="tag">Dirección de Contenido</span>
-                    <span class="tag">Tipografía</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ── ZOOM TUNNEL ── -->
+    <div class="zoom-tunnel" id="zoomTunnel">
+        <div class="zoom-viewport" id="zoomViewport">
 
-    <section class="project-gallery">
-        <h2 class="gallery-title">Gráficas</h2>
-        <div class="poster-track" id="posterTrack">
-            <div class="poster-track-inner" id="posterTrackInner">
-                <div class="poster-item"><img src="heinz/portada.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
-                <div class="poster-item"><img src="heinz/grafica-1.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
-                <div class="poster-item"><img src="heinz/grafica-2.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
-                <div class="poster-item"><img src="heinz/grafica3.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
-                <div class="poster-item"><img src="heinz/3.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
-                <div class="poster-item"><img src="heinz/4.jpg" alt="Heinz" loading="lazy" decoding="async"></div>
+            <!-- Patrón de fondo -->
+            <div class="zoom-bg-pattern">
+                <img src="heinz/grafica-2.jpg" alt="pattern">
             </div>
-            <span class="poster-drag-hint" id="dragHint">arrastra →</span>
+
+            <!-- Título central -->
+            <div class="zoom-title" id="zoomTitle">
+                <h1>HEINZ</h1>
+                <p class="subtitle">Fuente tipográfica · David González</p>
+            </div>
+
+            <!-- Descripción del proyecto -->
+            <div class="zoom-description" id="zoomDescription">
+                <p>Tipografía creada mediante sobres de ketchup Heinz sobre folios en blanco. Digitalización de los esbozos para la composición de los abecedarios y posteriores gráficas.</p>
+            </div>
+
+            <!-- TARJETAS — aparecen una a una, bien separadas -->
+            <div class="zoom-card" data-z="1" data-x="-30" data-y="-20" data-rot="-4" style="width:clamp(250px,28vw,420px); aspect-ratio:3/4;">
+                <img src="heinz/portada.jpg" alt="Heinz Portada" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="2" data-x="32" data-y="18" data-rot="5" style="width:clamp(230px,26vw,400px); aspect-ratio:3/4;">
+                <img src="heinz/grafica-1.1.jpg" alt="Tomato Paste" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="3" data-x="-5" data-y="-28" data-rot="-2" style="width:clamp(240px,27vw,410px); aspect-ratio:3/4;">
+                <img src="heinz/grafica3.jpg" alt="Primera salsa" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="4" data-x="-35" data-y="15" data-rot="6" style="width:clamp(260px,30vw,440px); aspect-ratio:3/4;">
+                <img src="heinz/3.jpg" alt="ABC Tipografía" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="5" data-x="28" data-y="-22" data-rot="-5" style="width:clamp(250px,28vw,420px); aspect-ratio:3/4;">
+                <img src="heinz/4.jpg" alt="Tipografía líquida" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="6" data-x="8" data-y="25" data-rot="3" style="width:clamp(240px,26vw,400px); aspect-ratio:3/4;">
+                <img src="heinz/grafica-1.jpg" alt="Tomato Paste blanco" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="7" data-x="-28" data-y="-15" data-rot="-6" style="width:clamp(270px,30vw,450px); aspect-ratio:3/4;">
+                <img src="heinz/grafica-2.2.jpg" alt="Heinz Pattern" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="8" data-x="35" data-y="10" data-rot="4" style="width:clamp(260px,28vw,430px); aspect-ratio:3/4;">
+                <img src="heinz/grafica-3.2.jpg" alt="Gráfica" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="9" data-x="-10" data-y="-30" data-rot="-3" style="width:clamp(250px,27vw,420px); aspect-ratio:3/4;">
+                <img src="heinz/3-prueba.jpg" alt="Prueba ABC" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="10" data-x="-25" data-y="22" data-rot="5" style="width:clamp(280px,32vw,460px); aspect-ratio:3/4;">
+                <img src="heinz/4.1.jpg" alt="Tipografía grande" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="11" data-x="30" data-y="-12" data-rot="-4" style="width:clamp(270px,30vw,450px); aspect-ratio:3/4;">
+                <img src="heinz/grafica-3.3.jpg" alt="Gráfica final" data-lightbox>
+            </div>
+
+            <!-- Info tags -->
+            <div class="zoom-info" id="zoomInfo">
+                <span class="tag">Dirección de Contenido</span>
+                <span class="tag">Tipografía</span>
+                <span class="tag">Branding</span>
+            </div>
+
+            <span class="scroll-hint" id="scrollHint">scroll ↓</span>
         </div>
-    </section>
+    </div>
 
     <div class="lightbox" id="lightbox">
         <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
@@ -259,19 +304,126 @@
     </div>
 
     <a href="work.html" class="back-btn">← Volver</a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+        gsap.registerPlugin(ScrollTrigger);
+
         (function() {
-            var items = document.querySelectorAll('.poster-item');
-            items.forEach(function(el) {
-                el.style.setProperty('--rot', (Math.random() * 10 - 5) + 'deg');
+            const tunnel = document.getElementById('zoomTunnel');
+            const cards  = document.querySelectorAll('.zoom-card');
+            const title  = document.getElementById('zoomTitle');
+            const desc   = document.getElementById('zoomDescription');
+            const info   = document.getElementById('zoomInfo');
+            const hint   = document.getElementById('scrollHint');
+            const totalCards = cards.length;
+            const W = window.innerWidth;
+            const H = window.innerHeight;
+
+            cards.forEach(card => {
+                const idx   = parseFloat(card.dataset.z) - 1;
+                const xPct  = parseFloat(card.dataset.x) || 0;
+                const yPct  = parseFloat(card.dataset.y) || 0;
+                const rot   = parseFloat(card.dataset.rot) || 0;
+
+                card.style.left = '50%';
+                card.style.top  = '50%';
+
+                gsap.set(card, {
+                    xPercent: -50, yPercent: -50,
+                    x: 0, y: 0,
+                    scale: 0.08,
+                    rotation: rot,
+                    opacity: 0
+                });
+
+                const cardStart = 0.30 + (idx / totalCards) * 0.55;
+                const cardMid   = cardStart + 0.08;
+                const cardEnd   = cardMid + 0.06;
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: tunnel,
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 1
+                    }
+                });
+
+                tl.fromTo(card, {
+                    scale: 0.08,
+                    x: 0,
+                    y: 0,
+                    rotation: rot,
+                    opacity: 0
+                }, {
+                    scale: 1.4,
+                    x: xPct * W * 0.012,
+                    y: yPct * H * 0.012,
+                    rotation: rot * 0.4,
+                    opacity: 1,
+                    duration: cardMid - cardStart,
+                    ease: 'power1.in'
+                }, cardStart)
+                .to(card, {
+                    scale: 5,
+                    x: xPct * W * 0.04,
+                    y: yPct * H * 0.04,
+                    opacity: 0,
+                    duration: cardEnd - cardMid,
+                    ease: 'power1.in'
+                }, cardMid);
             });
-            var track = document.getElementById('posterTrack');
-            var inner = document.getElementById('posterTrackInner');
-            var hint = document.getElementById('dragHint');
-            var justDragged = false;
-            var lb = document.getElementById('lightbox');
-            var lbImg = document.getElementById('lightboxImg');
-            var lbClose = document.getElementById('lightboxClose');
+
+            gsap.to(title, {
+                scale: 4,
+                opacity: 0,
+                ease: 'power2.in',
+                scrollTrigger: {
+                    trigger: tunnel,
+                    start: 'top top',
+                    end: '20% top',
+                    scrub: 1
+                }
+            });
+
+            const descTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: tunnel,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1
+                }
+            });
+            descTl.fromTo(desc, { opacity: 0 }, { opacity: 1, duration: 0.04 }, 0.14)
+                  .to(desc, { opacity: 0, duration: 0.04 }, 0.24);
+
+            gsap.to(info, {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: tunnel,
+                    start: 'top top',
+                    end: '10% top',
+                    scrub: true
+                }
+            });
+
+            gsap.to(hint, {
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: tunnel,
+                    start: 'top top',
+                    end: '5% top',
+                    scrub: true
+                }
+            });
+
+            // Lightbox
+            const lb      = document.getElementById('lightbox');
+            const lbImg   = document.getElementById('lightboxImg');
+            const lbClose = document.getElementById('lightboxClose');
+
             function openLightbox(src) {
                 lbImg.src = src;
                 lb.classList.add('active');
@@ -281,68 +433,14 @@
                 lb.classList.remove('active');
                 document.body.style.overflow = '';
             }
+
             if (lbClose) lbClose.addEventListener('click', closeLightbox);
-            if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
-            inner.addEventListener('click', function(e) {
-                var poster = e.target.closest('.poster-item');
-                if (!poster || justDragged) return;
-                var img = poster.querySelector('img');
-                if (img && img.src) openLightbox(img.src);
-            });
-            var isDown = false, startX, scrollLeft;
-            var dragThreshold = 6;
-            var autoScrollSpeed = 0.8;
-            var autoScrollPaused = false;
+            if (lb) lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-            function autoScroll() {
-                if (autoScrollPaused || isDown) return;
-                var maxScroll = track.scrollWidth - track.clientWidth;
-                if (maxScroll <= 0) return;
-                track.scrollLeft += autoScrollSpeed;
-                if (track.scrollLeft >= maxScroll) track.scrollLeft = 0;
-            }
-            setInterval(autoScroll, 20);
-
-            track.addEventListener('mousedown', function(e) {
-                isDown = true;
-                justDragged = false;
-                startX = e.clientX - track.getBoundingClientRect().left;
-                scrollLeft = track.scrollLeft;
-                autoScrollPaused = true;
-                if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
-            });
-            track.addEventListener('mouseleave', function() { isDown = false; track.classList.remove('grabbing'); });
-            track.addEventListener('mouseup', function() {
-                isDown = false;
-                track.classList.remove('grabbing');
-                autoScrollPaused = false;
-            });
-            track.addEventListener('mousemove', function(e) {
-                if (!isDown) return;
-                e.preventDefault();
-                var x = e.clientX - track.getBoundingClientRect().left;
-                if (Math.abs(x - startX) > dragThreshold) {
-                    justDragged = true;
-                    track.classList.add('grabbing');
-                }
-                track.scrollLeft = scrollLeft - (x - startX);
-            });
-            track.addEventListener('touchstart', function(e) {
-                justDragged = false;
-                autoScrollPaused = true;
-                startX = e.touches[0].clientX - track.getBoundingClientRect().left;
-                scrollLeft = track.scrollLeft;
-                if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
-            }, { passive: true });
-            track.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                var x = e.touches[0].clientX - track.getBoundingClientRect().left;
-                if (Math.abs(x - startX) > dragThreshold) justDragged = true;
-                track.scrollLeft = scrollLeft - (x - startX);
-            }, { passive: false });
-            track.addEventListener('touchend', function() {
-                setTimeout(function() { autoScrollPaused = false; }, 300);
+            document.querySelectorAll('[data-lightbox]').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => openLightbox(img.src));
             });
         })();
     </script>
