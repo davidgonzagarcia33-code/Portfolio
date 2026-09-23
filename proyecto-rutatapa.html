@@ -76,18 +76,6 @@
             color: rgba(255,255,255,0.5);
         }
 
-        .banner-section {
-            width: 100%;
-            background: #2a2015;
-            padding: 0;
-        }
-        .banner-section img {
-            width: 100%;
-            height: auto;
-            display: block;
-            cursor: pointer;
-        }
-
         .graficas-section {
             padding: 70px 40px 100px;
             background: #3D2E1C;
@@ -135,21 +123,10 @@
             overflow: hidden;
             cursor: pointer;
         }
-        .mupis-grid-item img,
-        .mupis-grid-item video {
+        .mupis-grid-item img {
             width: 100%;
             height: auto;
             display: block;
-        }
-        .mupi-video-item {
-            grid-column: span 3;
-            max-height: 70vh;
-            background: #1a140e;
-        }
-        .mupi-video-item video {
-            width: 100%;
-            max-height: 70vh;
-            object-fit: contain;
         }
 
         .lightbox {
@@ -181,7 +158,6 @@
             .nav-links a { font-size: 11px; }
             .graficas-section, .mupis-section { padding: 40px 16px 70px; }
             .graficas-grid, .mupis-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .mupi-video-item { grid-column: span 2; }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 22px; font-size: 11px; }
         }
     </style>
@@ -211,11 +187,6 @@
         </div>
     </section>
 
-    <!-- Banner grande -->
-    <section class="banner-section">
-        <img src="rutatapa/banner.jpg" alt="Banner Ruta de la Tapa" data-lightbox>
-    </section>
-
     <!-- Gráficas -->
     <section class="graficas-section">
         <h2 class="section-title">Gráficas</h2>
@@ -238,9 +209,6 @@
             <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi verde" data-lightbox></div>
             <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi dorado" data-lightbox></div>
             <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi teal" data-lightbox></div>
-            <div class="mupis-grid-item mupi-video-item">
-                <video src="rutatapa/mupi-video.mp4" muted loop playsinline preload="metadata"></video>
-            </div>
         </div>
     </section>
 
@@ -263,14 +231,6 @@
             document.querySelectorAll('[data-lightbox]').forEach(function(img) {
                 img.style.cursor = 'pointer';
                 img.addEventListener('click', function() { openLightbox(img.src); });
-            });
-            document.querySelectorAll('.mupi-video-item video').forEach(function(v) {
-                new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) v.play().catch(function(){});
-                        else v.pause();
-                    });
-                }, { threshold: 0.3 }).observe(v);
             });
         })();
     </script>
