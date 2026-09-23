@@ -4,3 +4,8 @@ Ropa/
 
 # Carpeta de vÃ­deos duplicada
 videos/
+
+# Originales pesados / fuentes de diseño
+*.ai
+blackout/BLACKOUT SPOT NAVIDAD 2025.mp4
+blackout/chilicheese.pdf

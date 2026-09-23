@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>Visual Art — David González</title>
+    <meta name="description" content="Visual Art de David González: cartelería, posters y piezas gráficas.">
+    <meta property="og:title" content="Visual Art — David González">
+    <meta property="og:description" content="Cartelería, posters y piezas gráficas de David González.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        body {
+            background: #000;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+        .nav-logo { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo-box { display: flex; align-items: center; justify-content: center; }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
+        .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 13px;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+        .nav-links a.active { opacity: 0.45; }
+        .music-toggle {
+            font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer;
+            letter-spacing: -2px; transition: color 0.2s ease; user-select: none;
+            background: none; border: none; padding: 0; font-family: inherit;
+        }
+        .music-toggle:hover { color: #EEFF00; }
+
+        .page-header {
+            padding: 180px 60px 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+        }
+        .page-header p {
+            margin-top: 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+        }
+        .section-jump {
+            display: flex;
+            gap: 28px;
+            margin-top: 28px;
+        }
+        .section-jump a {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        .section-jump a:hover { color: #fff; }
+
+        .art-section {
+            padding: 70px 60px 40px;
+        }
+        .art-section + .art-section {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin-top: 20px;
+        }
+        .art-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.2rem, 10vw, 8rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 12px;
+        }
+        .art-section-sub {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 40px;
+        }
+
+        /* Masonry para respetar formato original */
+        .art-grid {
+            columns: 3;
+            column-gap: 16px;
+            padding-bottom: 40px;
+        }
+        .art-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #111;
+        }
+        .art-item img,
+        .art-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease, opacity 0.35s ease;
+        }
+        .art-item:hover img,
+        .art-item:hover video { transform: scale(1.02); opacity: 0.85; }
+        @media (max-width: 768px) {
+            .art-grid { columns: 2; column-gap: 10px; }
+        }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 60px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+            cursor: zoom-out;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain; }
+        .lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        .page-footer {
+            padding: 40px 60px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-text, .back-link {
+            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+            color: rgba(255,255,255,0.45); text-decoration: none;
+        }
+        .back-link { color: #fff; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 0.6; }
+
+        @media (max-width: 768px) {
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 40px; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 10px; letter-spacing: 1px; }
+            .page-header { padding: 120px 20px 30px; }
+            .page-header h1 { font-size: 2.4rem; letter-spacing: 4px; }
+            .art-section { padding: 40px 20px 20px; }
+            .art-section-title { font-size: 3rem; }
+            .page-footer { padding: 30px 20px; flex-direction: column; gap: 16px; }
+            .lightbox { padding: 40px 15px 60px; }
+            .lightbox-close { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+        </a>
+        <div class="nav-links">
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+            <a href="work.html">Work</a>
+            <a href="visual-art.html" class="active">Visual Art</a>
+            <a href="merch.html">Merch</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>_Visual Art_</h1>
+        <p>Figures · Lettering</p>
+    </header>
+
+    <section class="art-section" id="visual-art">
+        <h2 class="art-section-title">Figures & Lettering</h2>
+        <p class="art-section-sub">Sujetos · Personajes · Tipografía · Type pieces</p>
+        <div class="art-grid" id="artGrid"></div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
+        <img src="" alt="Pieza ampliada" id="lightboxImg">
+    </div>
+
+    <footer class="page-footer">
+        <span class="footer-text">© 2026 DAVID GONZÁLEZ</span>
+        <a href="index.html" class="back-link">← Volver al inicio</a>
+    </footer>
+
+    <script>
+        (function() {
+            var pieces = [
+                'MORBO.png',
+                'POSTER BLANCO Y NEGRO YUNMORBO.jpg',
+                'My homies did everything.jpg',
+                'POSTER My homies.jpg',
+                'my homies... poster.png',
+                'RESILIENCIA.jpg',
+                { video: 'duende-video.mp4' },
+                'valle-du-soleil-(1).jpg',
+                'poster-morillas.png',
+                'GRAFICA-2.jpg',
+                'GRAFICA-4 .1.jpg',
+                'IMG_9241.JPG',
+                'true-love.jpg',
+                { video: 'nofear-video.mp4' },
+                'loveless.png',
+                'exodus.png',
+                'Juntosparasiempre.png',
+                'FINI.png',
+                'no-future.png'
+            ];
+
+            function fillGrid(gridId, list) {
+                var grid = document.getElementById(gridId);
+                list.forEach(function(entry) {
+                    var isVideo = typeof entry === 'object' && entry && entry.video;
+                    var src = isVideo ? entry.video : entry;
+                    var item = document.createElement('div');
+                    item.className = 'art-item';
+                    if (isVideo) {
+                        var vid = document.createElement('video');
+                        vid.src = src;
+                        vid.muted = true;
+                        vid.loop = true;
+                        vid.playsInline = true;
+                        vid.preload = 'metadata';
+                        new IntersectionObserver(function(entries) {
+                            entries.forEach(function(e) {
+                                if (e.isIntersecting) vid.play().catch(function(){});
+                                else vid.pause();
+                            });
+                        }, { threshold: 0.3 }).observe(vid);
+                        item.appendChild(vid);
+                    } else {
+                        var img = document.createElement('img');
+                        img.src = src;
+                        img.alt = 'Visual Art';
+                        img.loading = 'lazy';
+                        img.decoding = 'async';
+                        img.onerror = function() { item.remove(); };
+                        item.appendChild(img);
+                    }
+                    grid.appendChild(item);
+                });
+            }
+
+            fillGrid('artGrid', pieces);
+
+            var lb = document.getElementById('lightbox');
+            var lbImg = document.getElementById('lightboxImg');
+            var lbClose = document.getElementById('lightboxClose');
+            function openLightbox(src) {
+                lbImg.src = src;
+                lb.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lb.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            lbClose.addEventListener('click', closeLightbox);
+            lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+            document.addEventListener('click', function(e) {
+                var item = e.target.closest('.art-item');
+                if (!item) return;
+                var img = item.querySelector('img');
+                if (img && img.src) openLightbox(img.src);
+            });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>

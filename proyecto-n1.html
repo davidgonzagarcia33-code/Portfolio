@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>Next.1 — David González</title>
+    <meta name="description" content="Next.1: branding y packaging para marca de nutrición deportiva. Diseño de David González.">
+    <meta property="og:title" content="Next.1 — David González">
+    <meta property="og:description" content="Sistema de marca y packaging para Next.1, nutrición deportiva.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: #0A1628;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
+        .nav-logo-box { display: flex; align-items: center; justify-content: center; }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 13px;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+        .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; background: none; border: none; padding: 0; font-family: inherit; }
+        .music-toggle:hover { color: #EEFF00; }
+
+        .zoom-tunnel { height: 400vh; position: relative; }
+        .zoom-viewport {
+            position: sticky;
+            top: 0; width: 100vw; height: 100vh;
+            overflow: hidden;
+            background: #0A1628;
+        }
+        .zoom-bg-pattern {
+            position: absolute; inset: -20%; z-index: 0;
+            opacity: 0.06;
+        }
+        .zoom-bg-pattern img { width: 100%; height: 100%; object-fit: cover; }
+        .zoom-card {
+            position: absolute;
+            border-radius: 8px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+            will-change: transform, opacity;
+            transform-origin: center center;
+            cursor: grab;
+        }
+        .zoom-card:active { cursor: grabbing; }
+        .zoom-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .zoom-title {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50; text-align: center;
+            pointer-events: none; will-change: transform, opacity;
+        }
+        .zoom-title h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            letter-spacing: 0.08em;
+            color: #fff;
+            line-height: 0.9;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+        }
+        .zoom-title .subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(10px, 1.2vw, 14px);
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+        .zoom-description {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; max-width: 700px;
+            padding: 0 30px; opacity: 0;
+            will-change: opacity; z-index: 5;
+        }
+        .zoom-description p {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(12px, 1.4vw, 16px);
+            line-height: 1.9;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .zoom-info {
+            position: absolute; bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 50; display: flex; gap: 15px;
+            will-change: opacity;
+        }
+        .zoom-info .tag {
+            padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            font-family: 'Outfit', sans-serif;
+        }
+        .scroll-hint {
+            position: absolute; bottom: 100px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 11px; letter-spacing: 5px;
+            color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        .back-btn {
+            position: fixed; bottom: 40px; left: 40px;
+            padding: 15px 30px; background: #fff; color: #0A1628;
+            text-decoration: none; font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.3s ease; z-index: 1000;
+            border: 1px solid transparent;
+        }
+        .back-btn:hover { background: #EEFF00; color: #000; }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 60px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain; }
+        .lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        @media (max-width: 768px) {
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 40px; }
+            .nav-links { gap: 24px; }
+            .nav-links a { font-size: 11px; }
+            .zoom-tunnel { height: 280vh; }
+            .zoom-card { border-radius: 6px; }
+            .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
+            .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+        </a>
+        <div class="nav-links">
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+            <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <div class="zoom-tunnel" id="zoomTunnel">
+        <div class="zoom-viewport" id="zoomViewport">
+
+            <div class="zoom-title" id="zoomTitle">
+                <h1>NEXT.1</h1>
+                <p class="subtitle">Branding · Packaging · Nutrición deportiva</p>
+            </div>
+
+            <div class="zoom-description" id="zoomDescription">
+                <p>Branding completo para una marca de nutrición deportiva: desde la identidad visual hasta el sistema de packaging de toda la línea de producto — geles energéticos, proteína whey, creatina. El reto era construir una marca que compitiera visualmente en el lineal con las grandes, siendo nueva. Lenguaje visual limpio, deportivo y con un sistema de color que diferencia cada categoría de producto al instante.</p>
+            </div>
+
+            <div class="zoom-card" data-z="1" data-x="-28" data-y="-18" data-rot="-3" style="width:clamp(250px,28vw,420px); aspect-ratio:4/3;">
+                <img src="n1/proteina.jpg" alt="Next.1 Whey Protein" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="2" data-x="30" data-y="15" data-rot="4" style="width:clamp(280px,32vw,460px); aspect-ratio:4/3;">
+                <img src="n1/fast-grupo.jpg" alt="Fast Energy Gel línea" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="3" data-x="-8" data-y="-25" data-rot="-5" style="width:clamp(240px,26vw,400px); aspect-ratio:4/3;">
+                <img src="n1/long-grupo.jpg" alt="Long Energy Gel línea" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="4" data-x="-32" data-y="20" data-rot="6" style="width:clamp(230px,25vw,380px); aspect-ratio:4/3;">
+                <img src="n1/proteina-creatina.jpg" alt="Whey Protein + Creatina" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="5" data-x="25" data-y="-22" data-rot="-4" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/fast-limon.jpg" alt="Fast Gel Limón" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="6" data-x="10" data-y="28" data-rot="3" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/fast-green.jpg" alt="Fast Gel Power Green" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="7" data-x="-30" data-y="-10" data-rot="-6" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/fast-pera.jpg" alt="Fast Gel Pera" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="8" data-x="35" data-y="8" data-rot="5" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/long-limon.jpg" alt="Long Gel Limón" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="9" data-x="-15" data-y="-28" data-rot="-2" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/long-pastelito.jpg" alt="Long Gel Pastelito" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="10" data-x="20" data-y="25" data-rot="4" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
+                <img src="n1/long-chocolate.jpg" alt="Long Gel Chocolate" data-lightbox>
+            </div>
+            <div class="zoom-card" data-z="11" data-x="-25" data-y="15" data-rot="-5" style="width:clamp(240px,26vw,400px); aspect-ratio:4/3;">
+                <img src="n1/creatina.jpg" alt="Creatina + Magnesio" data-lightbox>
+            </div>
+
+            <div class="zoom-info" id="zoomInfo">
+                <span class="tag">Branding</span>
+                <span class="tag">Packaging</span>
+                <span class="tag">Identidad Visual</span>
+            </div>
+
+            <span class="scroll-hint" id="scrollHint">scroll ↓</span>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
+        <img src="" alt="Imagen ampliada" id="lightboxImg">
+    </div>
+
+    <a href="work.html" class="back-btn">← Volver</a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        (function() {
+            const tunnel = document.getElementById('zoomTunnel');
+            const cards  = document.querySelectorAll('.zoom-card');
+            const title  = document.getElementById('zoomTitle');
+            const desc   = document.getElementById('zoomDescription');
+            const info   = document.getElementById('zoomInfo');
+            const hint   = document.getElementById('scrollHint');
+            const totalCards = cards.length;
+            const W = window.innerWidth;
+            const H = window.innerHeight;
+
+            cards.forEach(card => {
+                const idx   = parseFloat(card.dataset.z) - 1;
+                const xPct  = parseFloat(card.dataset.x) || 0;
+                const yPct  = parseFloat(card.dataset.y) || 0;
+                const rot   = parseFloat(card.dataset.rot) || 0;
+                card.style.left = '50%';
+                card.style.top  = '50%';
+
+                gsap.set(card, {
+                    xPercent: -50, yPercent: -50,
+                    x: 0, y: 0, scale: 0.08,
+                    rotation: rot, opacity: 0
+                });
+
+                const spreadStart = 0.28 + (idx / totalCards) * 0.22;
+
+                const tl = gsap.timeline({
+                    scrollTrigger: { trigger: tunnel, start: 'top top', end: 'bottom bottom', scrub: 1 }
+                });
+
+                tl.fromTo(card, {
+                    scale: 0.15, x: 0, y: 0, rotation: rot, opacity: 0
+                }, {
+                    scale: 1,
+                    x: xPct * W * 0.01, y: yPct * H * 0.01,
+                    rotation: rot * 0.3, opacity: 1,
+                    duration: 0.12, ease: 'power2.out'
+                }, spreadStart);
+            });
+
+            gsap.to(title, {
+                scale: 4, opacity: 0, ease: 'power2.in',
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: '20% top', scrub: 1 }
+            });
+
+            const descTl = gsap.timeline({
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: 'bottom bottom', scrub: 1 }
+            });
+            descTl.fromTo(desc, { opacity: 0 }, { opacity: 1, duration: 0.04 }, 0.14)
+                  .to(desc, { opacity: 0, duration: 0.04 }, 0.24);
+
+            gsap.to(info, {
+                opacity: 0,
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: '10% top', scrub: true }
+            });
+            gsap.to(hint, {
+                opacity: 0,
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: '5% top', scrub: true }
+            });
+
+            Draggable.create(cards, {
+                type: 'x,y',
+                edgeResistance: 0.65,
+                inertia: true,
+                cursor: 'grab',
+                activeCursor: 'grabbing',
+                zIndexBoost: true
+            });
+
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightboxImg');
+            const lbClose = document.getElementById('lightboxClose');
+            function openLightbox(src) { lbImg.src = src; lb.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closeLightbox() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+            if (lbClose) lbClose.addEventListener('click', closeLightbox);
+            if (lb) lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+            document.querySelectorAll('[data-lightbox]').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => openLightbox(img.src));
+            });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>

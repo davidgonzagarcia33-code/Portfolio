@@ -13,13 +13,13 @@
     <meta property="og:type" content="website">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
         body {
             background: #1a0a2e;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: #fff;
             min-height: 100vh;
         }
@@ -54,7 +54,7 @@
 
         /* ── Zoom Tunnel ── */
         .zoom-tunnel {
-            height: 500vh;
+            height: 350vh;
             position: relative;
         }
         .zoom-viewport {
@@ -95,7 +95,7 @@
             text-shadow: 0 0 60px rgba(255,255,255,0.15);
         }
         .zoom-title p {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: clamp(0.7rem, 1.2vw, 0.95rem);
             letter-spacing: 4px;
             color: rgba(255,255,255,0.45);
@@ -112,9 +112,10 @@
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             will-change: transform, opacity;
-            cursor: pointer;
+            cursor: grab;
             z-index: 10;
         }
+        .zoom-card:active { cursor: grabbing; }
         .zoom-card img {
             width: 100%;
             height: auto;
@@ -138,7 +139,7 @@
             font-size: 11px;
             letter-spacing: 2.5px;
             text-transform: uppercase;
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             color: rgba(255,255,255,0.7);
             white-space: nowrap;
         }
@@ -149,16 +150,12 @@
             bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: 'DM Mono', monospace;
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
             font-size: 11px;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.35);
+            letter-spacing: 5px;
+            color: rgba(255,255,255,0.2);
             z-index: 15;
-            animation: hintBounce 2s ease-in-out infinite;
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.35; }
-            50% { transform: translateX(-50%) translateY(-8px); opacity: 1; }
+            text-transform: uppercase;
         }
 
         /* ── Lightbox ── */
@@ -208,20 +205,20 @@
 </head>
 <body>
     <nav class="nav">
-        <a href="animacion-scroll-v6.html" class="nav-logo">
+        <a href="index.html" class="nav-logo">
             <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
             <a href="about.html">About</a>
         </div>
     </nav>
 
     <div class="zoom-tunnel" id="zoomTunnel">
         <div class="zoom-viewport">
-            <div class="zoom-bg-pattern"></div>
-
             <div class="zoom-title" id="zoomTitle">
                 <h1>FOAM GUM</h1>
                 <p>Evento · David González</p>
@@ -260,6 +257,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script>
     (function() {
         gsap.registerPlugin(ScrollTrigger);
@@ -276,14 +274,14 @@
             var dy    = parseFloat(card.dataset.y);
             var rot   = parseFloat(card.dataset.rot);
 
-            var startNorm = depth / 11000;
+            var spreadStart = 0.28 + (depth / 11000) * 0.22;
 
             gsap.set(card, {
                 xPercent: -50,
                 yPercent: -50,
-                x: dx * 0.4,
-                y: dy * 0.4,
-                scale: 0.12,
+                x: 0,
+                y: 0,
+                scale: 0.15,
                 rotation: rot,
                 opacity: 0
             });
@@ -293,33 +291,24 @@
                     trigger: tunnel,
                     start: 'top top',
                     end: 'bottom bottom',
-                    scrub: 1.2
+                    scrub: 1
                 }
             });
 
             tl.fromTo(card, {
-                scale: 0.12,
-                x: dx * 0.4,
-                y: dy * 0.4,
+                scale: 0.15,
+                x: 0,
+                y: 0,
                 opacity: 0
             }, {
-                scale: 3.5,
-                x: dx * 8,
-                y: dy * 8,
+                scale: 1,
+                x: dx * 5,
+                y: dy * 5,
                 opacity: 1,
-                rotation: rot * 0.5,
-                duration: 1,
-                ease: 'power2.in'
-            }, startNorm * 0.7);
-
-            tl.to(card, {
-                scale: 6,
-                x: dx * 18,
-                y: dy * 18,
-                opacity: 0,
-                duration: 0.25,
-                ease: 'power1.in'
-            });
+                rotation: rot * 0.3,
+                duration: 0.12,
+                ease: 'power2.out'
+            }, spreadStart);
         });
 
         gsap.to(title, {
@@ -355,6 +344,16 @@
                 end: '5% top',
                 scrub: 1
             }
+        });
+
+        /* ── Drag ── */
+        Draggable.create(cards, {
+            type: 'x,y',
+            edgeResistance: 0.65,
+            inertia: true,
+            cursor: 'grab',
+            activeCursor: 'grabbing',
+            zIndexBoost: true
         });
 
         /* ── Lightbox ── */

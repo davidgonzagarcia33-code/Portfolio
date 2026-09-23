@@ -7,13 +7,14 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>About — David González</title>
-    <meta name="description" content="Sobre David González: multidiseñador y publicista murciano. Servicios de dirección creativa, branding, diseño gráfico y contenido audiovisual.">
+    <meta name="description" content="Sobre David González: creativo y publicista murciano. Servicios de dirección creativa, branding, diseño gráfico y contenido audiovisual.">
     <meta property="og:title" content="About — David González">
-    <meta property="og:description" content="Multidiseñador y publicista murciano. Dirección creativa, branding y contenido audiovisual.">
+    <meta property="og:description" content="Creativo y publicista murciano. Dirección creativa, branding y contenido audiovisual.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="og-image.svg">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <style>
@@ -22,7 +23,7 @@
 
         body {
             background: #000;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: #fff;
             overflow-x: hidden;
         }
@@ -84,7 +85,7 @@
 
         .hero-line-inner {
             display: block;
-            font-family: 'Druk Wide Bold', sans-serif;
+            font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(4rem, 12vw, 11rem);
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -114,6 +115,34 @@
             line-height: 1.9;
             color: rgba(255,255,255,0.5);
             transform: translateY(105%);
+        }
+
+        .studies-block {
+            margin-top: 48px;
+            text-align: center;
+            opacity: 0;
+        }
+        .studies-label {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 14px;
+        }
+        .studies-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+        .studies-item {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.72);
+            font-weight: 300;
         }
 
         .hero-scroll-indicator {
@@ -227,7 +256,7 @@
 
         .contact-title-inner {
             display: block;
-            font-family: 'Druk Wide Bold', sans-serif;
+            font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 700;
             letter-spacing: 6px;
@@ -239,10 +268,24 @@
             font-size: 1.05rem;
             color: rgba(255,255,255,0.4);
             line-height: 1.9;
-            margin: 30px 0 50px;
+            margin: 30px 0 20px;
             opacity: 0;
             transform: translateY(20px);
         }
+        .contact-email {
+            margin-bottom: 40px;
+        }
+        .contact-email a {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            color: rgba(238,255,0,0.85);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid rgba(238,255,0,0.25);
+            padding-bottom: 4px;
+            transition: border-color 0.2s;
+        }
+        .contact-email a:hover { border-color: rgba(238,255,0,0.85); }
 
         .contact-btns {
             display: flex;
@@ -305,12 +348,14 @@
 </head>
 <body>
     <nav class="nav">
-        <a href="animacion-scroll-v6.html" class="nav-logo">
+        <a href="index.html" class="nav-logo">
             <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
             <a href="about.html">About</a>
         </div>
     </nav>
@@ -322,10 +367,17 @@
             <div class="hero-line"><span class="hero-line-inner">González</span></div>
         </div>
         <div class="hero-subtitle">
-            <span class="hero-subtitle-inner">Multidiseñador & Publicista</span>
+            <span class="hero-subtitle-inner">Creativo & Publicista</span>
         </div>
         <div class="hero-desc">
-            <span class="hero-desc-inner">Creando experiencias visuales únicas desde Murcia</span>
+            <span class="hero-desc-inner">Creando experiencias visuales únicas desde Murcia. En 2026 realicé el diseño del cartel de la Ruta de la Tapa y el Cocktail.</span>
+        </div>
+        <div class="studies-block" id="studiesBlock">
+            <div class="studies-label">Estudios</div>
+            <div class="studies-list">
+                <div class="studies-item">Publicidad y RRPP / UMU</div>
+                <div class="studies-item">Gestión Publicitaria / UCM</div>
+            </div>
         </div>
         <div class="hero-scroll-indicator">
             <span>Scroll</span>
@@ -390,6 +442,7 @@
             <span class="contact-title-inner">Hablemos</span>
         </div>
         <p class="contact-sub">¿Tienes un proyecto en mente? Me encantaría saber más sobre él y cómo puedo ayudarte a hacerlo realidad.</p>
+        <p class="contact-email"><a href="mailto:hola@davidgonzalez.es">hola@davidgonzalez.es</a></p>
         <div class="contact-btns">
             <a href="mailto:hola@davidgonzalez.es" class="contact-btn primary">Email</a>
             <a href="https://www.instagram.com/d4vidd33/" target="_blank" rel="noopener noreferrer" class="contact-btn">Instagram</a>
@@ -408,6 +461,7 @@
         tl.to('.hero-line-inner', { y: 0, duration: 1.4, stagger: 0.15, delay: 0.3 })
           .to('.hero-subtitle-inner', { y: 0, duration: 1 }, '-=0.6')
           .to('.hero-desc-inner', { y: 0, duration: 1 }, '-=0.6')
+          .to('#studiesBlock', { opacity: 1, duration: 0.9 }, '-=0.5')
           .to('.hero-scroll-indicator', { opacity: 1, duration: 0.8 }, '-=0.4');
 
         // ===== DRAG & DROP =====

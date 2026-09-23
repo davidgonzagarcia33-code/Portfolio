@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>Presión Sonora · Ático Mamaluna — David González</title>
+    <meta name="description" content="Cartelería para fiestas y eventos: Presión Sonora y Ático Mamaluna. Diseño de David González.">
+    <meta property="og:title" content="Presión Sonora · Ático Mamaluna — David González">
+    <meta property="og:description" content="Cartelería para fiestas y eventos.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: #2A1035;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
+        .nav-logo-box { display: flex; align-items: center; justify-content: center; }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 13px;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+        .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; background: none; border: none; padding: 0; font-family: inherit; }
+        .music-toggle:hover { color: #EEFF00; }
+
+        /* Hero título */
+        .project-hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #2A1035;
+        }
+
+        /* Grid de posters */
+        .posters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100vw;
+        }
+        .posters-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 520px));
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            padding: 40px 24px 80px;
+            background: #2A1035;
+        }
+        .poster-item {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            cursor: pointer;
+            background: #1a0825;
+        }
+        .poster-item.poster-big {
+            height: auto;
+            max-height: 92vh;
+            border-radius: 8px;
+        }
+        .poster-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .poster-item:hover img { transform: scale(1.03); }
+        @media (max-width: 768px) {
+            .posters-grid { grid-template-columns: 1fr; }
+            .posters-pair { grid-template-columns: 1fr; gap: 16px; padding: 24px 16px 60px; }
+            .poster-item { height: 100vh; }
+            .poster-item.poster-big { height: auto; }
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            letter-spacing: 0.06em;
+            color: #C084D8;
+            line-height: 0.9;
+        }
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(10px, 1.2vw, 14px);
+            letter-spacing: 4px;
+            color: rgba(192,132,216,0.5);
+            text-transform: uppercase;
+            margin-top: 16px;
+        }
+        .hero-desc {
+            max-width: 600px;
+            margin: 24px auto 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(12px, 1.3vw, 15px);
+            line-height: 1.8;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 0.04em;
+            padding: 0 20px;
+        }
+        .hero-tags {
+            display: flex; gap: 12px; justify-content: center;
+            margin-top: 28px; flex-wrap: wrap;
+        }
+        .hero-tag {
+            padding: 7px 18px;
+            border: 1px solid rgba(192,132,216,0.3);
+            font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(192,132,216,0.6);
+            font-family: 'Outfit', sans-serif;
+        }
+        .back-btn {
+            position: fixed; bottom: 40px; left: 40px;
+            padding: 15px 30px; background: #C084D8; color: #1A0825;
+            text-decoration: none; font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.3s ease; z-index: 1000;
+            border: 1px solid transparent;
+        }
+        .back-btn:hover { background: #fff; color: #1A0825; }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 60px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain; }
+        .lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        @media (max-width: 768px) {
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 40px; }
+            .nav-links { gap: 24px; }
+            .nav-links a { font-size: 11px; }
+            .zoom-tunnel { height: 280vh; }
+            .zoom-card { border-radius: 6px; }
+            .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
+            .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+        </a>
+        <div class="nav-links">
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+            <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="project-hero">
+        <h1 class="hero-title">PRESIÓN SONORA<br>ÁTICO MAMALUNA</h1>
+        <p class="hero-subtitle">Cartelería · Fiestas y eventos</p>
+        <p class="hero-desc">Cartelería para fiestas y eventos: Presión Sonora y Ático Mamaluna. Piezas pensadas para funcionar solas en el feed y en la pared. Tipografía con peso, paleta propia y el line-up integrado en el diseño, no pegado encima como un listado.</p>
+        <div class="hero-tags">
+            <span class="hero-tag">Cartelería</span>
+            <span class="hero-tag">Eventos</span>
+            <span class="hero-tag">Música</span>
+        </div>
+    </section>
+
+    <!-- Grid posters -->
+    <div class="posters-grid">
+        <div class="poster-item" data-lightbox-src="presion/cartel-oscuro.jpg"><img src="presion/cartel-oscuro.jpg" alt="Presión Sonora"></div>
+        <div class="poster-item" data-lightbox-src="presion/atico-mamaluna.jpg"><img src="presion/atico-mamaluna.jpg" alt="Ático Mamaluna"></div>
+        <div class="poster-item" data-lightbox-src="presion/cartel-claro.jpg"><img src="presion/cartel-claro.jpg" alt="Presión Sonora variante"></div>
+    </div>
+
+    <div class="posters-pair">
+        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-2.jpg"><img src="presion/calablava-2.jpg" alt="Calablava día"></div>
+        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-3.jpg"><img src="presion/calablava-3.jpg" alt="Calablava noche"></div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
+        <img src="" alt="Imagen ampliada" id="lightboxImg">
+    </div>
+
+    <a href="work.html" class="back-btn">← Volver</a>
+
+    <script>
+        (function() {
+            var lb = document.getElementById('lightbox');
+            var lbImg = document.getElementById('lightboxImg');
+            var lbClose = document.getElementById('lightboxClose');
+            function openLightbox(src) { lbImg.src = src; lb.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closeLightbox() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+            if (lbClose) lbClose.addEventListener('click', closeLightbox);
+            if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+            document.querySelectorAll('.poster-item').forEach(function(item) {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() { openLightbox(item.dataset.lightboxSrc); });
+            });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>

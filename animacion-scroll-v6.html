@@ -8,17 +8,17 @@
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <meta name="robots" content="index, follow">
     <title>David González — Portfolio Creativo</title>
-    <meta name="description" content="Portfolio de David González, multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta name="description" content="Portfolio de David González, creativo y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
     <meta property="og:title" content="David González — Portfolio Creativo">
-    <meta property="og:description" content="Multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta property="og:description" content="Creativo y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="og-image.svg">
+    <meta property="og:image" content="og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
-    <link rel="canonical" href="https://portfolio-iota-gilt-47.vercel.app/">
+    <link rel="canonical" href="https://portfolio-iota-gilt-47.vercel.app/animacion-scroll-v6.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Barlow+Condensed:wght@300;400;600;700&family=Syne:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
     <style>
         :root {
@@ -44,7 +44,7 @@
 
         body {
             background: #000;
-            font-family: 'Barlow Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: var(--white);
             overflow: hidden;
             cursor: none;
@@ -169,7 +169,7 @@
         }
 
         .hero-brand {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: 12px;
             font-weight: 400;
             letter-spacing: 0.22em;
@@ -184,7 +184,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: 11px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
@@ -207,7 +207,7 @@
         }
 
         .hero-cta-top {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: 11px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
@@ -260,18 +260,21 @@
 
         .hero-eyebrow {
             display: inline-block;
-            font-family: 'DM Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: none;
+            color: rgba(255,255,255,0.85);
             border: 1px solid rgba(255,255,255,0.35);
-            padding: 8px 12px;
+            padding: 8px 14px;
             margin-bottom: 18px;
         }
 
         .hero-headline {
-            font-family: 'Druk Wide Bold', 'Syne', sans-serif;
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 800;
             font-size: clamp(2.2rem, 5.2vw, 4.6rem);
             font-weight: 700;
             line-height: 0.95;
@@ -282,9 +285,9 @@
         }
 
         .hero-surname {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
             font-weight: 300;
-            font-style: italic;
+            font-style: normal;
             letter-spacing: 0.01em;
         }
 
@@ -294,7 +297,7 @@
         }
 
         .hero-support {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: 13px;
             line-height: 1.7;
             color: rgba(255,255,255,0.72);
@@ -303,7 +306,7 @@
 
         .hero-cta {
             display: inline-block;
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: 11px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
@@ -410,70 +413,27 @@
                 padding-bottom: 8px;
             }
         }
-        /* ── PANTALLA DE CARGA ── */
+        /* ── PANTALLA DE CARGA (minimal) ── */
         .loader-screen {
             position: fixed;
             inset: 0;
             z-index: 100000;
             background: #000;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
         }
-
         .loader-screen.loaded {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-
-        .loader-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(60px, 15vw, 200px);
-            color: var(--white);
-            letter-spacing: 0.08em;
-            line-height: 1;
-            user-select: none;
-        }
-
-        .loader-bar-wrap {
-            width: clamp(200px, 40vw, 500px);
-            height: 3px;
-            background: rgba(255,255,255,0.12);
-            border-radius: 2px;
-            margin-top: 28px;
-            overflow: hidden;
-        }
-
-        .loader-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--white);
-            border-radius: 2px;
-            transition: width 0.15s linear;
-        }
-
-        .loader-percent {
-            font-family: 'DM Mono', monospace;
-            font-size: 12px;
-            letter-spacing: 0.18em;
-            color: rgba(255,255,255,0.5);
-            margin-top: 14px;
-            user-select: none;
-        }
     </style>
 </head>
 <body>
-    <!-- ── PANTALLA DE CARGA ── -->
-    <div class="loader-screen" id="loaderScreen">
-        <div class="loader-text">LOADING</div>
-        <div class="loader-bar-wrap">
-            <div class="loader-bar" id="loaderBar"></div>
-        </div>
-        <div class="loader-percent" id="loaderPercent">000</div>
-    </div>
+    <!-- ── PANTALLA DE CARGA (minimal) ── -->
+    <div class="loader-screen" id="loaderScreen"></div>
     <div class="cursor" id="cursor">
         <div class="cursor-butterfly" id="cursorButterfly">
             <canvas id="bfFrameA"></canvas>
@@ -487,12 +447,16 @@
 
         <div class="hero-ui">
             <div class="hero-top">
-                <div class="hero-brand">PUBLICIDAD Y RRPP / UMU<br>GESTIÓN PUBLICITARIA / UCM</div>
+                <div class="hero-brand" aria-hidden="true"></div>
                 <div class="hero-nav">
                     <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
                     <a href="animacion-scroll-v6.html">Home</a>
                     <span class="sep">/</span>
                     <a href="work.html">Work</a>
+                    <span class="sep">/</span>
+                    <a href="visual-art.html">Visual Art</a>
+                    <span class="sep">/</span>
+                    <a href="merch.html">Merch</a>
                     <span class="sep">/</span>
                     <a href="about.html">About</a>
                 </div>
@@ -503,7 +467,7 @@
 
             <div class="hero-bottom">
                 <div class="hero-copy-left">
-                    <span class="hero-eyebrow"># Multidiseñador &amp; Publicista</span>
+                    <span class="hero-eyebrow"># Creativo &amp; Publicista</span>
                     <h1 class="hero-headline">David<br><span class="hero-surname">González</span></h1>
                 </div>
                 <div class="hero-copy-right">
@@ -514,74 +478,12 @@
     </div>
 
     <script>
-        // ── PANTALLA DE CARGA ──
+        // ── PANTALLA DE CARGA (se quita en cuanto el DOM está listo, máximo 800ms) ──
         (function initLoader() {
-            const screen  = document.getElementById('loaderScreen');
-            const bar     = document.getElementById('loaderBar');
-            const pctEl   = document.getElementById('loaderPercent');
-
-            const resources = [
-                ...Array.from(document.querySelectorAll('img[src]')).map(i => i.src),
-                ...Array.from(document.querySelectorAll('video[src]')).map(v => v.src),
-                'butterfly-right.png',
-                'butterfly-left.png'
-            ];
-            const total = Math.max(resources.length, 1);
-            let loaded = 0;
-            let fakeProgress = 0;
-            let done = false;
-
-            function update(pct) {
-                const p = Math.min(100, Math.round(pct));
-                bar.style.width = p + '%';
-                pctEl.textContent = String(p).padStart(3, '0');
-            }
-
-            function finish() {
-                if (done) return;
-                done = true;
-                update(100);
-                setTimeout(() => {
-                    screen.classList.add('loaded');
-                    document.body.style.overflow = '';
-                }, 300);
-            }
-
-            function onLoad() {
-                loaded++;
-                const real = (loaded / total) * 100;
-                if (real > fakeProgress) {
-                    fakeProgress = real;
-                    update(fakeProgress);
-                }
-                if (loaded >= total) finish();
-            }
-
-            resources.forEach(src => {
-                if (src.includes('.mp4')) {
-                    const v = document.createElement('video');
-                    v.preload = 'auto';
-                    v.muted = true;
-                    v.oncanplaythrough = onLoad;
-                    v.onerror = onLoad;
-                    v.src = src;
-                } else {
-                    const img = new Image();
-                    img.onload = onLoad;
-                    img.onerror = onLoad;
-                    img.src = src;
-                }
-            });
-
-            const fakeInterval = setInterval(() => {
-                if (done) { clearInterval(fakeInterval); return; }
-                fakeProgress += (100 - fakeProgress) * 0.035;
-                update(fakeProgress);
-                if (fakeProgress >= 98) { clearInterval(fakeInterval); finish(); }
-            }, 60);
-
-            window.addEventListener('load', finish);
-            setTimeout(finish, 8000);
+            const screen = document.getElementById('loaderScreen');
+            function dismiss() { screen.classList.add('loaded'); document.body.style.overflow = ''; }
+            window.addEventListener('load', dismiss);
+            setTimeout(dismiss, 800);
         })();
 
         // ── CURSOR MARIPOSA (solo home) ──

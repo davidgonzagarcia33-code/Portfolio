@@ -3,262 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>Blackout Smashburger — David González</title>
     <meta name="description" content="Proyecto Blackout Smashburger: dirección de contenido, branding y fotografía por David González.">
-    <meta property="og:title" content="Blackout Smashburger — David González">
-    <meta property="og:description" content="Dirección de contenido, branding y fotografía para Blackout Smashburger.">
-    <meta property="og:type" content="website">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
-
         body {
-            background: #111;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            font-family: 'Outfit', sans-serif;
             color: #fff;
             overflow-x: hidden;
         }
-
-        /* ── NAV ── */
         .nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 40px; display: flex;
+            justify-content: space-between; align-items: center;
             z-index: 1000;
         }
-        .nav-logo {
-            display: flex; align-items: center; gap: 0; text-decoration: none;
-        }
-        .nav-logo-box {
-            display: flex; align-items: center; justify-content: center;
-        }
+        .nav-logo { display: flex; align-items: center; text-decoration: none; }
         .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
-        .nav-links { display: flex; gap: 40px; }
+        .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
         .nav-links a {
             color: #fff; text-decoration: none; font-size: 13px;
-            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
             transition: opacity 0.3s ease;
         }
         .nav-links a:hover { opacity: 0.6; }
-        .music-toggle { font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer; letter-spacing: -2px; transition: color 0.2s ease; user-select: none; background: none; border: none; padding: 0; font-family: inherit; }
+        .music-toggle {
+            font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer;
+            letter-spacing: -2px; background: none; border: none; padding: 0; font-family: inherit;
+        }
         .music-toggle:hover { color: #EEFF00; }
 
-        /* ── ZOOM TUNNEL ── */
-        .zoom-tunnel {
-            height: 500vh;
-            position: relative;
-        }
-
+        .zoom-tunnel { height: 220vh; position: relative; }
         .zoom-viewport {
-            position: sticky;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background: #111;
+            position: sticky; top: 0; width: 100vw; height: 100vh;
+            overflow: hidden; background: #000;
+        }
+        .zoom-bg {
+            position: absolute; inset: 0; z-index: 0;
+        }
+        .zoom-bg img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.28) saturate(0.85);
+            transform: scale(1.08);
+        }
+        .zoom-bg::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.72) 100%);
         }
 
-        /* Patrón de fondo */
-        .zoom-bg-pattern {
-            position: absolute;
-            inset: -20%;
-            z-index: 0;
-            opacity: 0.06;
-            mix-blend-mode: lighten;
-        }
-        .zoom-bg-pattern img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-
-        /* Cada tarjeta gráfica */
         .zoom-card {
-            position: absolute;
-            border-radius: 8px;
-            overflow: hidden;
+            position: absolute; border-radius: 8px; overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-            will-change: transform, opacity;
-            transform-origin: center center;
+            will-change: transform, opacity; transform-origin: center center; z-index: 2;
+            cursor: grab;
         }
-        .zoom-card img {
+        .zoom-card:active { cursor: grabbing; }
+        .zoom-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .zoom-title {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50; text-align: center; pointer-events: none;
+            will-change: transform, opacity; width: min(92vw, 1100px);
+        }
+        .zoom-title h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 11vw, 9rem);
+            letter-spacing: 0.06em; color: #fff; line-height: 0.92;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.45);
+        }
+
+        .zoom-description {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; max-width: 700px; padding: 0 30px;
+            opacity: 0; will-change: opacity; z-index: 5;
+        }
+        .zoom-description p {
+            font-family: 'Outfit', sans-serif; font-weight: 300;
+            font-size: clamp(14px, 1.6vw, 18px); line-height: 1.8;
+            color: rgba(255,255,255,0.8); letter-spacing: 0.02em;
+        }
+
+        /* Spot intro */
+        .spot-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+        .spot-hero video {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+        }
+        .spot-hero-label {
+            position: absolute; left: 40px; top: 100px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Campo 3D: todo el contenido junto */
+        .field-tunnel { height: 260vh; position: relative; background: #000; }
+        .field-viewport {
+            position: sticky; top: 0; width: 100vw; height: 100vh;
+            overflow: hidden; background: #000;
+            perspective: 1400px;
+        }
+        .field-world {
+            position: absolute; inset: 0;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .field-card {
+            position: absolute;
+            left: 50%; top: 50%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+            cursor: grab;
+            background: #111;
+            transform-style: preserve-3d;
+        }
+        .field-card:active { cursor: grabbing; }
+        .field-card img,
+        .field-card video {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
         }
 
-        /* Título central fijo */
-        .zoom-title {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 50;
-            text-align: center;
-            pointer-events: none;
-            will-change: transform, opacity;
-        }
-        .zoom-title h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4rem, 12vw, 10rem);
-            letter-spacing: 0.08em;
-            color: #fff;
-            line-height: 0.9;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.4);
-        }
-        .zoom-title .subtitle {
-            font-family: 'DM Mono', monospace;
-            font-size: clamp(10px, 1.2vw, 14px);
-            letter-spacing: 4px;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-            margin-top: 12px;
-        }
-
-        /* Tags info */
-        .zoom-info {
-            position: absolute;
-            bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 50;
-            display: flex; gap: 15px;
-            will-change: opacity;
-        }
-        .zoom-info .tag {
-            padding: 8px 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.6);
-            font-family: 'DM Mono', monospace;
-        }
-
-        /* Scroll hint */
-        .scroll-hint {
-            position: absolute;
-            bottom: 100px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 60;
-            font-family: 'DM Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.35);
-            text-transform: uppercase;
-            animation: hintBounce 2s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.35; }
-            50% { transform: translateX(-50%) translateY(8px); opacity: 0.8; }
-        }
-
-        /* Botón volver */
-        .back-btn {
-            position: fixed; bottom: 40px; left: 40px;
-            padding: 15px 30px; background: #000; color: #fff;
-            text-decoration: none; font-size: 13px; font-weight: 600;
-            letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.3s ease; z-index: 1000;
-            border: 1px solid transparent;
-        }
-        .back-btn:hover {
-            background: #fff; color: #000;
-        }
-
-        /* Lightbox */
         .lightbox {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.97); z-index: 9999;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 9999;
             display: flex; align-items: center; justify-content: center; padding: 60px;
             opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+            cursor: zoom-out;
         }
         .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; }
         .lightbox-close {
-            position: absolute; top: 30px; right: 40px;
-            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
+            position: absolute; top: 30px; right: 40px; color: #fff;
+            font-size: 14px; letter-spacing: 0.16em; cursor: pointer; opacity: 0.7;
+            text-transform: uppercase;
         }
         .lightbox-close:hover { opacity: 1; }
+        .back-btn {
+            position: fixed; bottom: 40px; left: 40px; padding: 15px 30px;
+            background: #fff; color: #000; text-decoration: none; font-size: 13px;
+            font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .back-btn:hover { background: #000; color: #fff; border: 1px solid #fff; }
 
         @media (max-width: 768px) {
             .nav { padding: 12px 15px; }
             .nav-logo-box img { width: 40px; }
-            .nav-links { gap: 24px; }
-            .nav-links a { font-size: 11px; }
-            .zoom-tunnel { height: 400vh; }
-            .zoom-card { border-radius: 6px; }
-            .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
-            .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 10px; }
+            .zoom-tunnel { height: 180vh; }
+            .field-tunnel { height: 200vh; }
+            .spot-hero-label { left: 20px; top: 80px; }
+            .back-btn { bottom: 20px; left: 20px; padding: 12px 22px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <nav class="nav">
-        <a href="animacion-scroll-v6.html" class="nav-logo">
+        <a href="index.html" class="nav-logo">
             <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
             <a href="about.html">About</a>
         </div>
     </nav>
 
-    <!-- ── ZOOM TUNNEL ── -->
     <div class="zoom-tunnel" id="zoomTunnel">
         <div class="zoom-viewport" id="zoomViewport">
-
-            <!-- Patrón de fondo -->
-            <div class="zoom-bg-pattern">
-                <img src="blackout/2.png" alt="pattern">
-            </div>
-
-            <!-- Título central -->
             <div class="zoom-title" id="zoomTitle">
-                <h1>BLACKOUT SMASHBURGER</h1>
-                <p class="subtitle">El Palmar · David González</p>
+                <h1>BLACKOUT<br>SMASHBURGER</h1>
             </div>
 
-            <!-- TARJETAS GRÁFICAS (posiciones iniciales distribuidas) -->
-            <!-- Anillo 1: lejano -->
-            <div class="zoom-card" data-z="3000" data-x="-35" data-y="-25" data-rot="-8" style="width:clamp(180px,22vw,320px); aspect-ratio:3/4;">
-                <img src="blackout/1.1.jpg" alt="Blackout Smashburger" data-lightbox>
+            <div class="zoom-description" id="zoomDescription">
+                <p>Blackout arrancó sin identidad visual definida: un local de smash burgers en El Palmar que competía solo por producto. El reto era construir una marca con personalidad propia que conectase con un público joven en redes. Aposté por un tono agresivo, fotografía con flash directo y una paleta negro/amarillo que se distingue al instante en el feed. Resultado: la marca pasó de 0 a referente local en contenido.</p>
             </div>
-            <div class="zoom-card" data-z="3200" data-x="30" data-y="20" data-rot="6" style="width:clamp(160px,18vw,280px); aspect-ratio:3/4;">
-                <img src="blackout/1.2.jpg" alt="Blackout Smashburger" data-lightbox>
-            </div>
+        </div>
+    </div>
 
-            <!-- Anillo 2: medio -->
-            <div class="zoom-card" data-z="5000" data-x="-42" data-y="15" data-rot="10" style="width:clamp(200px,25vw,380px); aspect-ratio:3/4;">
-                <img src="blackout/1.3.jpg" alt="Blackout Smashburger" data-lightbox>
-            </div>
-            <div class="zoom-card" data-z="5500" data-x="38" data-y="-10" data-rot="-7" style="width:clamp(180px,20vw,320px); aspect-ratio:3/4;">
-                <img src="blackout/2025.1.png" alt="Blackout Smashburger" data-lightbox>
-            </div>
+    <!-- Spot (justo después del título) -->
+    <section class="spot-hero" id="spotHero">
+        <video id="spotVideo" src="blackout/spot-navidad-web.mp4" muted loop playsinline preload="metadata"></video>
+        <span class="spot-hero-label">Spot</span>
+    </section>
 
-            <!-- Anillo 3: cercano -->
-            <div class="zoom-card" data-z="7500" data-x="-38" data-y="-20" data-rot="-12" style="width:clamp(220px,28vw,420px); aspect-ratio:3/4;">
-                <img src="blackout/ey2.png" alt="Blackout Smashburger" data-lightbox>
-            </div>
-            <div class="zoom-card" data-z="8000" data-x="35" data-y="25" data-rot="8" style="width:clamp(200px,24vw,360px); aspect-ratio:3/4;">
-                <img src="blackout/2.png" alt="Blackout Smashburger" data-lightbox>
-            </div>
+    <!-- Todo el contenido junto, campo 3D -->
+    <div class="field-tunnel" id="fieldTunnel">
+        <div class="field-viewport" id="fieldViewport">
+            <div class="field-world" id="fieldWorld">
+                <div class="field-card" data-x="-28" data-y="-22" data-z="-80" data-rot="-4" style="width:clamp(170px,18vw,260px);aspect-ratio:3/4;"><img src="blackout/Mesa de trabajo 1 copia.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="30" data-y="-18" data-z="40" data-rot="5" style="width:clamp(170px,18vw,260px);aspect-ratio:3/4;"><img src="blackout/Mesa de trabajo 1 copia 3.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-34" data-y="18" data-z="-220" data-rot="3" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/Mesa de trabajo 2 copia 2.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="32" data-y="22" data-z="-160" data-rot="-6" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/Mesa de trabajo 2 copia 3.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-8" data-y="-32" data-z="-340" data-rot="2" style="width:clamp(130px,13vw,190px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-01.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-38" data-y="-4" data-z="20" data-rot="-3" style="width:clamp(160px,16vw,240px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-02.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="38" data-y="-6" data-z="-280" data-rot="4" style="width:clamp(140px,14vw,200px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-03.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-18" data-y="30" data-z="-60" data-rot="-2" style="width:clamp(160px,16vw,240px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-04.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="16" data-y="32" data-z="-400" data-rot="5" style="width:clamp(120px,12vw,180px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-05.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-42" data-y="10" data-z="-480" data-rot="-5" style="width:clamp(110px,11vw,160px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-06.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="42" data-y="8" data-z="80" data-rot="3" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-07.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-12" data-y="-20" data-z="120" data-rot="-4" style="width:clamp(170px,18vw,250px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-08.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="20" data-y="-28" data-z="-200" data-rot="2" style="width:clamp(140px,14vw,200px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-10.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="-24" data-y="8" data-z="-520" data-rot="4" style="width:clamp(110px,11vw,160px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-11.jpg" alt="Blackout" data-lightbox></div>
+                <div class="field-card" data-x="8" data-y="18" data-z="10" data-rot="-3" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/1.3.jpg" alt="Blackout" data-lightbox></div>
 
-            <!-- Info tags -->
-            <div class="zoom-info" id="zoomInfo">
-                <span class="tag">Dirección de Contenido</span>
-                <span class="tag">Branding</span>
-                <span class="tag">Fotografía</span>
-            </div>
+                <div class="field-card" data-x="-22" data-y="-8" data-z="60" data-rot="3" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-1.jpg" alt="Chicken Box" data-lightbox></div>
+                <div class="field-card" data-x="24" data-y="4" data-z="-100" data-rot="-4" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-3.jpg" alt="Cheese Box" data-lightbox></div>
+                <div class="field-card" data-x="-6" data-y="26" data-z="-300" data-rot="2" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-2.jpg" alt="Nuggets Chili Cheese" data-lightbox></div>
+                <div class="field-card" data-x="10" data-y="-14" data-z="-240" data-rot="-2" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/tequenos-nutella.jpg" alt="Tequeños de Nutella" data-lightbox></div>
 
-            <span class="scroll-hint" id="scrollHint">scroll ↓</span>
+                <div class="field-card" data-x="-40" data-y="-26" data-z="-140" data-rot="6" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/0521 (1).mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="36" data-y="-32" data-z="-360" data-rot="-5" style="width:clamp(80px,9vw,140px);aspect-ratio:9/16;"><video src="blackout/EEE.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="-30" data-y="28" data-z="70" data-rot="4" style="width:clamp(100px,11vw,160px);aspect-ratio:9/16;"><video src="blackout/manue.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="28" data-y="28" data-z="-80" data-rot="-3" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/MEME.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="4" data-y="-36" data-z="-40" data-rot="3" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/MIX.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="-16" data-y="0" data-z="-420" data-rot="-6" style="width:clamp(80px,9vw,130px);aspect-ratio:9/16;"><video src="blackout/POLLOO.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="18" data-y="12" data-z="100" data-rot="2" style="width:clamp(100px,11vw,160px);aspect-ratio:9/16;"><video src="blackout/smash.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="-36" data-y="-14" data-z="-500" data-rot="5" style="width:clamp(70px,8vw,120px);aspect-ratio:9/16;"><video src="blackout/videaso.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="field-card" data-x="40" data-y="16" data-z="-180" data-rot="-4" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/video 2 en 1.mp4" muted loop playsinline preload="metadata"></video></div>
+            </div>
         </div>
     </div>
 
@@ -266,129 +254,113 @@
         <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
         <img src="" alt="Gráfica ampliada" id="lightboxImg">
     </div>
-
     <a href="work.html" class="back-btn">← Volver</a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
         (function() {
             const tunnel = document.getElementById('zoomTunnel');
-            const cards  = document.querySelectorAll('.zoom-card');
             const title  = document.getElementById('zoomTitle');
-            const info   = document.getElementById('zoomInfo');
-            const hint   = document.getElementById('scrollHint');
-
-            cards.forEach(card => {
-                const depth = parseFloat(card.dataset.z) || 0;
-                const xPct  = parseFloat(card.dataset.x) || 0;
-                const yPct  = parseFloat(card.dataset.y) || 0;
-                const rot   = parseFloat(card.dataset.rot) || 0;
-
-                const startNorm = depth / 11000;
-
-                card.style.left = '50%';
-                card.style.top  = '50%';
-
-                gsap.set(card, {
-                    xPercent: -50, yPercent: -50,
-                    x: xPct * window.innerWidth * 0.01 * 0.3,
-                    y: yPct * window.innerHeight * 0.01 * 0.3,
-                    scale: 0.15,
-                    rotation: rot,
-                    opacity: 0
-                });
-
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: tunnel,
-                        start: 'top top',
-                        end: 'bottom bottom',
-                        scrub: 1.2
-                    }
-                });
-
-                tl.fromTo(card, {
-                    scale: 0.12,
-                    x: xPct * window.innerWidth * 0.003,
-                    y: yPct * window.innerHeight * 0.003,
-                    rotation: rot,
-                    opacity: 0
-                }, {
-                    scale: 3.5,
-                    x: xPct * window.innerWidth * 0.025,
-                    y: yPct * window.innerHeight * 0.025,
-                    rotation: rot * 0.3,
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power2.in'
-                }, startNorm * 0.7)
-                .to(card, {
-                    scale: 6,
-                    x: xPct * window.innerWidth * 0.05,
-                    y: yPct * window.innerHeight * 0.05,
-                    opacity: 0,
-                    duration: 0.25,
-                    ease: 'power1.in'
-                });
-            });
+            const desc   = document.getElementById('zoomDescription');
 
             gsap.to(title, {
-                scale: 6,
-                opacity: 0,
-                ease: 'power2.in',
-                scrollTrigger: {
-                    trigger: tunnel,
-                    start: 'top top',
-                    end: '25% top',
-                    scrub: 1
-                }
+                scale: 4, opacity: 0, ease: 'power2.in',
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: '35% top', scrub: 1 }
             });
 
-            gsap.to(info, {
-                opacity: 0,
-                scrollTrigger: {
-                    trigger: tunnel,
-                    start: 'top top',
-                    end: '10% top',
-                    scrub: true
-                }
+            const descTl = gsap.timeline({
+                scrollTrigger: { trigger: tunnel, start: 'top top', end: 'bottom bottom', scrub: 1 }
+            });
+            descTl.fromTo(desc, { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.25)
+                  .to(desc, { opacity: 0, duration: 0.08 }, 0.7);
+
+            // Campo 3D unificado
+            var fieldTunnel = document.getElementById('fieldTunnel');
+            var fieldWorld  = document.getElementById('fieldWorld');
+            var fieldCards  = document.querySelectorAll('.field-card');
+            var FW = window.innerWidth;
+            var FH = window.innerHeight;
+            var mouseX = 0, mouseY = 0;
+
+            fieldCards.forEach(function(card) {
+                var xPct = parseFloat(card.dataset.x) || 0;
+                var yPct = parseFloat(card.dataset.y) || 0;
+                var z    = parseFloat(card.dataset.z) || 0;
+                var rot  = parseFloat(card.dataset.rot) || 0;
+                gsap.set(card, {
+                    xPercent: -50, yPercent: -50,
+                    x: xPct * FW * 0.01,
+                    y: yPct * FH * 0.01,
+                    z: z,
+                    rotation: rot,
+                    force3D: true
+                });
             });
 
-            gsap.to(hint, {
-                opacity: 0,
-                scrollTrigger: {
-                    trigger: tunnel,
-                    start: 'top top',
-                    end: '5% top',
-                    scrub: true
-                }
+            gsap.fromTo(fieldWorld, {
+                z: -700
+            }, {
+                z: 280,
+                ease: 'none',
+                scrollTrigger: { trigger: fieldTunnel, start: 'top top', end: 'bottom bottom', scrub: 1 }
             });
+
+            window.addEventListener('mousemove', function(e) {
+                mouseX = (e.clientX / FW - 0.5) * 10;
+                mouseY = (e.clientY / FH - 0.5) * -8;
+                gsap.to(fieldWorld, {
+                    rotateY: mouseX,
+                    rotateX: mouseY,
+                    duration: 1.1,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                });
+            });
+
+            Draggable.create(fieldCards, {
+                type: 'x,y', edgeResistance: 0.55, inertia: true,
+                cursor: 'grab', activeCursor: 'grabbing', zIndexBoost: true
+            });
+
+            document.querySelectorAll('.field-card video').forEach(function(v) {
+                new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) v.play().catch(function(){});
+                        else v.pause();
+                    });
+                }, { threshold: 0.15 }).observe(v);
+            });
+
+            // Spot intro: play when visible
+            var spot = document.getElementById('spotVideo');
+            if (spot) {
+                new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) spot.play().catch(function(){});
+                        else spot.pause();
+                    });
+                }, { threshold: 0.35 }).observe(document.getElementById('spotHero'));
+            }
 
             // Lightbox
-            const lb      = document.getElementById('lightbox');
-            const lbImg   = document.getElementById('lightboxImg');
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightboxImg');
             const lbClose = document.getElementById('lightboxClose');
-
             function openLightbox(src) {
-                lbImg.src = src;
-                lb.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                lbImg.src = src; lb.classList.add('active'); document.body.style.overflow = 'hidden';
             }
             function closeLightbox() {
-                lb.classList.remove('active');
-                document.body.style.overflow = '';
+                lb.classList.remove('active'); document.body.style.overflow = '';
             }
-
-            if (lbClose) lbClose.addEventListener('click', closeLightbox);
-            if (lb) lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
-
-            document.querySelectorAll('[data-lightbox]').forEach(img => {
-                img.style.cursor = 'pointer';
-                img.addEventListener('click', () => openLightbox(img.src));
+            lbClose.addEventListener('click', closeLightbox);
+            lb.addEventListener('click', function(e){ if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
+            document.querySelectorAll('[data-lightbox]').forEach(function(img){
+                img.addEventListener('click', function(){ openLightbox(img.src); });
             });
         })();
     </script>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <title>Ruta de la Tapa — David González</title>
+    <meta name="description" content="Cartelería y gráfica para la Ruta de la Tapa y el Cóctel de Los Alcázares. Diseño de David González, 2026.">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        body {
+            background: #3D2E1C;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 20px 40px; display: flex;
+            justify-content: space-between; align-items: center;
+            z-index: 1000;
+        }
+        .nav-logo { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 13px;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+        .music-toggle {
+            font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer;
+            letter-spacing: -2px; background: none; border: none; padding: 0; font-family: inherit;
+        }
+        .music-toggle:hover { color: #EEFF00; }
+
+        .project-hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 120px 24px 80px;
+            background: #3D2E1C;
+        }
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 7vw, 5.5rem);
+            letter-spacing: 0.06em; line-height: 0.95;
+        }
+        .hero-subtitle {
+            margin-top: 16px;
+            font-size: clamp(10px, 1.2vw, 14px);
+            letter-spacing: 4px; text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+        }
+        .hero-desc {
+            max-width: 640px; margin: 24px auto 0;
+            font-size: clamp(13px, 1.4vw, 16px);
+            line-height: 1.8; color: rgba(255,255,255,0.65);
+            padding: 0 12px;
+        }
+        .hero-tags {
+            display: flex; gap: 12px; justify-content: center;
+            margin-top: 28px; flex-wrap: wrap;
+        }
+        .hero-tag {
+            padding: 7px 18px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .banner-section {
+            width: 100%;
+            background: #2a2015;
+            padding: 0;
+        }
+        .banner-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        .graficas-section {
+            padding: 70px 40px 100px;
+            background: #3D2E1C;
+        }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            letter-spacing: 0.06em;
+            margin-bottom: 28px;
+        }
+        .graficas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .grafica-item {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #2a2015;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .grafica-item:hover { transform: scale(1.02); }
+        .grafica-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+        .grafica-item.tall {
+            grid-row: span 1;
+        }
+
+        .mupis-section {
+            padding: 40px 40px 100px;
+            background: #2a2015;
+        }
+        .mupis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .mupis-grid-item {
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .mupis-grid-item img,
+        .mupis-grid-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .mupi-video-item {
+            grid-column: span 3;
+            max-height: 70vh;
+            background: #1a140e;
+        }
+        .mupi-video-item video {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 60px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+            cursor: zoom-out;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; }
+        .lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
+        }
+        .back-btn {
+            position: fixed; bottom: 40px; left: 40px;
+            padding: 15px 30px; background: #fff; color: #3D2E1C;
+            text-decoration: none; font-size: 13px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: #EEFF00; color: #000; }
+
+        @media (max-width: 768px) {
+            .nav { padding: 12px 15px; }
+            .nav-logo-box img { width: 40px; }
+            .nav-links { gap: 20px; }
+            .nav-links a { font-size: 11px; }
+            .graficas-section, .mupis-section { padding: 40px 16px 70px; }
+            .graficas-grid, .mupis-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .mupi-video-item { grid-column: span 2; }
+            .back-btn { bottom: 20px; left: 20px; padding: 12px 22px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+        </a>
+        <div class="nav-links">
+            <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+            <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <h1 class="hero-title">RUTA DE LA TAPA<br>Y EL CÓCTEL</h1>
+        <p class="hero-subtitle">Los Alcázares · Cliente institucional · 2026</p>
+        <p class="hero-desc">Diseño del cartel oficial, banner y gráficas de producto para la Ruta de la Tapa y el Cóctel de Los Alcázares. Cliente institucional real: Ayuntamiento, Hostecar y Gastromar.</p>
+        <div class="hero-tags">
+            <span class="hero-tag">Cartelería</span>
+            <span class="hero-tag">Diseño Editorial</span>
+            <span class="hero-tag">Cliente Institucional</span>
+        </div>
+    </section>
+
+    <!-- Banner grande -->
+    <section class="banner-section">
+        <img src="rutatapa/banner.jpg" alt="Banner Ruta de la Tapa" data-lightbox>
+    </section>
+
+    <!-- Gráficas -->
+    <section class="graficas-section">
+        <h2 class="section-title">Gráficas</h2>
+        <div class="graficas-grid">
+            <div class="grafica-item"><img src="rutatapa/cartel.jpg" alt="Cartel oficial" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-gris.jpg" alt="Gráfica gris" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-lila.jpg" alt="Gráfica lila" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-azul.jpg" alt="Gráfica azul" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-amarilla.jpg" alt="Gráfica amarilla" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-dorada.jpg" alt="Gráfica dorada" data-lightbox></div>
+        </div>
+    </section>
+
+    <!-- Mupis -->
+    <section class="mupis-section">
+        <h2 class="section-title">Mupis</h2>
+        <div class="mupis-grid">
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-1.jpg" alt="Mupi azul" data-lightbox></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-2.jpg" alt="Mupi naranja" data-lightbox></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi verde" data-lightbox></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi dorado" data-lightbox></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi teal" data-lightbox></div>
+            <div class="mupis-grid-item mupi-video-item">
+                <video src="rutatapa/mupi-video.mp4" muted loop playsinline preload="metadata"></video>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
+        <img src="" alt="Imagen ampliada" id="lightboxImg">
+    </div>
+    <a href="work.html" class="back-btn">← Volver</a>
+
+    <script>
+        (function() {
+            var lb = document.getElementById('lightbox');
+            var lbImg = document.getElementById('lightboxImg');
+            var lbClose = document.getElementById('lightboxClose');
+            function openLightbox(src) { lbImg.src = src; lb.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closeLightbox() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+            if (lbClose) lbClose.addEventListener('click', closeLightbox);
+            if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+            document.querySelectorAll('[data-lightbox]').forEach(function(img) {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function() { openLightbox(img.src); });
+            });
+            document.querySelectorAll('.mupi-video-item video').forEach(function(v) {
+                new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) v.play().catch(function(){});
+                        else v.pause();
+                    });
+                }, { threshold: 0.3 }).observe(v);
+            });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
+</body>
+</html>

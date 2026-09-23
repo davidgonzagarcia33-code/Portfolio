@@ -1,27 +1,679 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>David González — Portfolio Creativo</title>
-  <meta name="description" content="Portfolio de David González, multidiseñador y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
-  <link rel="icon" href="perfil.svg" type="image/svg+xml">
-  <meta http-equiv="refresh" content="0; url=animacion-scroll-v6.html">
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; background:#000; color:#fff; }
-    a { color: #EEFF00; }
-    .wrap { min-height: 100vh; display:flex; align-items:center; justify-content:center; padding: 40px 20px; text-align:center; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <meta name="robots" content="index, follow">
+    <title>David González — Portfolio Creativo</title>
+    <meta name="description" content="Portfolio de David González, creativo y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta property="og:title" content="David González — Portfolio Creativo">
+    <meta property="og:description" content="Creativo y publicista. Dirección creativa, branding, diseño gráfico y contenido visual.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://portfolio-iota-gilt-47.vercel.app/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
+    <style>
+        :root {
+            --acid: #EEFF00;
+            --acid-dim: rgba(238,255,0,0.15);
+            --white: #fff;
+            --black: #000;
+            --grain-opacity: 0.045;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: auto;
+        }
+
+        body {
+            background: #000;
+            font-family: 'Outfit', sans-serif;
+            color: var(--white);
+            overflow: hidden;
+            cursor: none;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: -200%;
+            width: 400%;
+            height: 400%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+            opacity: var(--grain-opacity);
+            pointer-events: none;
+            z-index: 9998;
+            animation: grainShift 0.12s steps(1) infinite;
+        }
+
+        @keyframes grainShift {
+            0%  { transform: translate(0,0); }
+            10% { transform: translate(-5%,-10%); }
+            20% { transform: translate(-15%,5%); }
+            30% { transform: translate(7%,-25%); }
+            40% { transform: translate(-5%,25%); }
+            50% { transform: translate(-15%,10%); }
+            60% { transform: translate(15%,0); }
+            70% { transform: translate(0,15%); }
+            80% { transform: translate(-10%,0); }
+            90% { transform: translate(10%,5%); }
+        }
+
+        /* ── CURSOR MARIPOSA (solo home) ── */
+        .cursor {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            will-change: left, top, transform;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: width 0.22s cubic-bezier(0.22,1,0.36,1),
+                        height 0.22s cubic-bezier(0.22,1,0.36,1);
+        }
+        .cursor.cursor-hover-link {
+            width: 72px;
+            height: 72px;
+        }
+        .cursor-butterfly {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .cursor-butterfly canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            opacity: 0;
+            transition: opacity 0.08s linear;
+        }
+        .cursor-butterfly canvas.active {
+            opacity: 1;
+        }
+        .cursor.facing-left .cursor-butterfly {
+            transform: scaleX(-1);
+        }
+
+
+        /* ── CURSOR-TRACKING HERO ── */
+        .cursor-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            z-index: 5;
+        }
+
+        .cursor-hero video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: contain;
+            object-position: center 55%;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            background: #000;
+        }
+
+        .hero-ui {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            padding: clamp(20px, 4vw, 48px);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        .hero-ui a,
+        .hero-ui button {
+            pointer-events: auto;
+            cursor: none;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .hero-brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            line-height: 1.55;
+            display: block;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .hero-nav a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .hero-nav a:hover {
+            color: var(--acid);
+        }
+
+        .hero-nav .sep {
+            opacity: 0.35;
+            margin: 0 4px;
+        }
+
+        .hero-cta-top {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: transparent;
+            border: 2px solid var(--white);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 3px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            display: inline-block;
+            transition: color 0.35s ease;
+        }
+
+        .hero-cta-top::after {
+            content: "";
+            background: var(--white);
+            position: absolute;
+            z-index: -1;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: -100%;
+            right: 100%;
+            transition: all 0.35s ease;
+        }
+
+        .hero-cta-top:hover {
+            color: #000;
+        }
+
+        .hero-cta-top:hover::after {
+            left: 0;
+            right: 0;
+        }
+
+        .hero-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: clamp(24px, 5vw, 80px);
+            z-index: 2;
+        }
+
+        .hero-copy-left {
+            max-width: min(520px, 42vw);
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: none;
+            color: rgba(255,255,255,0.85);
+            border: 1px solid rgba(255,255,255,0.35);
+            padding: 8px 14px;
+            margin-bottom: 18px;
+        }
+
+        .hero-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-shadow: 0 2px 30px rgba(0,0,0,0.55);
+        }
+
+        .hero-surname {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            font-style: normal;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-copy-right {
+            max-width: min(320px, 34vw);
+            text-align: left;
+        }
+
+        .hero-support {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.72);
+            margin-bottom: 22px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #000;
+            background: var(--white);
+            text-decoration: none;
+            padding: 14px 20px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .hero-cta:hover {
+            background: var(--acid);
+            transform: translateY(-2px);
+        }
+
+        .music-toggle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: -2px;
+            transition: color 0.2s ease;
+            user-select: none;
+            background: none;
+            border: none;
+            padding: 0 8px 0 0;
+            font-family: inherit;
+        }
+
+        .music-toggle:hover {
+            color: var(--acid);
+        }
+
+        .music-toggle.is-playing {
+            color: var(--acid);
+        }
+
+        /* Nav antigua oculta en home (UI va dentro del hero) */
+        .nav { display: none; }
+
+        /* ========== RESPONSIVE MÓVIL ========== */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            .cursor {
+                display: none !important;
+            }
+
+            .hero-ui {
+                padding: 18px 16px 22px;
+            }
+
+            .hero-top {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .hero-brand {
+                font-size: 11px;
+                letter-spacing: 0.14em;
+            }
+
+            .hero-nav {
+                order: 3;
+                width: 100%;
+                justify-content: flex-start;
+                font-size: 10px;
+            }
+
+            .hero-cta-top {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .hero-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .hero-copy-left,
+            .hero-copy-right {
+                max-width: 100%;
+            }
+
+            .hero-headline {
+                font-size: clamp(1.8rem, 9vw, 2.6rem);
+            }
+
+            .hero-support {
+                font-size: 12px;
+                max-width: 280px;
+            }
+
+            /* Cursor hero en móvil */
+            .cursor-hero video {
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                object-fit: contain;
+                object-position: center 45%;
+            }
+
+            .hero-bottom {
+                padding-bottom: 8px;
+            }
+        }
+        /* ── PANTALLA DE CARGA (minimal) ── */
+        .loader-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+        .loader-screen.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <div>
-      <p>Redirigiendo al portfolio…</p>
-      <p>Si no ocurre automáticamente, abre <a href="animacion-scroll-v6.html">el portfolio</a></p>
+    <!-- ── PANTALLA DE CARGA (minimal) ── -->
+    <div class="loader-screen" id="loaderScreen"></div>
+    <div class="cursor" id="cursor">
+        <div class="cursor-butterfly" id="cursorButterfly">
+            <canvas id="bfFrameA"></canvas>
+            <canvas id="bfFrameB"></canvas>
+        </div>
     </div>
-  </div>
-  <script>window.location.replace('animacion-scroll-v6.html');</script>
+
+    <!-- ── CURSOR-TRACKING HERO ── -->
+    <div class="cursor-hero" id="cursorHero">
+        <video id="trackingVideo" src="character-tracking.mp4?v=2" muted playsinline preload="auto"></video>
+
+        <div class="hero-ui">
+            <div class="hero-top">
+                <div class="hero-brand" aria-hidden="true"></div>
+                <div class="hero-nav">
+                    <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <a href="work.html">Work</a>
+                    <span class="sep">/</span>
+                    <a href="visual-art.html">Visual Art</a>
+                    <span class="sep">/</span>
+                    <a href="merch.html">Merch</a>
+                    <span class="sep">/</span>
+                    <a href="about.html">About</a>
+                </div>
+                <a href="work.html" class="hero-cta-top">Ver trabajos</a>
+            </div>
+
+            <div></div>
+
+            <div class="hero-bottom">
+                <div class="hero-copy-left">
+                    <span class="hero-eyebrow"># Creativo &amp; Publicista</span>
+                    <h1 class="hero-headline">David<br><span class="hero-surname">González</span></h1>
+                </div>
+                <div class="hero-copy-right">
+                    <p class="hero-support">Dirección creativa, branding y piezas visuales con actitud. Deja de scrollear en Instagram o TikTok y échale un ojo a mis trabajos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── PANTALLA DE CARGA (se quita en cuanto el DOM está listo, máximo 800ms) ──
+        (function initLoader() {
+            const screen = document.getElementById('loaderScreen');
+            function dismiss() { screen.classList.add('loaded'); document.body.style.overflow = ''; }
+            window.addEventListener('load', dismiss);
+            setTimeout(dismiss, 800);
+        })();
+
+        // ── CURSOR MARIPOSA (solo home) ──
+        const cursorEl = document.getElementById('cursor');
+
+        (function initCursor() {
+            if (!window.matchMedia('(pointer: fine)').matches) return;
+
+            const canvasA = document.getElementById('bfFrameA');
+            const canvasB = document.getElementById('bfFrameB');
+            const DIR_THRESHOLD = 1.2;
+            let mouseX = 0, mouseY = 0;
+            let curX = 0, curY = 0;
+            let lastX = 0;
+            let facingLeft = false;
+            let initialized = false;
+            let flapOn = false;
+            const LERP = 0.18;
+
+            function processButterfly(src, canvas) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const tmp = document.createElement('canvas');
+                        tmp.width = img.width;
+                        tmp.height = img.height;
+                        const tctx = tmp.getContext('2d');
+                        tctx.drawImage(img, 0, 0);
+                        const data = tctx.getImageData(0, 0, tmp.width, tmp.height);
+                        const px = data.data;
+                        let minX = tmp.width, minY = tmp.height, maxX = 0, maxY = 0;
+                        for (let i = 0; i < px.length; i += 4) {
+                            if (px[i] < 28 && px[i + 1] < 28 && px[i + 2] < 28) {
+                                px[i + 3] = 0;
+                            } else {
+                                const x = (i / 4) % tmp.width;
+                                const y = Math.floor((i / 4) / tmp.width);
+                                if (x < minX) minX = x;
+                                if (y < minY) minY = y;
+                                if (x > maxX) maxX = x;
+                                if (y > maxY) maxY = y;
+                            }
+                        }
+                        tctx.putImageData(data, 0, 0);
+                        if (maxX <= minX || maxY <= minY) {
+                            canvas.width = tmp.width;
+                            canvas.height = tmp.height;
+                            canvas.getContext('2d').drawImage(tmp, 0, 0);
+                            resolve();
+                            return;
+                        }
+                        const pad = 2;
+                        const cw = maxX - minX + 1 + pad * 2;
+                        const ch = maxY - minY + 1 + pad * 2;
+                        canvas.width = cw;
+                        canvas.height = ch;
+                        canvas.getContext('2d').drawImage(tmp, minX - pad, minY - pad, cw, ch, 0, 0, cw, ch);
+                        resolve();
+                    };
+                    img.onerror = resolve;
+                    img.src = src;
+                });
+            }
+
+            Promise.all([
+                processButterfly('butterfly-right.png', canvasA),
+                processButterfly('butterfly-left.png', canvasB)
+            ]).then(() => {
+                canvasA.classList.add('active');
+                setInterval(() => {
+                    flapOn = !flapOn;
+                    canvasA.classList.toggle('active', !flapOn);
+                    canvasB.classList.toggle('active', flapOn);
+                }, 180);
+            });
+
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!initialized) {
+                    curX = mouseX;
+                    curY = mouseY;
+                    lastX = mouseX;
+                    initialized = true;
+                }
+            });
+
+            (function animateCursor() {
+                curX += (mouseX - curX) * LERP;
+                curY += (mouseY - curY) * LERP;
+                const velX = mouseX - lastX;
+                lastX = mouseX;
+                if (velX > DIR_THRESHOLD && facingLeft) {
+                    facingLeft = false;
+                    cursorEl.classList.remove('facing-left');
+                } else if (velX < -DIR_THRESHOLD && !facingLeft) {
+                    facingLeft = true;
+                    cursorEl.classList.add('facing-left');
+                }
+                cursorEl.style.left = curX + 'px';
+                cursorEl.style.top  = curY + 'px';
+                requestAnimationFrame(animateCursor);
+            })();
+
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => cursorEl.classList.add('cursor-hover-link'));
+                el.addEventListener('mouseleave', () => cursorEl.classList.remove('cursor-hover-link'));
+            });
+        })();
+
+        // ── CURSOR-TRACKING VIDEO ──
+        const trackingVideo = document.getElementById('trackingVideo');
+
+        (function initCursorTracking() {
+            if (!trackingVideo) return;
+
+            const video = trackingVideo;
+            video.pause();
+            video.muted = true;
+            video.playsInline = true;
+
+            let duration = 0;
+            let targetT = 0.5;
+            let smoothT = 0.5;
+            let seeking = false;
+            const EASE = 0.22;
+
+            function shortestDelta(from, to) {
+                let d = to - from;
+                if (d > 0.5) d -= 1;
+                if (d < -0.5) d += 1;
+                return d;
+            }
+
+            function pointerToProgress(clientX, clientY) {
+                if (!duration) return;
+                const rect = video.getBoundingClientRect();
+                const cx = rect.left + rect.width * 0.5;
+                const cy = rect.top + rect.height * 0.42;
+                const dx = clientX - cx;
+                const dy = clientY - cy;
+                let ang = Math.atan2(dy, dx);
+                let t = (ang + Math.PI) / (Math.PI * 2);
+                t = (t + 0.75) % 1;
+                targetT = t;
+            }
+
+            function tick() {
+                smoothT = (smoothT + shortestDelta(smoothT, targetT) * EASE + 1) % 1;
+
+                if (!seeking && duration) {
+                    const next = smoothT * duration;
+                    if (Math.abs(next - video.currentTime) > 0.01) {
+                        seeking = true;
+                        try {
+                            video.currentTime = next;
+                        } catch (err) {
+                            seeking = false;
+                        }
+                    }
+                }
+                requestAnimationFrame(tick);
+            }
+
+            video.addEventListener('seeked', () => {
+                seeking = false;
+            });
+
+            function ready() {
+                duration = video.duration || 0;
+                if (!duration) return;
+                smoothT = 0.5;
+                targetT = 0.5;
+                video.currentTime = duration * 0.5;
+                requestAnimationFrame(tick);
+            }
+
+            if (video.readyState >= 1) ready();
+            else video.addEventListener('loadedmetadata', ready, { once: true });
+
+            window.addEventListener('pointermove', (e) => {
+                pointerToProgress(e.clientX, e.clientY);
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!e.touches[0]) return;
+                pointerToProgress(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: true });
+        })();
+    </script>
+    <script src="persistent-music.js"></script>
 </body>
 </html>

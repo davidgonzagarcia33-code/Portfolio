@@ -7,20 +7,20 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>Heinz — David González</title>
-    <meta name="description" content="Proyecto Heinz: dirección de contenido y tipografía por David González.">
+    <meta name="description" content="Proyecto personal Heinz: tipografía experimental creada por David González.">
     <meta property="og:title" content="Heinz — David González">
-    <meta property="og:description" content="Dirección de contenido y tipografía para Heinz.">
+    <meta property="og:description" content="Proyecto personal de tipografía experimental inspirado en Heinz.">
     <meta property="og:type" content="website">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
 
         body {
             background: #E34113;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: #fff;
             overflow-x: hidden;
         }
@@ -54,7 +54,7 @@
 
         /* ── ZOOM TUNNEL ── */
         .zoom-tunnel {
-            height: 700vh;
+            height: 400vh;
             position: relative;
         }
 
@@ -88,7 +88,9 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.45);
             will-change: transform, opacity;
             transform-origin: center center;
+            cursor: grab;
         }
+        .zoom-card:active { cursor: grabbing; }
         .zoom-card img {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
@@ -113,7 +115,7 @@
             text-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
         .zoom-title .subtitle {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: clamp(10px, 1.2vw, 14px);
             letter-spacing: 4px;
             color: rgba(0,0,0,0.5);
@@ -134,7 +136,7 @@
             z-index: 5;
         }
         .zoom-description p {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
             font-size: clamp(12px, 1.4vw, 16px);
             line-height: 1.9;
             color: rgba(255,255,255,0.75);
@@ -158,7 +160,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: rgba(0,0,0,0.6);
-            font-family: 'DM Mono', monospace;
+            font-family: 'Outfit', sans-serif;
         }
 
         /* Scroll hint */
@@ -167,17 +169,12 @@
             bottom: 100px; left: 50%;
             transform: translateX(-50%);
             z-index: 60;
-            font-family: 'DM Mono', monospace;
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
             font-size: 11px;
-            letter-spacing: 3px;
-            color: rgba(0,0,0,0.35);
+            letter-spacing: 5px;
+            color: rgba(0,0,0,0.25);
             text-transform: uppercase;
-            animation: hintBounce 2s ease-in-out infinite;
             pointer-events: none;
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.35; }
-            50% { transform: translateX(-50%) translateY(8px); opacity: 0.8; }
         }
 
         /* Botón volver */
@@ -213,7 +210,7 @@
             .nav-logo-box img { width: 40px; }
             .nav-links { gap: 24px; }
             .nav-links a { font-size: 11px; }
-            .zoom-tunnel { height: 500vh; }
+            .zoom-tunnel { height: 280vh; }
             .zoom-card { border-radius: 6px; }
             .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
@@ -222,12 +219,14 @@
 </head>
 <body>
     <nav class="nav">
-        <a href="animacion-scroll-v6.html" class="nav-logo">
+        <a href="index.html" class="nav-logo">
             <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
+            <a href="visual-art.html">Visual Art</a>
+            <a href="merch.html">Merch</a>
             <a href="about.html">About</a>
         </div>
     </nav>
@@ -237,19 +236,15 @@
         <div class="zoom-viewport" id="zoomViewport">
 
             <!-- Patrón de fondo -->
-            <div class="zoom-bg-pattern">
-                <img src="heinz/grafica-2.jpg" alt="pattern">
-            </div>
-
             <!-- Título central -->
             <div class="zoom-title" id="zoomTitle">
                 <h1>HEINZ</h1>
-                <p class="subtitle">Fuente tipográfica · David González</p>
+                <p class="subtitle">Proyecto personal · Fuente tipográfica</p>
             </div>
 
             <!-- Descripción del proyecto -->
             <div class="zoom-description" id="zoomDescription">
-                <p>Tipografía creada mediante sobres de ketchup Heinz sobre folios en blanco. Digitalización de los esbozos para la composición de los abecedarios y posteriores gráficas.</p>
+                <p>Proyecto personal. Quería explorar la tipografía desde lo analógico: ¿se puede construir un abecedario entero con sobres de ketchup? Vacié decenas de sobres Heinz sobre folios en blanco, dibujando cada letra a mano. Después digitalicé los trazos y compuse un sistema tipográfico completo con el que generé las gráficas finales.</p>
             </div>
 
             <!-- TARJETAS — aparecen una a una, bien separadas -->
@@ -289,7 +284,7 @@
 
             <!-- Info tags -->
             <div class="zoom-info" id="zoomInfo">
-                <span class="tag">Dirección de Contenido</span>
+                <span class="tag">Proyecto personal</span>
                 <span class="tag">Tipografía</span>
                 <span class="tag">Branding</span>
             </div>
@@ -307,6 +302,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -338,9 +334,7 @@
                     opacity: 0
                 });
 
-                const cardStart = 0.30 + (idx / totalCards) * 0.55;
-                const cardMid   = cardStart + 0.08;
-                const cardEnd   = cardMid + 0.06;
+                const spreadStart = 0.28 + (idx / totalCards) * 0.22;
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -352,28 +346,20 @@
                 });
 
                 tl.fromTo(card, {
-                    scale: 0.08,
+                    scale: 0.15,
                     x: 0,
                     y: 0,
                     rotation: rot,
                     opacity: 0
                 }, {
-                    scale: 1.4,
-                    x: xPct * W * 0.012,
-                    y: yPct * H * 0.012,
-                    rotation: rot * 0.4,
+                    scale: 1,
+                    x: xPct * W * 0.01,
+                    y: yPct * H * 0.01,
+                    rotation: rot * 0.3,
                     opacity: 1,
-                    duration: cardMid - cardStart,
-                    ease: 'power1.in'
-                }, cardStart)
-                .to(card, {
-                    scale: 5,
-                    x: xPct * W * 0.04,
-                    y: yPct * H * 0.04,
-                    opacity: 0,
-                    duration: cardEnd - cardMid,
-                    ease: 'power1.in'
-                }, cardMid);
+                    duration: 0.12,
+                    ease: 'power2.out'
+                }, spreadStart);
             });
 
             gsap.to(title, {
@@ -417,6 +403,16 @@
                     end: '5% top',
                     scrub: true
                 }
+            });
+
+            // Drag: las cards se pueden mover
+            Draggable.create(cards, {
+                type: 'x,y',
+                edgeResistance: 0.65,
+                inertia: true,
+                cursor: 'grab',
+                activeCursor: 'grabbing',
+                zIndexBoost: true
             });
 
             // Lightbox
