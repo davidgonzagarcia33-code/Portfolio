@@ -145,27 +145,6 @@
             font-weight: 300;
         }
 
-        .hero-scroll-indicator {
-            position: absolute;
-            bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-            opacity: 0;
-        }
-        .hero-scroll-indicator span {
-            font-size: 11px; letter-spacing: 4px;
-            text-transform: uppercase; color: rgba(255,255,255,0.3);
-        }
-        .scroll-line {
-            width: 1px; height: 40px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
-        }
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; transform: scaleY(1); }
-            50% { opacity: 0.8; transform: scaleY(1.2); }
-        }
-
         /* ===== DRAGGABLE SECTION ===== */
         .draggable-section {
             position: relative;
@@ -379,10 +358,6 @@
                 <div class="studies-item">Gestión Publicitaria / UCM</div>
             </div>
         </div>
-        <div class="hero-scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
     </section>
 
     <!-- SERVICIOS + HERRAMIENTAS ARRASTRABLES -->
@@ -461,8 +436,7 @@
         tl.to('.hero-line-inner', { y: 0, duration: 1.4, stagger: 0.15, delay: 0.3 })
           .to('.hero-subtitle-inner', { y: 0, duration: 1 }, '-=0.6')
           .to('.hero-desc-inner', { y: 0, duration: 1 }, '-=0.6')
-          .to('#studiesBlock', { opacity: 1, duration: 0.9 }, '-=0.5')
-          .to('.hero-scroll-indicator', { opacity: 1, duration: 0.8 }, '-=0.4');
+          .to('#studiesBlock', { opacity: 1, duration: 0.9 }, '-=0.5');
 
         // ===== DRAG & DROP =====
         var dragItem = null;
