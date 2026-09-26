@@ -9,3 +9,6 @@ videos/
 *.ai
 blackout/BLACKOUT SPOT NAVIDAD 2025.mp4
 blackout/chilicheese.pdf
+
+# Originales comprimidos (mantener local, no desplegar)
+blackout/*-orig.mp4

@@ -117,34 +117,140 @@
             pointer-events: none;
         }
 
-        /* Campo 3D: todo el contenido junto */
-        .field-tunnel { height: 260vh; position: relative; background: #000; }
-        .field-viewport {
-            position: sticky; top: 0; width: 100vw; height: 100vh;
-            overflow: hidden; background: #000;
-            perspective: 1400px;
+        .content-section {
+            padding: 80px 40px 100px;
+            background: #000;
         }
-        .field-world {
-            position: absolute; inset: 0;
-            transform-style: preserve-3d;
-            will-change: transform;
+        .content-section.alt { background: #0a0a0a; }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+            color: #fff;
         }
-        .field-card {
-            position: absolute;
-            left: 50%; top: 50%;
-            border-radius: 12px;
+        .section-sub {
+            font-size: clamp(12px, 1.2vw, 14px);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(238,255,0,0.55);
+            margin-bottom: 36px;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .media-item {
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 24px 70px rgba(0,0,0,0.55);
-            cursor: grab;
             background: #111;
-            transform-style: preserve-3d;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        .field-card:active { cursor: grabbing; }
-        .field-card img,
-        .field-card video {
-            width: 100%; height: 100%;
-            object-fit: cover; display: block;
+        .media-item:hover { transform: scale(1.02); }
+        .media-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
+        .series-block {
+            margin-bottom: 48px;
+        }
+        .series-block:last-child { margin-bottom: 0; }
+        .series-label {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(238,255,0,0.7);
+            border: 1px solid rgba(238,255,0,0.35);
+            padding: 6px 14px;
+            margin-bottom: 18px;
+        }
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .series-grid.pair {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .series-grid.carta-pack {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: start;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            margin: 36px auto 0;
+            width: 100%;
+            max-width: 1080px;
+            justify-content: center;
+        }
+        .video-item {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #111;
+            aspect-ratio: 9 / 16;
+            max-height: none;
+            margin: 0;
+            width: 100%;
+        }
+        .video-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Pegatinas en laterales al scrollear */
+        .project-body {
+            position: relative;
+            overflow: visible;
+        }
+        .sticker-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 6;
+            overflow: visible;
+        }
+        .sticker {
+            position: absolute;
+            width: clamp(140px, 18vw, 240px);
+            height: auto;
+            display: block;
+            mix-blend-mode: lighten;
+            filter: drop-shadow(0 10px 22px rgba(0,0,0,0.5));
+            user-select: none;
+            -webkit-user-drag: none;
+            transform-origin: center center;
+            animation: stickerSpin linear infinite;
+        }
+        .sticker.round { border-radius: 50%; }
+        .sticker.wide { width: clamp(180px, 22vw, 280px); }
+        @keyframes stickerSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .sticker:nth-child(1) { animation-duration: 18s; animation-direction: normal; }
+        .sticker:nth-child(2) { animation-duration: 22s; animation-direction: reverse; }
+        .sticker:nth-child(3) { animation-duration: 16s; animation-direction: normal; }
+        .sticker:nth-child(4) { animation-duration: 20s; animation-direction: reverse; }
+        .sticker:nth-child(5) { animation-duration: 14s; animation-direction: normal; }
+        .sticker:nth-child(6) { animation-duration: 24s; animation-direction: reverse; }
+        .sticker:nth-child(7) { animation-duration: 17s; animation-direction: normal; }
+        .sticker:nth-child(8) { animation-duration: 21s; animation-direction: reverse; }
+        .sticker:nth-child(9) { animation-duration: 19s; animation-direction: normal; }
 
         .lightbox {
             position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 9999;
@@ -174,9 +280,18 @@
             .nav-links { gap: 14px; }
             .nav-links a { font-size: 10px; }
             .zoom-tunnel { height: 180vh; }
-            .field-tunnel { height: 200vh; }
             .spot-hero-label { left: 20px; top: 80px; }
+            .content-section { padding: 50px 16px 70px; }
+            .media-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .series-grid, .series-grid.pair, .series-grid.carta-pack { grid-template-columns: 1fr; gap: 10px; }
+            .videos-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+            .sticker { width: clamp(110px, 28vw, 170px); }
+            .sticker.wide { width: clamp(130px, 34vw, 200px); }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 22px; font-size: 11px; }
+        }
+        @media (max-width: 900px) and (min-width: 769px) {
+            .media-grid { grid-template-columns: repeat(2, 1fr); }
+            .videos-grid { grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-left: auto; margin-right: auto; }
         }
     </style>
 </head>
@@ -201,7 +316,7 @@
             </div>
 
             <div class="zoom-description" id="zoomDescription">
-                <p>Blackout arrancó sin identidad visual definida: un local de smash burgers en El Palmar que competía solo por producto. El reto era construir una marca con personalidad propia que conectase con un público joven en redes. Aposté por un tono agresivo, fotografía con flash directo y una paleta negro/amarillo que se distingue al instante en el feed. Resultado: la marca pasó de 0 a referente local en contenido.</p>
+                <p>Identidad, diseño de contenido y estrategias para la marca independiente de smashburgers más molona de la región, reconocida como la hamburguesería del pueblo.</p>
             </div>
         </div>
     </div>
@@ -212,42 +327,88 @@
         <span class="spot-hero-label">Spot</span>
     </section>
 
-    <!-- Todo el contenido junto, campo 3D -->
-    <div class="field-tunnel" id="fieldTunnel">
-        <div class="field-viewport" id="fieldViewport">
-            <div class="field-world" id="fieldWorld">
-                <div class="field-card" data-x="-28" data-y="-22" data-z="-80" data-rot="-4" style="width:clamp(170px,18vw,260px);aspect-ratio:3/4;"><img src="blackout/grafica-01.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="30" data-y="-18" data-z="40" data-rot="5" style="width:clamp(170px,18vw,260px);aspect-ratio:3/4;"><img src="blackout/grafica-02.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-34" data-y="18" data-z="-220" data-rot="3" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/grafica-03.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="32" data-y="22" data-z="-160" data-rot="-6" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/grafica-04.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-8" data-y="-32" data-z="-340" data-rot="2" style="width:clamp(130px,13vw,190px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-01.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-38" data-y="-4" data-z="20" data-rot="-3" style="width:clamp(160px,16vw,240px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-02.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="38" data-y="-6" data-z="-280" data-rot="4" style="width:clamp(140px,14vw,200px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-03.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-18" data-y="30" data-z="-60" data-rot="-2" style="width:clamp(160px,16vw,240px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-04.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="16" data-y="32" data-z="-400" data-rot="5" style="width:clamp(120px,12vw,180px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-05.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-42" data-y="10" data-z="-480" data-rot="-5" style="width:clamp(110px,11vw,160px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-06.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="42" data-y="8" data-z="80" data-rot="3" style="width:clamp(150px,15vw,220px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-07.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-12" data-y="-20" data-z="120" data-rot="-4" style="width:clamp(170px,18vw,250px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-08.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="20" data-y="-28" data-z="-200" data-rot="2" style="width:clamp(140px,14vw,200px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-10.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="-24" data-y="8" data-z="-520" data-rot="4" style="width:clamp(110px,11vw,160px);aspect-ratio:3/4;"><img src="blackout/fotos/foto-11.jpg" alt="Blackout" data-lightbox></div>
-                <div class="field-card" data-x="8" data-y="18" data-z="10" data-rot="-3" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/grafica-13.jpg" alt="Blackout" data-lightbox></div>
+    <div class="project-body" id="projectBody">
+    <div class="sticker-layer" id="stickerLayer" aria-hidden="true">
+        <img class="sticker round" src="blackout/stickers/sticker-rayo.png" alt="" style="left:-48px; top:6%;" loading="lazy">
+        <img class="sticker wide" src="blackout/stickers/sticker-hello.png" alt="" style="right:-60px; top:14%;" loading="lazy">
+        <img class="sticker round" src="blackout/stickers/sticker-burger-circle.png" alt="" style="left:-52px; top:28%;" loading="lazy">
+        <img class="sticker round" src="blackout/stickers/sticker-smash-it.png" alt="" style="right:-44px; top:40%;" loading="lazy">
+        <img class="sticker" src="blackout/stickers/sticker-runner.png" alt="" style="left:-36px; top:52%;" loading="lazy">
+        <img class="sticker round" src="blackout/stickers/sticker-bun.png" alt="" style="right:-56px; top:64%;" loading="lazy">
+        <img class="sticker round" src="blackout/stickers/sticker-rayo.png" alt="" style="left:-58px; top:74%;" loading="lazy">
+        <img class="sticker wide" src="blackout/stickers/sticker-hello.png" alt="" style="right:-70px; top:84%;" loading="lazy">
+        <img class="sticker round" src="blackout/stickers/sticker-burger-circle.png" alt="" style="left:-40px; top:93%;" loading="lazy">
+    </div>
 
-                <div class="field-card" data-x="-22" data-y="-8" data-z="60" data-rot="3" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-1.jpg" alt="Chicken Box" data-lightbox></div>
-                <div class="field-card" data-x="24" data-y="4" data-z="-100" data-rot="-4" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-3.jpg" alt="Cheese Box" data-lightbox></div>
-                <div class="field-card" data-x="-6" data-y="26" data-z="-300" data-rot="2" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/chilicheese-2.jpg" alt="Nuggets Chili Cheese" data-lightbox></div>
-                <div class="field-card" data-x="10" data-y="-14" data-z="-240" data-rot="-2" style="width:clamp(160px,16vw,230px);aspect-ratio:3/4;"><img src="blackout/tequenos-nutella.jpg" alt="Tequeños de Nutella" data-lightbox></div>
+    <section class="content-section" id="graficas">
+        <h2 class="section-title">Campaña</h2>
+        <p class="section-sub">Dirección de arte y copy</p>
 
-                <div class="field-card" data-x="-40" data-y="-26" data-z="-140" data-rot="6" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/clip-0521.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="36" data-y="-32" data-z="-360" data-rot="-5" style="width:clamp(80px,9vw,140px);aspect-ratio:9/16;"><video src="blackout/clip-eee.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="-30" data-y="28" data-z="70" data-rot="4" style="width:clamp(100px,11vw,160px);aspect-ratio:9/16;"><video src="blackout/manue.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="28" data-y="28" data-z="-80" data-rot="-3" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/clip-meme.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="4" data-y="-36" data-z="-40" data-rot="3" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/clip-mix.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="-16" data-y="0" data-z="-420" data-rot="-6" style="width:clamp(80px,9vw,130px);aspect-ratio:9/16;"><video src="blackout/clip-pollo.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="18" data-y="12" data-z="100" data-rot="2" style="width:clamp(100px,11vw,160px);aspect-ratio:9/16;"><video src="blackout/smash.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="-36" data-y="-14" data-z="-500" data-rot="5" style="width:clamp(70px,8vw,120px);aspect-ratio:9/16;"><video src="blackout/videaso.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="field-card" data-x="40" data-y="16" data-z="-180" data-rot="-4" style="width:clamp(90px,10vw,150px);aspect-ratio:9/16;"><video src="blackout/clip-2en1.mp4" muted loop playsinline preload="metadata"></video></div>
+        <div class="media-grid">
+            <div class="media-item"><img src="blackout/grafica-01.jpg" alt="Campaña Blackout — ¿Sabes por qué Blackout es la mejor?" data-lightbox></div>
+            <div class="media-item"><img src="blackout/grafica-04.jpg" alt="Campaña Blackout — Por eso somos los mejores" data-lightbox></div>
+            <div class="media-item"><img src="blackout/grafica-03.jpg" alt="Campaña Blackout — No deja a nadie indiferente" data-lightbox></div>
+            <div class="media-item"><img src="blackout/grafica-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí" data-lightbox></div>
+            <div class="media-item"><img src="blackout/grafica-mentalmente-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí (bandeja)" data-lightbox></div>
+        </div>
+    </section>
+
+    <section class="content-section alt" id="grafica-producto">
+        <h2 class="section-title">Gráfica de Producto</h2>
+        <p class="section-sub">Cartelería, ilustración y promociones</p>
+
+        <div class="series-block">
+            <span class="series-label">Promos Super Combo</span>
+            <div class="media-grid">
+                <div class="media-item"><img src="blackout/chilicheese-1.jpg" alt="Chicken Box Super Combo" data-lightbox></div>
+                <div class="media-item"><img src="blackout/chilicheese-2.jpg" alt="Nuggets Chili Cheese" data-lightbox></div>
+                <div class="media-item"><img src="blackout/chilicheese-3.jpg" alt="Cheese Box Super Combo" data-lightbox></div>
+                <div class="media-item"><img src="blackout/tequenos-nutella.jpg" alt="Promoción Tequeños de Nutella" data-lightbox></div>
             </div>
         </div>
+
+        <div class="series-block">
+            <span class="series-label">Carta y packaging</span>
+            <div class="series-grid carta-pack">
+                <div class="media-item"><img src="blackout/carta-anverso.jpg" alt="Carta Blackout — anverso" data-lightbox></div>
+                <div class="media-item"><img src="blackout/carta-reverso.jpg" alt="Carta Blackout — reverso" data-lightbox></div>
+                <div class="media-item"><img src="blackout/pack.jpg" alt="Packaging Blackout — cajas Smash Burger" data-lightbox></div>
+            </div>
+        </div>
+
+        <div class="series-block">
+            <span class="series-label">Carrusel Instagram · Señales de tráfico</span>
+            <div class="series-grid">
+                <div class="media-item"><img src="blackout/senal-1.jpg" alt="Señal Stop Vegan" data-lightbox></div>
+                <div class="media-item"><img src="blackout/senal-2.jpg" alt="Señal hamburguesa vegetal" data-lightbox></div>
+                <div class="media-item"><img src="blackout/senal-3.jpg" alt="Señal camino con curvas" data-lightbox></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="redes">
+        <h2 class="section-title">Contenido para redes</h2>
+        <p class="section-sub">Fotografía y clips para feed</p>
+        <div class="media-grid">
+            <div class="media-item"><img src="blackout/fotos/foto-01.jpg" alt="Foto Blackout 01" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-02.jpg" alt="Foto Blackout 02" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-03.jpg" alt="Foto Blackout 03" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-04.jpg" alt="Foto Blackout 04" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-05.jpg" alt="Foto Blackout 05" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-06.jpg" alt="Foto Blackout 06" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-07.jpg" alt="Foto Blackout 07" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-08.jpg" alt="Foto Blackout 08" data-lightbox></div>
+            <div class="media-item"><img src="blackout/fotos/foto-10.jpg" alt="Foto Blackout 10" data-lightbox></div>
+        </div>
+        <div class="videos-grid">
+            <div class="video-item"><video src="blackout/clip-eee.mp4" muted loop playsinline preload="metadata"></video></div>
+            <div class="video-item"><video src="blackout/clip-mix.mp4" muted loop playsinline preload="metadata"></video></div>
+            <div class="video-item"><video src="blackout/smash.mp4" muted loop playsinline preload="metadata"></video></div>
+            <div class="video-item"><video src="blackout/clip-2en1.mp4" muted loop playsinline preload="metadata"></video></div>
+            <div class="video-item"><video src="blackout/clip-videaso.mp4" muted loop playsinline preload="metadata"></video></div>
+            <div class="video-item"><video src="blackout/clip-0521.mp4" muted loop playsinline preload="metadata"></video></div>
+        </div>
+    </section>
     </div>
 
     <div class="lightbox" id="lightbox">
@@ -258,7 +419,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -278,64 +438,6 @@
             descTl.fromTo(desc, { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.25)
                   .to(desc, { opacity: 0, duration: 0.08 }, 0.7);
 
-            // Campo 3D unificado
-            var fieldTunnel = document.getElementById('fieldTunnel');
-            var fieldWorld  = document.getElementById('fieldWorld');
-            var fieldCards  = document.querySelectorAll('.field-card');
-            var FW = window.innerWidth;
-            var FH = window.innerHeight;
-            var mouseX = 0, mouseY = 0;
-
-            fieldCards.forEach(function(card) {
-                var xPct = parseFloat(card.dataset.x) || 0;
-                var yPct = parseFloat(card.dataset.y) || 0;
-                var z    = parseFloat(card.dataset.z) || 0;
-                var rot  = parseFloat(card.dataset.rot) || 0;
-                gsap.set(card, {
-                    xPercent: -50, yPercent: -50,
-                    x: xPct * FW * 0.01,
-                    y: yPct * FH * 0.01,
-                    z: z,
-                    rotation: rot,
-                    force3D: true
-                });
-            });
-
-            gsap.fromTo(fieldWorld, {
-                z: -700
-            }, {
-                z: 280,
-                ease: 'none',
-                scrollTrigger: { trigger: fieldTunnel, start: 'top top', end: 'bottom bottom', scrub: 1 }
-            });
-
-            window.addEventListener('mousemove', function(e) {
-                mouseX = (e.clientX / FW - 0.5) * 10;
-                mouseY = (e.clientY / FH - 0.5) * -8;
-                gsap.to(fieldWorld, {
-                    rotateY: mouseX,
-                    rotateX: mouseY,
-                    duration: 1.1,
-                    ease: 'power2.out',
-                    overwrite: 'auto'
-                });
-            });
-
-            Draggable.create(fieldCards, {
-                type: 'x,y', edgeResistance: 0.55, inertia: true,
-                cursor: 'grab', activeCursor: 'grabbing', zIndexBoost: true
-            });
-
-            document.querySelectorAll('.field-card video').forEach(function(v) {
-                new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) v.play().catch(function(){});
-                        else v.pause();
-                    });
-                }, { threshold: 0.15 }).observe(v);
-            });
-
-            // Spot intro: play when visible
             var spot = document.getElementById('spotVideo');
             if (spot) {
                 new IntersectionObserver(function(entries) {
@@ -346,7 +448,15 @@
                 }, { threshold: 0.35 }).observe(document.getElementById('spotHero'));
             }
 
-            // Lightbox
+            document.querySelectorAll('.video-item video').forEach(function(v) {
+                new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) v.play().catch(function(){});
+                        else v.pause();
+                    });
+                }, { threshold: 0.25 }).observe(v);
+            });
+
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightboxImg');
             const lbClose = document.getElementById('lightboxClose');
