@@ -436,7 +436,7 @@
 
     <!-- ── CURSOR-TRACKING HERO ── -->
     <div class="cursor-hero" id="cursorHero">
-        <video id="trackingVideo" src="character-tracking.mp4?v=2" muted playsinline preload="auto"></video>
+        <video id="trackingVideo" src="character-tracking.mp4?v=3" poster="character-poster.jpg" muted loop playsinline webkit-playsinline preload="auto"></video>
 
         <div class="hero-ui">
             <div class="hero-top">
@@ -594,15 +594,20 @@
             if (!trackingVideo) return;
 
             const video = trackingVideo;
-            video.pause();
             video.muted = true;
             video.playsInline = true;
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+            video.pause();
 
             let duration = 0;
             let targetT = 0.5;
             let smoothT = 0.5;
             let seeking = false;
+            let unlocked = false;
+            let lastInteract = 0;
             const EASE = 0.22;
+            const isCoarse = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
 
             function shortestDelta(from, to) {
                 let d = to - from;
@@ -613,6 +618,7 @@
 
             function pointerToProgress(clientX, clientY) {
                 if (!duration) return;
+                lastInteract = performance.now();
                 const rect = video.getBoundingClientRect();
                 const cx = rect.left + rect.width * 0.5;
                 const cy = rect.top + rect.height * 0.42;
@@ -624,10 +630,42 @@
                 targetT = t;
             }
 
-            function tick() {
+            function unlockAndShowFrame() {
+                if (unlocked || !duration) return;
+                const mid = duration * 0.5;
+                const kick = video.play();
+                const finish = function() {
+                    video.pause();
+                    try { video.currentTime = mid; } catch (e) {}
+                    unlocked = true;
+                    smoothT = 0.5;
+                    targetT = 0.5;
+                };
+                if (kick && typeof kick.then === 'function') {
+                    kick.then(finish).catch(function() {
+                        // iOS a veces necesita un toque: pintar frame en el primer gesto
+                        const once = function() {
+                            video.play().then(finish).catch(function(){});
+                            window.removeEventListener('touchstart', once);
+                            window.removeEventListener('pointerdown', once);
+                        };
+                        window.addEventListener('touchstart', once, { once: true, passive: true });
+                        window.addEventListener('pointerdown', once, { once: true });
+                    });
+                } else {
+                    finish();
+                }
+            }
+
+            function tick(now) {
+                // En móvil, si no hay interacción reciente, el monstruo gira solo
+                if (isCoarse && duration && (now - lastInteract > 1200)) {
+                    targetT = (now / 9000) % 1;
+                }
+
                 smoothT = (smoothT + shortestDelta(smoothT, targetT) * EASE + 1) % 1;
 
-                if (!seeking && duration) {
+                if (!seeking && duration && unlocked) {
                     const next = smoothT * duration;
                     if (Math.abs(next - video.currentTime) > 0.01) {
                         seeking = true;
@@ -641,27 +679,37 @@
                 requestAnimationFrame(tick);
             }
 
-            video.addEventListener('seeked', () => {
+            video.addEventListener('seeked', function() {
                 seeking = false;
             });
 
             function ready() {
                 duration = video.duration || 0;
-                if (!duration) return;
-                smoothT = 0.5;
-                targetT = 0.5;
-                video.currentTime = duration * 0.5;
+                if (!duration || !isFinite(duration)) return;
+                unlockAndShowFrame();
                 requestAnimationFrame(tick);
             }
 
             if (video.readyState >= 1) ready();
             else video.addEventListener('loadedmetadata', ready, { once: true });
 
-            window.addEventListener('pointermove', (e) => {
+            // Empujar carga en redes móviles
+            try { video.load(); } catch (e) {}
+
+            window.addEventListener('pointermove', function(e) {
                 pointerToProgress(e.clientX, e.clientY);
             }, { passive: true });
 
-            window.addEventListener('touchmove', (e) => {
+            window.addEventListener('pointerdown', function(e) {
+                pointerToProgress(e.clientX, e.clientY);
+            }, { passive: true });
+
+            window.addEventListener('touchmove', function(e) {
+                if (!e.touches[0]) return;
+                pointerToProgress(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: true });
+
+            window.addEventListener('touchstart', function(e) {
                 if (!e.touches[0]) return;
                 pointerToProgress(e.touches[0].clientX, e.touches[0].clientY);
             }, { passive: true });
