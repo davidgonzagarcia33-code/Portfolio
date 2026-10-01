@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>About — David González</title>
-    <meta name="description" content="Sobre David González: creativo y publicista murciano. Servicios de dirección creativa, branding, diseño gráfico y contenido audiovisual.">
+    <meta name="description" content="Sobre David González: creativo y publicista murciano. Dirección creativa, branding, diseño gráfico y contenido audiovisual.">
     <meta property="og:title" content="About — David González">
     <meta property="og:description" content="Creativo y publicista murciano. Dirección creativa, branding y contenido audiovisual.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="og-image.svg">
+    <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/og-image.png">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
-    <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <style>
@@ -23,50 +24,10 @@
 
         body {
             background: #000;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Archivo', sans-serif;
             color: #fff;
             overflow-x: hidden;
         }
-
-        .nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-        }
-        .nav-logo {
-            display: flex; align-items: center; gap: 0; text-decoration: none;
-        }
-        .nav-logo-box {
-            display: flex; align-items: center; justify-content: center;
-        }
-        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a {
-            color: #fff; text-decoration: none; font-size: 13px;
-            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-            transition: opacity 0.3s ease;
-        }
-        .nav-links a:hover { opacity: 0.6; }
-
-        .music-toggle {
-            font-size: 10px;
-            color: rgba(255,255,255,0.4);
-            cursor: pointer;
-            letter-spacing: -2px;
-            transition: color 0.2s ease;
-            user-select: none;
-            background: none;
-            border: none;
-            padding: 0;
-            font-family: inherit;
-        }
-        .music-toggle:hover { color: #EEFF00; }
 
         /* ===== HERO ANIMADO ===== */
         .hero-section {
@@ -86,35 +47,37 @@
         .hero-line-inner {
             display: block;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4rem, 12vw, 11rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 0.95;
+            font-size: clamp(7rem, 18vw, 22rem);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            line-height: 0.9;
             text-transform: uppercase;
             transform: translateY(105%);
         }
 
-        .hero-subtitle { margin-top: 40px; overflow: hidden; }
-
-        .hero-subtitle-inner {
-            display: block;
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: rgba(238,255,0,0.85);
-            transform: translateY(105%);
+        .hero-line-inner.is-surname {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            text-transform: none;
+            letter-spacing: -0.03em;
+            font-size: clamp(5.2rem, 13.2vw, 16rem);
         }
 
-        .hero-desc { margin-top: 30px; overflow: hidden; max-width: 600px; text-align: center; }
+        .hero-desc { margin-top: 36px; overflow: hidden; max-width: 640px; text-align: center; }
 
         .hero-desc-inner {
             display: block;
             font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.9;
-            color: rgba(255,255,255,0.5);
+            font-weight: 400;
+            line-height: 1.85;
+            color: rgba(255,255,255,0.6);
             transform: translateY(105%);
+        }
+        .hero-desc-inner em {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: 1.15em;
+            color: rgba(255,255,255,0.92);
         }
 
         .studies-block {
@@ -123,9 +86,9 @@
             opacity: 0;
         }
         .studies-label {
-            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.22em;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
             color: rgba(255,255,255,0.35);
             margin-bottom: 14px;
@@ -137,15 +100,18 @@
             align-items: center;
         }
         .studies-item {
-            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
-            font-size: clamp(0.85rem, 1.5vw, 1rem);
-            letter-spacing: 0.12em;
+            font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: rgba(255,255,255,0.72);
-            font-weight: 300;
+            font-weight: 400;
+        }
+        .studies-item span {
+            color: rgba(255,255,255,0.4);
+            margin-left: 8px;
         }
 
-        /* ===== DRAGGABLE SECTION ===== */
+        /* ===== SERVICIOS + HERRAMIENTAS (arrastrables) ===== */
         .draggable-section {
             position: relative;
             width: 100%;
@@ -156,76 +122,96 @@
         .drag-item {
             position: absolute;
             cursor: grab;
-            transition: box-shadow 0.2s ease;
             z-index: 1;
+            user-select: none;
         }
 
         .drag-item:active { cursor: grabbing; }
 
         .drag-item.card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 30px;
-            backdrop-filter: blur(5px);
+            background: #000;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding: 22px 6px 0 0;
+            transition: border-color 0.3s ease;
         }
 
         .drag-item.card:hover {
-            border-color: rgba(238,255,0,0.2);
-            box-shadow: 0 0 30px rgba(238,255,0,0.05);
+            border-top-color: #EEFF00;
         }
 
         .drag-item .card-number {
-            font-size: 0.7rem;
-            color: rgba(238,255,0,0.5);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1;
+            color: #EEFF00;
+            margin-bottom: 14px;
         }
 
         .drag-item h3 {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            line-height: 0.95;
             text-transform: uppercase;
             margin-bottom: 10px;
         }
 
         .drag-item p {
-            font-size: 0.85rem;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.4);
+            font-size: 0.86rem;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.48);
         }
 
         .drag-item.pill {
-            padding: 14px 30px;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            letter-spacing: 0.06em;
+            line-height: 1;
             text-transform: uppercase;
-            font-weight: 300;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            color: rgba(255,255,255,0.5);
+            transition: color 0.3s ease;
         }
 
         .drag-item.pill:hover {
-            border-color: rgba(238,255,0,0.5);
-            color: rgba(238,255,0,0.85);
+            color: #EEFF00;
         }
 
         .section-float-label {
             position: absolute;
-            font-size: 0.7rem;
-            letter-spacing: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: rgba(238,255,0,0.5);
+            color: rgba(255,255,255,0.5);
+        }
+        .section-float-label::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: #EEFF00;
+        }
+        .section-float-label em {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: 14px;
+            letter-spacing: 0;
+            text-transform: none;
+            color: rgba(255,255,255,0.4);
         }
 
         /* ===== CONTACTO ===== */
         .contact-block {
             position: relative;
             z-index: 5;
-            padding: 80px 60px;
+            padding: 80px 60px 100px;
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
@@ -237,7 +223,7 @@
             display: block;
             font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 700;
+            font-weight: 400;
             letter-spacing: 6px;
             text-transform: uppercase;
             transform: translateY(105%);
@@ -245,9 +231,10 @@
 
         .contact-sub {
             font-size: 1.05rem;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.9;
-            margin: 30px 0 20px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.85;
+            margin: 26px auto 22px;
+            max-width: 560px;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -255,78 +242,67 @@
             margin-bottom: 40px;
         }
         .contact-email a {
-            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-            color: rgba(238,255,0,0.85);
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(1.4rem, 3vw, 2.1rem);
+            color: rgba(238,255,0,0.9);
             text-decoration: none;
-            letter-spacing: 0.04em;
+            letter-spacing: 0;
             border-bottom: 1px solid rgba(238,255,0,0.25);
-            padding-bottom: 4px;
+            padding-bottom: 3px;
             transition: border-color 0.2s;
         }
-        .contact-email a:hover { border-color: rgba(238,255,0,0.85); }
+        .contact-email a:hover { border-color: rgba(238,255,0,0.9); }
 
         .contact-btns {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 14px;
             opacity: 0;
             transform: translateY(20px);
         }
 
         .contact-btn {
-            padding: 16px 40px;
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 15px 32px;
+            border: 1px solid rgba(255,255,255,0.22);
             color: #fff;
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            transition: all 0.4s ease;
+            transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
         }
-        .contact-btn:hover { background: #fff; color: #000; }
-        .contact-btn.primary { background: rgba(238,255,0,0.85); color: #000; border-color: rgba(238,255,0,0.85); }
+        .contact-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        .contact-btn.primary { background: #EEFF00; color: #000; border-color: #EEFF00; }
         .contact-btn.primary:hover { background: #fff; border-color: #fff; }
-
-        .footer {
-            padding: 30px 60px;
-            text-align: center;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.2);
-            text-transform: uppercase;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
 
         @media (max-width: 768px) {
             .hero-section { padding: 100px 20px 40px; }
             .hero-line-inner {
-                font-size: clamp(2.4rem, 12.5vw, 3.6rem);
-                letter-spacing: -0.01em;
-                line-height: 0.95;
+                font-size: clamp(4.8rem, 24vw, 7rem);
+                line-height: 0.9;
             }
-            .hero-subtitle-inner { font-size: 0.85rem; letter-spacing: 3px; }
+            .hero-line-inner.is-surname { font-size: clamp(3.6rem, 17vw, 5.2rem); letter-spacing: -0.03em; }
+            .hero-desc-inner { font-size: 0.95rem; line-height: 1.75; }
             .draggable-section { min-height: auto; padding: 20px; }
-            .drag-item { position: relative !important; left: auto !important; top: auto !important; width: 100% !important; margin-bottom: 15px; cursor: default; }
-            .contact-block { padding: 60px 20px; }
+            .drag-item { position: relative !important; left: auto !important; top: auto !important; width: 100% !important; margin-bottom: 18px; cursor: default; }
+            .drag-item.pill { display: inline-block; width: auto !important; margin: 0 18px 14px 0; font-size: 1.7rem; }
+            .section-float-label { position: relative !important; left: auto !important; top: auto !important; margin: 20px 0 22px; }
+            .contact-block { padding: 60px 20px 80px; }
             .contact-title-inner {
                 font-size: clamp(1.8rem, 8.5vw, 2.6rem);
                 letter-spacing: 3px;
             }
-            .contact-sub { font-size: 0.95rem; line-height: 1.7; margin: 18px 0 30px; }
-            .contact-btns { flex-direction: column; gap: 15px; }
+            .contact-sub { font-size: 0.95rem; line-height: 1.7; margin: 18px 0 24px; }
+            .contact-btns { flex-direction: column; gap: 12px; }
             .contact-btn { width: 100%; text-align: center; padding: 14px 24px; }
-            .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 40px; }
-            .nav-links { gap: 24px; }
-            .nav-links a { font-size: 11px; letter-spacing: 1px; }
-            .section-float-label { font-size: 10px; }
         }
     </style>
+    <link rel="stylesheet" href="site.css?v=1">
 </head>
 <body>
-    <nav class="nav">
+    <nav class="nav nav--glass">
         <a href="index.html" class="nav-logo">
             <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
         </a>
@@ -343,72 +319,69 @@
     <section class="hero-section">
         <div class="hero-name">
             <div class="hero-line"><span class="hero-line-inner">David</span></div>
-            <div class="hero-line"><span class="hero-line-inner">González</span></div>
-        </div>
-        <div class="hero-subtitle">
-            <span class="hero-subtitle-inner">Creativo & Publicista</span>
+            <div class="hero-line"><span class="hero-line-inner is-surname">González</span></div>
         </div>
         <div class="hero-desc">
-            <span class="hero-desc-inner">Creando experiencias visuales únicas desde Murcia. En 2026 realicé el diseño del cartel de la Ruta de la Tapa y el Cocktail.</span>
+            <span class="hero-desc-inner">Creando experiencias visuales únicas desde Murcia.</span>
         </div>
         <div class="studies-block" id="studiesBlock">
-            <div class="studies-label">Estudios</div>
+            <div class="studies-label">Formación</div>
             <div class="studies-list">
-                <div class="studies-item">Publicidad y RRPP / UMU</div>
-                <div class="studies-item">Gestión Publicitaria / UCM</div>
+                <div class="studies-item">Publicidad y RRPP <span>UMU</span></div>
+                <div class="studies-item">Gestión Publicitaria <span>UCM</span></div>
             </div>
         </div>
     </section>
 
     <!-- SERVICIOS + HERRAMIENTAS ARRASTRABLES -->
     <div class="draggable-section" id="draggableSection">
-        <span class="section-float-label" style="left: 50px; top: 30px;">Servicios</span>
-        <span class="section-float-label" style="left: 50px; top: 620px;">Herramientas</span>
+        <span class="section-float-label" style="left: 50px; top: 30px;">Qué hago <em>arrastra las fichas</em></span>
+        <span class="section-float-label" style="left: 50px; top: 620px;">Con qué</span>
 
         <!-- Servicios -->
         <div class="drag-item card" style="left: 100px; top: 80px; width: 280px;">
             <div class="card-number">01</div>
             <h3>Branding</h3>
-            <p>Identidad visual, logotipos, sistemas de marca y guías de estilo.</p>
+            <p>Identidad, logotipo, sistema visual y manual de uso.</p>
         </div>
-        <div class="drag-item card" style="left: 500px; top: 50px; width: 280px;">
+        <div class="drag-item card" style="left: 480px; top: 50px; width: 280px;">
             <div class="card-number">02</div>
-            <h3>Dirección Creativa</h3>
-            <p>Conceptualización y dirección de campañas publicitarias.</p>
+            <h3>Dirección creativa</h3>
+            <p>Concepto, tono y dirección de campañas de principio a fin.</p>
         </div>
-        <div class="drag-item card" style="left: 900px; top: 100px; width: 280px;">
+        <div class="drag-item card" style="left: 860px; top: 100px; width: 280px;">
             <div class="card-number">03</div>
-            <h3>Diseño Gráfico</h3>
-            <p>Cartelería, packaging, editorial y piezas para medios digitales.</p>
+            <h3>Diseño gráfico</h3>
+            <p>Cartelería, packaging, editorial y piezas para pantalla.</p>
         </div>
         <div class="drag-item card" style="left: 200px; top: 320px; width: 280px;">
             <div class="card-number">04</div>
-            <h3>Motion & Video</h3>
-            <p>Animación, edición de vídeo y contenido audiovisual.</p>
+            <h3>Motion &amp; vídeo</h3>
+            <p>Edición, animación y contenido audiovisual para marca.</p>
         </div>
-        <div class="drag-item card" style="left: 600px; top: 350px; width: 280px;">
+        <div class="drag-item card" style="left: 580px; top: 350px; width: 280px;">
             <div class="card-number">05</div>
-            <h3>Social Media</h3>
-            <p>Contenido visual y estrategia creativa para plataformas digitales.</p>
+            <h3>Social media</h3>
+            <p>Contenido y estrategia creativa que funciona en el feed.</p>
         </div>
-        <div class="drag-item card" style="left: 1000px; top: 300px; width: 280px;">
+        <div class="drag-item card" style="left: 960px; top: 300px; width: 280px;">
             <div class="card-number">06</div>
             <h3>Publicidad</h3>
-            <p>Conceptos publicitarios, campañas ATL/BTL y comunicación de marca.</p>
+            <p>Conceptos, campañas ATL/BTL y comunicación de marca.</p>
         </div>
         <div class="drag-item card" style="left: 400px; top: 520px; width: 280px;">
             <div class="card-number">07</div>
-            <h3>Desarrollo Web Front-End</h3>
-            <p>Diseño y desarrollo de páginas web interactivas y experiencias digitales.</p>
+            <h3>Front-end</h3>
+            <p>Diseño y desarrollo de webs interactivas. Esta, por ejemplo.</p>
         </div>
 
         <!-- Herramientas -->
-        <div class="drag-item pill" style="left: 120px; top: 660px;">Photoshop</div>
-        <div class="drag-item pill" style="left: 350px; top: 690px;">Illustrator</div>
-        <div class="drag-item pill" style="left: 580px; top: 650px;">InDesign</div>
-        <div class="drag-item pill" style="left: 780px; top: 680px;">After Effects</div>
-        <div class="drag-item pill" style="left: 1020px; top: 660px;">Premiere Pro</div>
-        <div class="drag-item pill" style="left: 300px; top: 750px;">Inteligencia Artificial</div>
+        <div class="drag-item pill" style="left: 100px; top: 670px;">Photoshop</div>
+        <div class="drag-item pill" style="left: 320px; top: 700px;">Illustrator</div>
+        <div class="drag-item pill" style="left: 540px; top: 660px;">InDesign</div>
+        <div class="drag-item pill" style="left: 740px; top: 700px;">After Effects</div>
+        <div class="drag-item pill" style="left: 1000px; top: 665px;">Premiere Pro</div>
+        <div class="drag-item pill" style="left: 300px; top: 770px;">Inteligencia Artificial</div>
     </div>
 
     <!-- CONTACTO -->
@@ -416,7 +389,7 @@
         <div class="contact-title">
             <span class="contact-title-inner">Hablemos</span>
         </div>
-        <p class="contact-sub">¿Tienes un proyecto en mente? Me encantaría saber más sobre él y cómo puedo ayudarte a hacerlo realidad.</p>
+        <p class="contact-sub">Si buscas un creativo para tu agencia o estudio, o tienes un proyecto entre manos, escríbeme.</p>
         <p class="contact-email"><a href="mailto:davidgonzagarcia33@gmail.com">davidgonzagarcia33@gmail.com</a></p>
         <div class="contact-btns">
             <a href="mailto:davidgonzagarcia33@gmail.com" class="contact-btn primary">Email</a>
@@ -426,7 +399,14 @@
         </div>
     </section>
 
-    <footer class="footer">© 2026 David González</footer>
+    <footer class="site-footer">
+        <span>© 2026 David González · Murcia</span>
+        <nav class="site-footer-social" aria-label="Redes">
+            <a href="https://www.instagram.com/d4vidd33/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.behance.net/davigonzalez35" target="_blank" rel="noopener noreferrer">Behance</a>
+        </nav>
+    </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
@@ -434,7 +414,6 @@
         // ===== HERO ANIMATION =====
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
         tl.to('.hero-line-inner', { y: 0, duration: 1.4, stagger: 0.15, delay: 0.3 })
-          .to('.hero-subtitle-inner', { y: 0, duration: 1 }, '-=0.6')
           .to('.hero-desc-inner', { y: 0, duration: 1 }, '-=0.6')
           .to('#studiesBlock', { opacity: 1, duration: 0.9 }, '-=0.5');
 
@@ -504,6 +483,7 @@
             .to('.contact-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
             .to('.contact-btns', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
     </script>
+    <script src="site.js?v=1"></script>
     <script src="persistent-music.js"></script>
 </body>
 </html>
