@@ -1,7 +1,7 @@
 /* ============================================================
-   David Gonz·lez ó capa com˙n de estilo
-   TipografÌa: Bebas Neue (display) ∑ Archivo (texto/UI) ∑ Instrument Serif (acentos)
-   Se carga despuÈs del <style> de cada p·gina para unificar nav,
+   David Gonzùlez ù capa comùn de estilo
+   Tipografùa: Bebas Neue (display) ù Archivo (texto/UI) ù Instrument Serif (acentos)
+   Se carga despuùs del <style> de cada pùgina para unificar nav,
    controles, lightbox, fichas de proyecto, pie y accesibilidad.
    ============================================================ */
 
@@ -57,7 +57,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 .meta-line span + span::before {
-    content: '∑';
+    content: 'ù';
     margin: 0 12px;
     color: var(--fg-35);
 }
@@ -70,7 +70,7 @@ body.lightbox-open { overflow: hidden; }
     text-transform: none;
 }
 
-/* ---------- NavegaciÛn ---------- */
+/* ---------- Navegaciùn ---------- */
 .nav {
     position: fixed;
     top: 0;
@@ -115,10 +115,49 @@ body.lightbox-open { overflow: hidden; }
     text-decoration: none;
 }
 
-.nav-logo-box img {
-    width: 50px;
-    height: auto;
-    border-radius: 50%;
+.nav-logo-box {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+.nav-logo-box > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+    display: block;
+    transition: filter 0.28s ease;
+}
+
+.nav-logo-censor {
+    position: absolute;
+    inset: 0;
+    background: url("perfil.svg") center 18% / cover no-repeat;
+    clip-path: inset(55% 0 25% 0);
+    filter: url("#logo-pixel") grayscale(1) contrast(1.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s linear;
+}
+
+.nav-logo-fx {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.nav-logo:hover .nav-logo-box > img,
+.nav-logo:focus-visible .nav-logo-box > img {
+    filter: grayscale(1) contrast(1.12);
+}
+
+.nav-logo:hover .nav-logo-censor,
+.nav-logo:focus-visible .nav-logo-censor {
+    opacity: 1;
 }
 
 .nav-links {
@@ -333,7 +372,7 @@ body.lightbox-open { overflow: hidden; }
     color: var(--fg-70);
 }
 
-/* ---------- Cabecera de serie (01 ó Nombre óóó) ---------- */
+/* ---------- Cabecera de serie (01 ù Nombre ùùù) ---------- */
 .series-head {
     display: flex;
     align-items: center;
@@ -515,10 +554,10 @@ body.lightbox-open { overflow: hidden; }
     }
 }
 
-/* ---------- MÛvil ---------- */
+/* ---------- Mùvil ---------- */
 @media (max-width: 768px) {
     .nav { padding: 14px var(--pad-x); }
-    .nav-logo-box img { width: 40px; }
+    .nav-logo-box { width: 42px; height: 42px; }
     .nav-links { gap: 18px; }
     .nav-links a { font-size: 10px; letter-spacing: 0.14em; }
 

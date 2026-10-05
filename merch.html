@@ -3,55 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>Merch — David González</title>
-    <meta name="description" content="Merch de David González: ropa, prints y piezas gráficas textiles.">
+    <meta name="description" content="Merch de David González: camisetas y piezas gráficas textiles de diseño propio.">
     <meta property="og:title" content="Merch — David González">
-    <meta property="og:description" content="Ropa, prints y merch gráfico de David González.">
+    <meta property="og:description" content="Camisetas y merch gráfico de David González.">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/og-image.png">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
         html, body {
             background: #000;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Archivo', sans-serif;
             color: #fff;
             min-height: 100%;
             overflow-x: hidden;
         }
-        .nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(10px);
-        }
-        .nav-logo { display: flex; align-items: center; text-decoration: none; }
-        .nav-logo-box { display: flex; align-items: center; justify-content: center; }
-        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
-        .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-        .nav-links a {
-            color: #fff; text-decoration: none; font-size: 13px;
-            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-            transition: opacity 0.3s ease;
-        }
-        .nav-links a:hover { opacity: 0.6; }
-        .nav-links a.active { opacity: 0.45; }
-        .music-toggle {
-            font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer;
-            letter-spacing: -2px; transition: color 0.2s ease; user-select: none;
-            background: none; border: none; padding: 0; font-family: inherit;
-        }
-        .music-toggle:hover { color: #EEFF00; }
 
         .merch-stage {
             min-height: 100vh;
@@ -59,27 +33,30 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 110px 0 80px;
+            padding: 110px 0 70px;
             position: relative;
             overflow: hidden;
         }
         .merch-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
         .merch-viewport {
             width: 100%;
             max-width: 100vw;
-            height: min(88vh, 980px);
+            height: min(84vh, 940px);
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
+            cursor: grab;
         }
+        .merch-viewport.dragging { cursor: grabbing; }
         .merch-track {
             display: flex;
             align-items: center;
@@ -97,10 +74,10 @@
         }
         .merch-item {
             position: relative;
-            width: min(92vw, 88vh, 980px);
-            height: min(92vw, 88vh, 980px);
+            width: min(92vw, 84vh, 940px);
+            height: min(92vw, 84vh, 940px);
             overflow: visible;
-            cursor: pointer;
+            cursor: zoom-in;
             background: transparent;
         }
         .merch-item img {
@@ -116,93 +93,79 @@
         .merch-item:hover .merch-front { opacity: 0; transform: scale(1.02); }
         .merch-item:hover .merch-back { opacity: 1; transform: scale(1.02); }
 
+        /* Nombre de la pieza + contador */
+        .merch-caption {
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            margin-top: 18px;
+            min-height: 2.4rem;
+        }
+        .merch-caption-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1;
+            transition: opacity 0.3s ease;
+        }
+        .merch-caption-count {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.45);
+        }
+
         .merch-hint {
-            margin-top: 28px;
-            font-family: 'Outfit', sans-serif;
+            margin-top: 14px;
             font-size: 11px;
-            letter-spacing: 0.28em;
+            font-weight: 500;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
             color: rgba(255,255,255,0.35);
-            animation: hintPulse 2.2s ease-in-out infinite;
         }
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.25; }
-            50% { opacity: 0.7; }
-        }
+        .merch-hint-touch { display: none; }
+        html.touch .merch-hint-desktop { display: none; }
+        html.touch .merch-hint-touch { display: inline; }
 
         .merch-dots {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: 22px;
         }
         .merch-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.25);
+            width: 28px; height: 2px;
+            border-radius: 0;
+            background: rgba(255,255,255,0.22);
             border: none;
             padding: 0;
             cursor: pointer;
-            transition: background 0.25s ease, transform 0.25s ease;
+            transition: background 0.25s ease;
         }
-        .merch-dot.active {
-            background: #fff;
-            transform: scale(1.25);
-        }
-
-        .lightbox {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.97); z-index: 9999;
-            display: flex; align-items: center; justify-content: center; padding: 60px;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
-            cursor: zoom-out;
-        }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain; }
-        .lightbox-close {
-            position: absolute; top: 30px; right: 40px;
-            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
-        }
-        .lightbox-close:hover { opacity: 1; }
-
-        .page-footer {
-            padding: 30px 60px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        .footer-text, .back-link {
-            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-            color: rgba(255,255,255,0.45); text-decoration: none;
-        }
-        .back-link { color: #fff; transition: opacity 0.3s; }
-        .back-link:hover { opacity: 0.6; }
+        .merch-dot.active { background: #fff; }
 
         @media (max-width: 768px) {
-            .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 40px; }
-            .nav-links { gap: 14px; }
-            .nav-links a { font-size: 10px; letter-spacing: 1px; }
-            .merch-stage { padding: 100px 0 50px; }
-            .merch-viewport { height: min(80vh, 720px); }
+            .merch-stage { padding: 100px 0 40px; }
+            .merch-viewport { height: min(74vh, 680px); }
             .merch-item {
-                width: min(94vw, 80vh, 560px);
-                height: min(94vw, 80vh, 560px);
+                width: min(94vw, 74vh, 560px);
+                height: min(94vw, 74vh, 560px);
             }
-            .page-footer { padding: 24px 20px; flex-direction: column; gap: 16px; }
-            .lightbox { padding: 40px 15px 60px; }
-            .lightbox-close { top: 15px; right: 15px; }
+            .merch-caption { margin-top: 10px; gap: 12px; }
         }
     </style>
+    <link rel="stylesheet" href="site.css?v=5">
 </head>
 <body>
-    <nav class="nav">
+    <nav class="nav nav--glass">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
             <a href="work.html">Work</a>
             <a href="visual-art.html">Visual Art</a>
-            <a href="merch.html" class="active">Merch</a>
+            <a href="merch.html">Merch</a>
             <a href="about.html">About</a>
         </div>
     </nav>
@@ -212,43 +175,41 @@
         <div class="merch-viewport" id="merchViewport">
             <div class="merch-track" id="merchTrack"></div>
         </div>
+        <div class="merch-caption" aria-live="polite">
+            <span class="merch-caption-name" id="merchName"></span>
+            <span class="merch-caption-count" id="merchCount"></span>
+        </div>
         <div class="merch-dots" id="merchDots"></div>
-        <span class="merch-hint">arrastra · hover para ver espalda</span>
+        <span class="merch-hint">
+            <span class="merch-hint-desktop">Arrastra o usa las flechas · Pasa el ratón para ver la espalda</span>
+            <span class="merch-hint-touch">Desliza para cambiar · Toca para ampliar</span>
+        </span>
     </section>
 
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
-        <img src="" alt="Merch ampliado" id="lightboxImg">
-    </div>
-
-    <footer class="page-footer">
-        <span class="footer-text">© 2026 DAVID GONZÁLEZ</span>
-        <a href="index.html" class="back-link">← Volver al inicio</a>
+    <footer class="site-footer">
+        <span>© 2026 David González · Murcia</span>
+        <a class="site-footer-mail" href="mailto:davidgonzagarcia33@gmail.com">davidgonzagarcia33@gmail.com</a>
+        <nav class="site-footer-social" aria-label="Redes">
+            <a href="https://www.instagram.com/d4vidd33/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.behance.net/davigonzalez35" target="_blank" rel="noopener noreferrer">Behance</a>
+        </nav>
     </footer>
 
+    <script src="site.js?v=1"></script>
     <script>
         (function() {
             var products = [
-                {
-                    front: 'merch/clean-nofear-front.png',
-                    back: 'merch/clean-nofear-back.png',
-                    alt: 'Camiseta NO FEAR'
-                },
-                {
-                    front: 'merch/clean-truelove-front.png',
-                    back: 'merch/clean-truelove-back.png',
-                    alt: 'Camiseta TRUE LOVE'
-                },
-                {
-                    front: 'merch/clean-fmty-front.png',
-                    back: 'merch/clean-fmty-back.png',
-                    alt: 'Camiseta FROM ME TO YOU'
-                }
+                { front: 'merch/clean-nofear-front.png', back: 'merch/clean-nofear-back.png', name: 'No Fear' },
+                { front: 'merch/clean-truelove-front.png', back: 'merch/clean-truelove-back.png', name: 'True Love' },
+                { front: 'merch/clean-fmty-front.png', back: 'merch/clean-fmty-back.png', name: 'From Me to You' }
             ];
 
             var track = document.getElementById('merchTrack');
             var dotsWrap = document.getElementById('merchDots');
             var viewport = document.getElementById('merchViewport');
+            var nameEl = document.getElementById('merchName');
+            var countEl = document.getElementById('merchCount');
             var index = 0;
             var autoTimer = null;
             var isDragging = false;
@@ -263,17 +224,18 @@
                 item.className = 'merch-item';
                 item.dataset.front = p.front;
                 item.dataset.back = p.back;
+                item.dataset.name = p.name;
 
                 var front = document.createElement('img');
                 front.className = 'merch-front';
                 front.src = p.front;
-                front.alt = p.alt + ' — delante';
+                front.alt = 'Camiseta ' + p.name + ' — delante';
                 front.draggable = false;
 
                 var back = document.createElement('img');
                 back.className = 'merch-back';
                 back.src = p.back;
-                back.alt = p.alt + ' — espalda';
+                back.alt = 'Camiseta ' + p.name + ' — espalda';
                 back.draggable = false;
 
                 item.appendChild(front);
@@ -284,7 +246,7 @@
                 var dot = document.createElement('button');
                 dot.className = 'merch-dot' + (i === 0 ? ' active' : '');
                 dot.type = 'button';
-                dot.setAttribute('aria-label', 'Ir a camiseta ' + (i + 1));
+                dot.setAttribute('aria-label', 'Ver camiseta ' + p.name);
                 dot.addEventListener('click', function() {
                     goTo(i);
                     restartAuto();
@@ -298,6 +260,8 @@
                 Array.prototype.forEach.call(dotsWrap.children, function(dot, di) {
                     dot.classList.toggle('active', di === index);
                 });
+                nameEl.textContent = products[index].name;
+                countEl.textContent = (index + 1) + ' / ' + products.length;
             }
 
             function next() { goTo(index + 1); }
@@ -308,7 +272,7 @@
                 autoTimer = setInterval(next, 3200);
             }
 
-            // Enter from the right on first paint
+            // Entra desde la derecha en el primer pintado
             track.style.transition = 'none';
             track.style.transform = 'translateX(100vw)';
             requestAnimationFrame(function() {
@@ -329,6 +293,7 @@
                 justDragged = false;
                 startX = clientX;
                 clearInterval(autoTimer);
+                viewport.classList.add('dragging');
             }
             function onMove(clientX) {
                 if (!isDragging) return;
@@ -337,6 +302,7 @@
             function onUp(clientX) {
                 if (!isDragging) return;
                 isDragging = false;
+                viewport.classList.remove('dragging');
                 var dx = clientX - startX;
                 if (dx < -50) next();
                 else if (dx > 50) prev();
@@ -348,34 +314,19 @@
             window.addEventListener('mouseup', function(e) { onUp(e.clientX); });
             viewport.addEventListener('touchstart', function(e) { onDown(e.touches[0].clientX); }, { passive: true });
             viewport.addEventListener('touchmove', function(e) { onMove(e.touches[0].clientX); }, { passive: true });
-            viewport.addEventListener('touchend', function(e) {
-                onUp(e.changedTouches[0].clientX);
-            });
+            viewport.addEventListener('touchend', function(e) { onUp(e.changedTouches[0].clientX); });
 
-            var lb = document.getElementById('lightbox');
-            var lbImg = document.getElementById('lightboxImg');
-            var lbClose = document.getElementById('lightboxClose');
-            function openLightbox(src) {
-                lbImg.src = src;
-                lb.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                clearInterval(autoTimer);
-            }
-            function closeLightbox() {
-                lb.classList.remove('active');
-                document.body.style.overflow = '';
-                restartAuto();
-            }
-            lbClose.addEventListener('click', closeLightbox);
-            lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+            // Ampliar: delante o espalda según lo que se esté viendo
             track.addEventListener('click', function(e) {
                 if (justDragged) return;
                 var item = e.target.closest('.merch-item');
                 if (!item) return;
-                var src = item.matches(':hover') ? item.dataset.back : item.dataset.front;
-                if (src) openLightbox(src);
+                var showingBack = item.matches(':hover') && !document.documentElement.classList.contains('touch');
+                var src = showingBack ? item.dataset.back : item.dataset.front;
+                if (src) window.DG.lightbox.open(src, 'Camiseta ' + item.dataset.name + (showingBack ? ' — espalda' : ' — delante'));
             });
+            document.addEventListener('dg:lightbox-open', function() { clearInterval(autoTimer); });
+            document.addEventListener('dg:lightbox-close', restartAuto);
         })();
     </script>
     <script src="persistent-music.js"></script>

@@ -28,7 +28,12 @@
             z-index: 1000;
         }
         .nav-logo { display: flex; align-items: center; text-decoration: none; }
-        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
+        .nav-logo-box { position: relative; width: 52px; height: 52px; overflow: hidden; flex: 0 0 auto; }
+        .nav-logo-box > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; transition: filter 0.28s ease; }
+        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil.svg") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
+        .nav-logo-fx { position: absolute; width: 0; height: 0; overflow: hidden; }
+        .nav-logo:hover .nav-logo-box > img, .nav-logo:focus-visible .nav-logo-box > img { filter: grayscale(1) contrast(1.12); }
+        .nav-logo:hover .nav-logo-censor, .nav-logo:focus-visible .nav-logo-censor { opacity: 1; }
         .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
         .nav-links a {
             color: #fff; text-decoration: none; font-size: 13px;
@@ -276,7 +281,7 @@
 
         @media (max-width: 768px) {
             .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 40px; }
+            .nav-logo-box { width: 42px; height: 42px; }
             .nav-links { gap: 14px; }
             .nav-links a { font-size: 10px; }
             .zoom-tunnel { height: 180vh; }
@@ -298,7 +303,7 @@
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>

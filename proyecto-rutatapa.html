@@ -6,85 +6,101 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
-    <title>Ruta de la Tapa — David González</title>
-    <meta name="description" content="Cartelería y gráfica para la Ruta de la Tapa y el Cóctel de Los Alcázares. Diseño de David González, 2026.">
+    <title>Ruta de la Tapa y el Cóctel — David González</title>
+    <meta name="description" content="Cartel oficial, banner y gráfica de producto para la Ruta de la Tapa y el Cóctel de Los Alcázares 2026. Diseño de David González junto a la agencia MDM.">
+    <meta property="og:title" content="Ruta de la Tapa y el Cóctel — David González">
+    <meta property="og:description" content="Cartel oficial, banner y gráfica de producto para Los Alcázares 2026.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/rutatapa/cartel.jpg">
     <link rel="icon" href="perfil.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a, button { -webkit-tap-highlight-color: transparent; }
         body {
             background: #3D2E1C;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Archivo', sans-serif;
             color: #fff;
             overflow-x: hidden;
         }
-        .nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 20px 40px; display: flex;
-            justify-content: space-between; align-items: center;
-            z-index: 1000;
-        }
-        .nav-logo { display: flex; align-items: center; text-decoration: none; }
-        .nav-logo-box img { width: 50px; height: auto; border-radius: 50%; }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a {
-            color: #fff; text-decoration: none; font-size: 13px;
-            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-            transition: opacity 0.3s ease;
-        }
-        .nav-links a:hover { opacity: 0.6; }
-        .music-toggle {
-            font-size: 10px; color: rgba(255,255,255,0.4); cursor: pointer;
-            letter-spacing: -2px; background: none; border: none; padding: 0; font-family: inherit;
-        }
-        .music-toggle:hover { color: #EEFF00; }
 
         .project-hero {
+            position: relative;
             min-height: 100vh;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            text-align: center; padding: 120px 24px 80px;
+            text-align: center; padding: 140px 24px 110px;
             background: #3D2E1C;
+        }
+        .hero-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: rgba(238,255,0,0.7);
         }
         .hero-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.4rem, 7vw, 5.5rem);
-            letter-spacing: 0.06em; line-height: 0.95;
-        }
-        .hero-subtitle {
-            margin-top: 16px;
-            font-size: clamp(10px, 1.2vw, 14px);
-            letter-spacing: 4px; text-transform: uppercase;
-            color: rgba(255,255,255,0.45);
+            font-weight: 400;
+            font-size: clamp(2.6rem, 7.5vw, 6rem);
+            letter-spacing: 0.04em; line-height: 0.92;
         }
         .hero-desc {
-            max-width: 640px; margin: 24px auto 0;
-            font-size: clamp(13px, 1.4vw, 16px);
-            line-height: 1.8; color: rgba(255,255,255,0.65);
+            max-width: 680px; margin: 30px auto 0;
+            font-size: clamp(14px, 1.4vw, 17px);
+            line-height: 1.8; color: rgba(255,255,255,0.7);
             padding: 0 12px;
         }
-        .hero-tags {
-            display: flex; gap: 12px; justify-content: center;
-            margin-top: 28px; flex-wrap: wrap;
+        .hero-desc em {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-size: 1.12em;
+            color: rgba(255,255,255,0.92);
         }
-        .hero-tag {
-            padding: 7px 18px;
-            border: 1px solid rgba(255,255,255,0.2);
-            font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
+        .spec {
+            width: min(100%, 820px);
+            margin: 44px auto 0;
+            text-align: left;
         }
 
         .graficas-section {
-            padding: 70px 40px 100px;
+            padding: 90px 40px 60px;
             background: #3D2E1C;
+        }
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
         }
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
             font-size: clamp(2.2rem, 5vw, 3.6rem);
             letter-spacing: 0.06em;
-            margin-bottom: 28px;
+            line-height: 0.95;
+        }
+        .section-meta {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            text-align: right;
         }
         .graficas-grid {
             display: grid;
@@ -92,25 +108,22 @@
             gap: 16px;
         }
         .grafica-item {
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
             background: #2a2015;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            cursor: zoom-in;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .grafica-item:hover { transform: scale(1.02); }
+        .grafica-item:hover { transform: scale(1.015); }
         .grafica-item img {
             width: 100%;
             height: auto;
             display: block;
             object-fit: contain;
         }
-        .grafica-item.tall {
-            grid-row: span 1;
-        }
 
         .mupis-section {
-            padding: 40px 40px 100px;
+            padding: 70px 40px 110px;
             background: #2a2015;
         }
         .mupis-grid {
@@ -119,53 +132,39 @@
             gap: 14px;
         }
         .mupis-grid-item {
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            cursor: pointer;
+            cursor: zoom-in;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .mupis-grid-item:hover { transform: scale(1.015); }
         .mupis-grid-item img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .lightbox {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.97); z-index: 9999;
-            display: flex; align-items: center; justify-content: center; padding: 60px;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
-            cursor: zoom-out;
-        }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; }
-        .lightbox-close {
-            position: absolute; top: 30px; right: 40px;
-            color: #fff; font-size: 14px; letter-spacing: 3px; cursor: pointer; opacity: 0.7;
-        }
-        .back-btn {
-            position: fixed; bottom: 40px; left: 40px;
-            padding: 15px 30px; background: #fff; color: #3D2E1C;
-            text-decoration: none; font-size: 13px; font-weight: 600;
-            letter-spacing: 2px; text-transform: uppercase; z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        .back-btn:hover { background: #EEFF00; color: #000; }
+        .next-project { background: #3D2E1C; }
+        .site-footer { background: #3D2E1C; }
 
         @media (max-width: 768px) {
-            .nav { padding: 12px 15px; }
-            .nav-logo-box img { width: 40px; }
-            .nav-links { gap: 20px; }
-            .nav-links a { font-size: 11px; }
-            .graficas-section, .mupis-section { padding: 40px 16px 70px; }
+            .project-hero { padding: 120px 20px 90px; }
+            .hero-eyebrow { font-size: 10px; letter-spacing: 0.18em; }
+            .hero-desc { margin-top: 22px; }
+            .spec { margin-top: 34px; }
+            .graficas-section { padding: 60px 16px 40px; }
+            .mupis-section { padding: 50px 16px 80px; }
+            .section-head { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 20px; }
+            .section-meta { text-align: left; }
             .graficas-grid, .mupis-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .back-btn { bottom: 20px; left: 20px; padding: 12px 22px; font-size: 11px; }
         }
     </style>
+    <link rel="stylesheet" href="site.css?v=5">
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"></div>
+            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -177,63 +176,68 @@
     </nav>
 
     <section class="project-hero">
+        <p class="hero-eyebrow">Los Alcázares · 2026</p>
         <h1 class="hero-title">RUTA DE LA TAPA<br>Y EL CÓCTEL</h1>
-        <p class="hero-subtitle">Los Alcázares · Cliente institucional · 2026</p>
-        <p class="hero-desc">Diseño del cartel oficial, banner y gráficas de producto para la Ruta de la Tapa y el Cóctel de Los Alcázares. El proyecto del cartel se realizó junto a la agencia de marketing MDM: yo como diseñador del mismo en varios formatos, y la agencia quien lo presentaba. Cliente institucional: Ayuntamiento, Hostecar y Gastromar.</p>
-        <div class="hero-tags">
-            <span class="hero-tag">Cartelería</span>
-            <span class="hero-tag">Diseño Editorial</span>
-            <span class="hero-tag">Cliente Institucional</span>
-        </div>
+        <p class="hero-desc">Diseño del <em>cartel oficial</em>, banner y gráficas de producto para la Ruta de la Tapa y el Cóctel de Los Alcázares. El proyecto del cartel se realizó junto a la agencia de marketing MDM: yo como diseñador del mismo en varios formatos, y la agencia quien lo presentaba.</p>
+        <dl class="spec">
+            <div><dt>Cliente</dt><dd>Ayuntamiento de Los Alcázares, Hostecar y Gastromar</dd></div>
+            <div><dt>Rol</dt><dd>Diseño del cartel y adaptaciones a todos los formatos</dd></div>
+            <div><dt>Con</dt><dd>Agencia MDM</dd></div>
+            <div><dt>Piezas</dt><dd>Cartel, banner, gráfica de producto y mupis</dd></div>
+        </dl>
+        <div class="scroll-hint">Scroll</div>
     </section>
 
     <!-- Gráficas -->
     <section class="graficas-section">
-        <h2 class="section-title">Gráficas</h2>
+        <div class="section-head">
+            <h2 class="section-title">Cartel y gráficas</h2>
+            <p class="section-meta">Cartel oficial · 5 versiones de color</p>
+        </div>
         <div class="graficas-grid">
-            <div class="grafica-item"><img src="rutatapa/cartel.jpg" alt="Cartel oficial" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-gris.jpg" alt="Gráfica gris" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-lila.jpg" alt="Gráfica lila" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-azul.jpg" alt="Gráfica azul" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-amarilla.jpg" alt="Gráfica amarilla" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-dorada.jpg" alt="Gráfica dorada" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/cartel.jpg" alt="Cartel oficial de la Ruta de la Tapa y el Cóctel 2026" data-lightbox></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-gris.jpg" alt="Gráfica de producto — versión gris" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-lila.jpg" alt="Gráfica de producto — versión lila" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-azul.jpg" alt="Gráfica de producto — versión azul" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-amarilla.jpg" alt="Gráfica de producto — versión amarilla" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="grafica-item"><img src="rutatapa/grafica-dorada.jpg" alt="Gráfica de producto — versión dorada" data-lightbox loading="lazy" decoding="async"></div>
         </div>
     </section>
 
     <!-- Mupis -->
     <section class="mupis-section">
-        <h2 class="section-title">Mupis</h2>
+        <div class="section-head">
+            <h2 class="section-title">Mupis</h2>
+            <p class="section-meta">Exterior · 5 emplazamientos</p>
+        </div>
         <div class="mupis-grid">
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-1.jpg" alt="Mupi azul" data-lightbox></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-2.jpg" alt="Mupi naranja" data-lightbox></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi verde" data-lightbox></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi dorado" data-lightbox></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi teal" data-lightbox></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-1.jpg" alt="Mupi — versión azul" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-2.jpg" alt="Mupi — versión naranja" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi — versión verde" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi — versión dorada" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi — versión turquesa" data-lightbox loading="lazy" decoding="async"></div>
         </div>
     </section>
 
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightboxClose">✕ Cerrar</span>
-        <img src="" alt="Imagen ampliada" id="lightboxImg">
-    </div>
-    <a href="work.html" class="back-btn">← Volver</a>
+    <a href="proyecto-presion.html" class="next-project">
+        <span class="next-project-label">Siguiente proyecto</span>
+        <span class="next-project-title">Presión Sonora · Ático Mamaluna</span>
+        <span class="next-project-meta">Cartelería para fiestas y eventos</span>
+    </a>
 
-    <script>
-        (function() {
-            var lb = document.getElementById('lightbox');
-            var lbImg = document.getElementById('lightboxImg');
-            var lbClose = document.getElementById('lightboxClose');
-            function openLightbox(src) { lbImg.src = src; lb.classList.add('active'); document.body.style.overflow = 'hidden'; }
-            function closeLightbox() { lb.classList.remove('active'); document.body.style.overflow = ''; }
-            if (lbClose) lbClose.addEventListener('click', closeLightbox);
-            if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
-            document.querySelectorAll('[data-lightbox]').forEach(function(img) {
-                img.style.cursor = 'pointer';
-                img.addEventListener('click', function() { openLightbox(img.src); });
-            });
-        })();
-    </script>
+    <footer class="site-footer">
+        <span>© 2026 David González · Murcia</span>
+        <a class="site-footer-mail" href="mailto:davidgonzagarcia33@gmail.com">davidgonzagarcia33@gmail.com</a>
+        <nav class="site-footer-social" aria-label="Redes">
+            <a href="https://www.instagram.com/d4vidd33/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/david-gonz%C3%A1lez-garc%C3%ADaa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.behance.net/davigonzalez35" target="_blank" rel="noopener noreferrer">Behance</a>
+        </nav>
+    </footer>
+
+    <a href="work.html" class="back-btn">Work</a>
+
+    <script src="site.js?v=1"></script>
     <script src="persistent-music.js"></script>
 </body>
 </html>
