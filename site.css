@@ -1,7 +1,7 @@
 /* ============================================================
-   David Gonzùlez ù capa comùn de estilo
-   Tipografùa: Bebas Neue (display) ù Archivo (texto/UI) ù Instrument Serif (acentos)
-   Se carga despuùs del <style> de cada pùgina para unificar nav,
+   David Gonz?lez ? capa com?n de estilo
+   Tipograf?a: Bebas Neue (display) ? Archivo (texto/UI) ? Instrument Serif (acentos)
+   Se carga despu?s del <style> de cada p?gina para unificar nav,
    controles, lightbox, fichas de proyecto, pie y accesibilidad.
    ============================================================ */
 
@@ -22,6 +22,9 @@
 }
 
 html { -webkit-text-size-adjust: 100%; }
+
+/* <picture> (AVIF/WebP) no participa en el layout: la <img> se comporta como antes */
+picture { display: contents; }
 
 body {
     font-family: var(--font-text);
@@ -57,7 +60,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 .meta-line span + span::before {
-    content: 'ù';
+    content: '¬∑';
     margin: 0 12px;
     color: var(--fg-35);
 }
@@ -70,7 +73,7 @@ body.lightbox-open { overflow: hidden; }
     text-transform: none;
 }
 
-/* ---------- Navegaciùn ---------- */
+/* ---------- Navegaci?n ---------- */
 .nav {
     position: fixed;
     top: 0;
@@ -135,7 +138,7 @@ body.lightbox-open { overflow: hidden; }
 .nav-logo-censor {
     position: absolute;
     inset: 0;
-    background: url("perfil.svg") center 18% / cover no-repeat;
+    background: url("perfil-nav.webp") center 18% / cover no-repeat;
     clip-path: inset(55% 0 25% 0);
     filter: url("#logo-pixel") grayscale(1) contrast(1.45);
     opacity: 0;
@@ -236,7 +239,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 .back-btn::before {
-    content: '?';
+    content: '‚Üê';
     font-family: var(--font-text);
     transition: transform 0.4s var(--ease);
 }
@@ -372,7 +375,7 @@ body.lightbox-open { overflow: hidden; }
     color: var(--fg-70);
 }
 
-/* ---------- Cabecera de serie (01 ù Nombre ùùù) ---------- */
+/* ---------- Cabecera de serie (01 ? Nombre ???) ---------- */
 .series-head {
     display: flex;
     align-items: center;
@@ -476,7 +479,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 .next-project-title::after {
-    content: '?';
+    content: '‚Üí';
     display: inline-block;
     margin-left: 0.25em;
     font-family: var(--font-text);
@@ -554,7 +557,7 @@ body.lightbox-open { overflow: hidden; }
     }
 }
 
-/* ---------- Mùvil ---------- */
+/* ---------- M?vil ---------- */
 @media (max-width: 768px) {
     .nav { padding: 14px var(--pad-x); }
     .nav-logo-box { width: 42px; height: 42px; }

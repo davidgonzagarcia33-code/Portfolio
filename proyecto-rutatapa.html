@@ -12,7 +12,7 @@
     <meta property="og:description" content="Cartel oficial, banner y gráfica de producto para Los Alcázares 2026.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/rutatapa/cartel.jpg">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -159,12 +159,12 @@
             .graficas-grid, .mupis-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
     </style>
-    <link rel="stylesheet" href="site.css?v=5">
+    <link rel="stylesheet" href="site.css?v=7">
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -195,12 +195,12 @@
             <p class="section-meta">Cartel oficial · 5 versiones de color</p>
         </div>
         <div class="graficas-grid">
-            <div class="grafica-item"><img src="rutatapa/cartel.jpg" alt="Cartel oficial de la Ruta de la Tapa y el Cóctel 2026" data-lightbox></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-gris.jpg" alt="Gráfica de producto — versión gris" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-lila.jpg" alt="Gráfica de producto — versión lila" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-azul.jpg" alt="Gráfica de producto — versión azul" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-amarilla.jpg" alt="Gráfica de producto — versión amarilla" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="grafica-item"><img src="rutatapa/grafica-dorada.jpg" alt="Gráfica de producto — versión dorada" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/cartel.avif" type="image/avif"><source srcset="rutatapa/cartel.webp" type="image/webp"><img src="rutatapa/cartel.jpg" alt="Cartel oficial de la Ruta de la Tapa y el Cóctel 2026" data-lightbox decoding="async" fetchpriority="high"></picture></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/grafica-gris.avif" type="image/avif"><source srcset="rutatapa/grafica-gris.webp" type="image/webp"><img src="rutatapa/grafica-gris.jpg" alt="Gráfica de producto — versión gris" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/grafica-lila.avif" type="image/avif"><source srcset="rutatapa/grafica-lila.webp" type="image/webp"><img src="rutatapa/grafica-lila.jpg" alt="Gráfica de producto — versión lila" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/grafica-azul.avif" type="image/avif"><source srcset="rutatapa/grafica-azul.webp" type="image/webp"><img src="rutatapa/grafica-azul.jpg" alt="Gráfica de producto — versión azul" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/grafica-amarilla.avif" type="image/avif"><source srcset="rutatapa/grafica-amarilla.webp" type="image/webp"><img src="rutatapa/grafica-amarilla.jpg" alt="Gráfica de producto — versión amarilla" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="grafica-item"><picture><source srcset="rutatapa/grafica-dorada.avif" type="image/avif"><source srcset="rutatapa/grafica-dorada.webp" type="image/webp"><img src="rutatapa/grafica-dorada.jpg" alt="Gráfica de producto — versión dorada" data-lightbox loading="lazy" decoding="async"></picture></div>
         </div>
     </section>
 
@@ -211,11 +211,11 @@
             <p class="section-meta">Exterior · 5 emplazamientos</p>
         </div>
         <div class="mupis-grid">
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-1.jpg" alt="Mupi — versión azul" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-2.jpg" alt="Mupi — versión naranja" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi — versión verde" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi — versión dorada" data-lightbox loading="lazy" decoding="async"></div>
-            <div class="mupis-grid-item"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi — versión turquesa" data-lightbox loading="lazy" decoding="async"></div>
+            <div class="mupis-grid-item"><picture><source srcset="rutatapa/mupi-mockup-1.avif" type="image/avif"><source srcset="rutatapa/mupi-mockup-1.webp" type="image/webp"><img src="rutatapa/mupi-mockup-1.jpg" alt="Mupi — versión azul" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="mupis-grid-item"><picture><source srcset="rutatapa/mupi-mockup-2.avif" type="image/avif"><source srcset="rutatapa/mupi-mockup-2.webp" type="image/webp"><img src="rutatapa/mupi-mockup-2.jpg" alt="Mupi — versión naranja" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="mupis-grid-item"><picture><source srcset="rutatapa/mupi-mockup-3.avif" type="image/avif"><source srcset="rutatapa/mupi-mockup-3.webp" type="image/webp"><img src="rutatapa/mupi-mockup-3.jpg" alt="Mupi — versión verde" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="mupis-grid-item"><picture><source srcset="rutatapa/mupi-mockup-4.avif" type="image/avif"><source srcset="rutatapa/mupi-mockup-4.webp" type="image/webp"><img src="rutatapa/mupi-mockup-4.jpg" alt="Mupi — versión dorada" data-lightbox loading="lazy" decoding="async"></picture></div>
+            <div class="mupis-grid-item"><picture><source srcset="rutatapa/mupi-mockup-5.avif" type="image/avif"><source srcset="rutatapa/mupi-mockup-5.webp" type="image/webp"><img src="rutatapa/mupi-mockup-5.jpg" alt="Mupi — versión turquesa" data-lightbox loading="lazy" decoding="async"></picture></div>
         </div>
     </section>
 
@@ -237,7 +237,7 @@
 
     <a href="work.html" class="back-btn">Work</a>
 
-    <script src="site.js?v=1"></script>
-    <script src="persistent-music.js"></script>
+    <script src="site.js?v=2"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

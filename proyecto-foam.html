@@ -11,7 +11,7 @@
     <meta property="og:title" content="Foam Gum — David González">
     <meta property="og:description" content="Dirección creativa y diseño gráfico para Foam Gum.">
     <meta property="og:type" content="website">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -43,7 +43,7 @@
         }
         .nav-logo-box { position: relative; width: 52px; height: 52px; overflow: hidden; flex: 0 0 auto; }
         .nav-logo-box > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; transition: filter 0.28s ease; }
-        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil.svg") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
+        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil-nav.webp") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
         .nav-logo-fx { position: absolute; width: 0; height: 0; overflow: hidden; }
         .nav-logo:hover .nav-logo-box > img, .nav-logo:focus-visible .nav-logo-box > img { filter: grayscale(1) contrast(1.12); }
         .nav-logo:hover .nav-logo-censor, .nav-logo:focus-visible .nav-logo-censor { opacity: 1; }
@@ -270,12 +270,13 @@
             .lightbox-close { top: 15px; right: 15px; padding: 12px; }
             .lightbox img { max-height: 70vh; }
         }
+        picture { display: contents; }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -298,19 +299,19 @@
             </div>
 
             <div class="zoom-card" data-depth="3000" data-x="-35" data-y="-25" data-rot="-8" style="width:clamp(180px,22vw,320px)">
-                <img src="foam/grafica-1.png" alt="Foam Gum — Gráfica 1" data-lightbox loading="lazy" decoding="async">
+                <picture><source srcset="foam/grafica-1.avif" type="image/avif"><source srcset="foam/grafica-1.webp" type="image/webp"><img src="foam/grafica-1.png" alt="Foam Gum — Gráfica 1" data-lightbox loading="lazy" decoding="async"></picture>
             </div>
             <div class="zoom-card" data-depth="4000" data-x="30" data-y="20" data-rot="6" style="width:clamp(160px,18vw,280px)">
-                <img src="foam/grafica-4.png" alt="Foam Gum — Gráfica 4" data-lightbox loading="lazy" decoding="async">
+                <picture><source srcset="foam/grafica-4.avif" type="image/avif"><source srcset="foam/grafica-4.webp" type="image/webp"><img src="foam/grafica-4.png" alt="Foam Gum — Gráfica 4" data-lightbox loading="lazy" decoding="async"></picture>
             </div>
             <div class="zoom-card" data-depth="5500" data-x="-42" data-y="15" data-rot="10" style="width:clamp(200px,25vw,380px)">
-                <img src="foam/grafica-3.png" alt="Foam Gum — Gráfica 3" data-lightbox loading="lazy" decoding="async">
+                <picture><source srcset="foam/grafica-3.avif" type="image/avif"><source srcset="foam/grafica-3.webp" type="image/webp"><img src="foam/grafica-3.png" alt="Foam Gum — Gráfica 3" data-lightbox loading="lazy" decoding="async"></picture>
             </div>
             <div class="zoom-card" data-depth="7000" data-x="38" data-y="-10" data-rot="-7" style="width:clamp(180px,20vw,320px)">
-                <img src="foam/grafica-2.png" alt="Foam Gum — Gráfica 2" data-lightbox loading="lazy" decoding="async">
+                <picture><source srcset="foam/grafica-2.avif" type="image/avif"><source srcset="foam/grafica-2.webp" type="image/webp"><img src="foam/grafica-2.png" alt="Foam Gum — Gráfica 2" data-lightbox loading="lazy" decoding="async"></picture>
             </div>
             <div class="zoom-card" data-depth="8500" data-x="-10" data-y="30" data-rot="5" style="width:clamp(170px,20vw,300px)">
-                <img src="foam/coche.png" alt="Foam Gum — Coche" data-lightbox loading="lazy" decoding="async">
+                <picture><source srcset="foam/coche.avif" type="image/avif"><source srcset="foam/coche.webp" type="image/webp"><img src="foam/coche.png" alt="Foam Gum — Coche" data-lightbox loading="lazy" decoding="async"></picture>
             </div>
 
             <div class="zoom-info" id="zoomInfo">
@@ -479,7 +480,7 @@
         cards.forEach(function(card) {
             card.addEventListener('click', function() {
                 var img = card.querySelector('img[data-lightbox]');
-                if (img) openLightbox(img.src);
+                if (img) openLightbox(img.currentSrc || img.src);
             });
         });
 
@@ -488,6 +489,6 @@
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
     })();
     </script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

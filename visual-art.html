@@ -12,7 +12,7 @@
     <meta property="og:description" content="Cartelería, lettering y piezas gráficas personales de David González.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/og-image.png">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -123,12 +123,12 @@
             .art-item { margin-bottom: 10px; }
         }
     </style>
-    <link rel="stylesheet" href="site.css?v=5">
+    <link rel="stylesheet" href="site.css?v=7">
 </head>
 <body>
     <nav class="nav nav--glass">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -158,6 +158,7 @@
         </nav>
     </footer>
 
+    <script src="site.js?v=2"></script>
     <script>
         (function() {
             var pieces = [
@@ -186,6 +187,7 @@
             ];
 
             var grid = document.getElementById('artGrid');
+            var pos = 0; // las 3 primeras piezas se cargan ya, el resto en lazy
             pieces.forEach(function(entry) {
                 var isVideo = !Array.isArray(entry);
                 var src = isVideo ? entry.video : entry[0];
@@ -209,13 +211,9 @@
                     }, { threshold: 0.3 }).observe(vid);
                     item.appendChild(vid);
                 } else {
-                    var img = document.createElement('img');
-                    img.src = src;
-                    img.alt = title;
-                    img.loading = 'lazy';
-                    img.decoding = 'async';
-                    img.onerror = function() { item.remove(); };
-                    item.appendChild(img);
+                    var made = window.DG.picture(src, { alt: title, loading: pos++ < 3 ? 'eager' : 'lazy' });
+                    made.img.onerror = function() { item.remove(); };
+                    item.appendChild(made.picture);
                     item.setAttribute('data-lightbox', '');
                     item.setAttribute('data-caption', title);
                 }
@@ -227,7 +225,6 @@
             });
         })();
     </script>
-    <script src="site.js?v=1"></script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     <title>Blackout Smashburger — David González</title>
     <meta name="description" content="Proyecto Blackout Smashburger: dirección de contenido, branding y fotografía por David González.">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
         .nav-logo { display: flex; align-items: center; text-decoration: none; }
         .nav-logo-box { position: relative; width: 52px; height: 52px; overflow: hidden; flex: 0 0 auto; }
         .nav-logo-box > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; transition: filter 0.28s ease; }
-        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil.svg") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
+        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil-nav.webp") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
         .nav-logo-fx { position: absolute; width: 0; height: 0; overflow: hidden; }
         .nav-logo:hover .nav-logo-box > img, .nav-logo:focus-visible .nav-logo-box > img { filter: grayscale(1) contrast(1.12); }
         .nav-logo:hover .nav-logo-censor, .nav-logo:focus-visible .nav-logo-censor { opacity: 1; }
@@ -298,12 +298,13 @@
             .media-grid { grid-template-columns: repeat(2, 1fr); }
             .videos-grid { grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-left: auto; margin-right: auto; }
         }
+        picture { display: contents; }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -350,11 +351,11 @@
         <p class="section-sub">Dirección de arte y copy</p>
 
         <div class="media-grid">
-            <div class="media-item"><img src="blackout/grafica-01.jpg" alt="Campaña Blackout — ¿Sabes por qué Blackout es la mejor?" data-lightbox></div>
-            <div class="media-item"><img src="blackout/grafica-04.jpg" alt="Campaña Blackout — Por eso somos los mejores" data-lightbox></div>
-            <div class="media-item"><img src="blackout/grafica-03.jpg" alt="Campaña Blackout — No deja a nadie indiferente" data-lightbox></div>
-            <div class="media-item"><img src="blackout/grafica-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí" data-lightbox></div>
-            <div class="media-item"><img src="blackout/grafica-mentalmente-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí (bandeja)" data-lightbox></div>
+            <div class="media-item"><picture><source srcset="blackout/grafica-01.avif" type="image/avif"><source srcset="blackout/grafica-01.webp" type="image/webp"><img src="blackout/grafica-01.jpg" alt="Campaña Blackout — ¿Sabes por qué Blackout es la mejor?" data-lightbox decoding="async"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/grafica-04.avif" type="image/avif"><source srcset="blackout/grafica-04.webp" type="image/webp"><img src="blackout/grafica-04.jpg" alt="Campaña Blackout — Por eso somos los mejores" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/grafica-03.avif" type="image/avif"><source srcset="blackout/grafica-03.webp" type="image/webp"><img src="blackout/grafica-03.jpg" alt="Campaña Blackout — No deja a nadie indiferente" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/grafica-02.avif" type="image/avif"><source srcset="blackout/grafica-02.webp" type="image/webp"><img src="blackout/grafica-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/grafica-mentalmente-02.avif" type="image/avif"><source srcset="blackout/grafica-mentalmente-02.webp" type="image/webp"><img src="blackout/grafica-mentalmente-02.jpg" alt="Campaña Blackout — Mentalmente estoy aquí (bandeja)" data-lightbox decoding="async" loading="lazy"></picture></div>
         </div>
     </section>
 
@@ -365,28 +366,28 @@
         <div class="series-block">
             <span class="series-label">Promos Super Combo</span>
             <div class="media-grid">
-                <div class="media-item"><img src="blackout/chilicheese-1.jpg" alt="Chicken Box Super Combo" data-lightbox></div>
-                <div class="media-item"><img src="blackout/chilicheese-2.jpg" alt="Nuggets Chili Cheese" data-lightbox></div>
-                <div class="media-item"><img src="blackout/chilicheese-3.jpg" alt="Cheese Box Super Combo" data-lightbox></div>
-                <div class="media-item"><img src="blackout/tequenos-nutella.jpg" alt="Promoción Tequeños de Nutella" data-lightbox></div>
+                <div class="media-item"><picture><source srcset="blackout/chilicheese-1.avif" type="image/avif"><source srcset="blackout/chilicheese-1.webp" type="image/webp"><img src="blackout/chilicheese-1.jpg" alt="Chicken Box Super Combo" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/chilicheese-2.avif" type="image/avif"><source srcset="blackout/chilicheese-2.webp" type="image/webp"><img src="blackout/chilicheese-2.jpg" alt="Nuggets Chili Cheese" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/chilicheese-3.avif" type="image/avif"><source srcset="blackout/chilicheese-3.webp" type="image/webp"><img src="blackout/chilicheese-3.jpg" alt="Cheese Box Super Combo" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/tequenos-nutella.avif" type="image/avif"><source srcset="blackout/tequenos-nutella.webp" type="image/webp"><img src="blackout/tequenos-nutella.jpg" alt="Promoción Tequeños de Nutella" data-lightbox decoding="async" loading="lazy"></picture></div>
             </div>
         </div>
 
         <div class="series-block">
             <span class="series-label">Carta y packaging</span>
             <div class="series-grid carta-pack">
-                <div class="media-item"><img src="blackout/carta-anverso.jpg" alt="Carta Blackout — anverso" data-lightbox></div>
-                <div class="media-item"><img src="blackout/carta-reverso.jpg" alt="Carta Blackout — reverso" data-lightbox></div>
-                <div class="media-item"><img src="blackout/pack.jpg" alt="Packaging Blackout — cajas Smash Burger" data-lightbox></div>
+                <div class="media-item"><picture><source srcset="blackout/carta-anverso.avif" type="image/avif"><source srcset="blackout/carta-anverso.webp" type="image/webp"><img src="blackout/carta-anverso.jpg" alt="Carta Blackout — anverso" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/carta-reverso.avif" type="image/avif"><source srcset="blackout/carta-reverso.webp" type="image/webp"><img src="blackout/carta-reverso.jpg" alt="Carta Blackout — reverso" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/pack.avif" type="image/avif"><source srcset="blackout/pack.webp" type="image/webp"><img src="blackout/pack.jpg" alt="Packaging Blackout — cajas Smash Burger" data-lightbox decoding="async" loading="lazy"></picture></div>
             </div>
         </div>
 
         <div class="series-block">
             <span class="series-label">Carrusel Instagram · Señales de tráfico</span>
             <div class="series-grid">
-                <div class="media-item"><img src="blackout/senal-1.jpg" alt="Señal Stop Vegan" data-lightbox></div>
-                <div class="media-item"><img src="blackout/senal-2.jpg" alt="Señal hamburguesa vegetal" data-lightbox></div>
-                <div class="media-item"><img src="blackout/senal-3.jpg" alt="Señal camino con curvas" data-lightbox></div>
+                <div class="media-item"><picture><source srcset="blackout/senal-1.avif" type="image/avif"><source srcset="blackout/senal-1.webp" type="image/webp"><img src="blackout/senal-1.jpg" alt="Señal Stop Vegan" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/senal-2.avif" type="image/avif"><source srcset="blackout/senal-2.webp" type="image/webp"><img src="blackout/senal-2.jpg" alt="Señal hamburguesa vegetal" data-lightbox decoding="async" loading="lazy"></picture></div>
+                <div class="media-item"><picture><source srcset="blackout/senal-3.avif" type="image/avif"><source srcset="blackout/senal-3.webp" type="image/webp"><img src="blackout/senal-3.jpg" alt="Señal camino con curvas" data-lightbox decoding="async" loading="lazy"></picture></div>
             </div>
         </div>
     </section>
@@ -395,15 +396,15 @@
         <h2 class="section-title">Contenido para redes</h2>
         <p class="section-sub">Fotografía y clips para feed</p>
         <div class="media-grid">
-            <div class="media-item"><img src="blackout/fotos/foto-01.jpg" alt="Foto Blackout 01" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-02.jpg" alt="Foto Blackout 02" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-03.jpg" alt="Foto Blackout 03" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-04.jpg" alt="Foto Blackout 04" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-05.jpg" alt="Foto Blackout 05" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-06.jpg" alt="Foto Blackout 06" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-07.jpg" alt="Foto Blackout 07" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-08.jpg" alt="Foto Blackout 08" data-lightbox></div>
-            <div class="media-item"><img src="blackout/fotos/foto-10.jpg" alt="Foto Blackout 10" data-lightbox></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-01.avif" type="image/avif"><source srcset="blackout/fotos/foto-01.webp" type="image/webp"><img src="blackout/fotos/foto-01.jpg" alt="Foto Blackout 01" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-02.avif" type="image/avif"><source srcset="blackout/fotos/foto-02.webp" type="image/webp"><img src="blackout/fotos/foto-02.jpg" alt="Foto Blackout 02" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-03.avif" type="image/avif"><source srcset="blackout/fotos/foto-03.webp" type="image/webp"><img src="blackout/fotos/foto-03.jpg" alt="Foto Blackout 03" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-04.avif" type="image/avif"><source srcset="blackout/fotos/foto-04.webp" type="image/webp"><img src="blackout/fotos/foto-04.jpg" alt="Foto Blackout 04" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-05.avif" type="image/avif"><source srcset="blackout/fotos/foto-05.webp" type="image/webp"><img src="blackout/fotos/foto-05.jpg" alt="Foto Blackout 05" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-06.avif" type="image/avif"><source srcset="blackout/fotos/foto-06.webp" type="image/webp"><img src="blackout/fotos/foto-06.jpg" alt="Foto Blackout 06" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-07.avif" type="image/avif"><source srcset="blackout/fotos/foto-07.webp" type="image/webp"><img src="blackout/fotos/foto-07.jpg" alt="Foto Blackout 07" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-08.avif" type="image/avif"><source srcset="blackout/fotos/foto-08.webp" type="image/webp"><img src="blackout/fotos/foto-08.jpg" alt="Foto Blackout 08" data-lightbox decoding="async" loading="lazy"></picture></div>
+            <div class="media-item"><picture><source srcset="blackout/fotos/foto-10.avif" type="image/avif"><source srcset="blackout/fotos/foto-10.webp" type="image/webp"><img src="blackout/fotos/foto-10.jpg" alt="Foto Blackout 10" data-lightbox decoding="async" loading="lazy"></picture></div>
         </div>
         <div class="videos-grid">
             <div class="video-item"><video src="blackout/clip-eee.mp4" muted loop playsinline preload="metadata"></video></div>
@@ -475,10 +476,10 @@
             lb.addEventListener('click', function(e){ if (e.target === lb) closeLightbox(); });
             document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
             document.querySelectorAll('[data-lightbox]').forEach(function(img){
-                img.addEventListener('click', function(){ openLightbox(img.src); });
+                img.addEventListener('click', function(){ openLightbox(img.currentSrc || img.src); });
             });
         })();
     </script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

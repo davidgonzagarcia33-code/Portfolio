@@ -12,7 +12,7 @@
     <meta property="og:description" content="Camisetas y merch gráfico de David González.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/og-image.png">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -154,12 +154,12 @@
             .merch-caption { margin-top: 10px; gap: 12px; }
         }
     </style>
-    <link rel="stylesheet" href="site.css?v=5">
+    <link rel="stylesheet" href="site.css?v=7">
 </head>
 <body>
     <nav class="nav nav--glass">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -196,7 +196,7 @@
         </nav>
     </footer>
 
-    <script src="site.js?v=1"></script>
+    <script src="site.js?v=2"></script>
     <script>
         (function() {
             var products = [
@@ -226,20 +226,22 @@
                 item.dataset.back = p.back;
                 item.dataset.name = p.name;
 
-                var front = document.createElement('img');
-                front.className = 'merch-front';
-                front.src = p.front;
-                front.alt = 'Camiseta ' + p.name + ' — delante';
-                front.draggable = false;
+                var front = window.DG.picture(p.front, {
+                    className: 'merch-front',
+                    alt: 'Camiseta ' + p.name + ' — delante',
+                    draggable: false,
+                    loading: i === 0 ? 'eager' : 'lazy',
+                    fetchpriority: i === 0 ? 'high' : null
+                });
+                var back = window.DG.picture(p.back, {
+                    className: 'merch-back',
+                    alt: 'Camiseta ' + p.name + ' — espalda',
+                    draggable: false,
+                    loading: 'lazy'
+                });
 
-                var back = document.createElement('img');
-                back.className = 'merch-back';
-                back.src = p.back;
-                back.alt = 'Camiseta ' + p.name + ' — espalda';
-                back.draggable = false;
-
-                item.appendChild(front);
-                item.appendChild(back);
+                item.appendChild(front.picture);
+                item.appendChild(back.picture);
                 slide.appendChild(item);
                 track.appendChild(slide);
 
@@ -322,13 +324,14 @@
                 var item = e.target.closest('.merch-item');
                 if (!item) return;
                 var showingBack = item.matches(':hover') && !document.documentElement.classList.contains('touch');
-                var src = showingBack ? item.dataset.back : item.dataset.front;
+                var shown = item.querySelector(showingBack ? '.merch-back' : '.merch-front');
+                var src = (shown && shown.currentSrc) || (showingBack ? item.dataset.back : item.dataset.front);
                 if (src) window.DG.lightbox.open(src, 'Camiseta ' + item.dataset.name + (showingBack ? ' — espalda' : ' — delante'));
             });
             document.addEventListener('dg:lightbox-open', function() { clearInterval(autoTimer); });
             document.addEventListener('dg:lightbox-close', restartAuto);
         })();
     </script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

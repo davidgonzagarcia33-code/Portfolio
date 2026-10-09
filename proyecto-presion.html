@@ -11,7 +11,7 @@
     <meta property="og:title" content="Presión Sonora · Ático Mamaluna — David González">
     <meta property="og:description" content="Cartelería para fiestas y eventos.">
     <meta property="og:type" content="website">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -38,7 +38,7 @@
         .nav-logo-box { display: flex; align-items: center; justify-content: center; }
         .nav-logo-box { position: relative; width: 52px; height: 52px; overflow: hidden; flex: 0 0 auto; }
         .nav-logo-box > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; transition: filter 0.28s ease; }
-        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil.svg") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
+        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil-nav.webp") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
         .nav-logo-fx { position: absolute; width: 0; height: 0; overflow: hidden; }
         .nav-logo:hover .nav-logo-box > img, .nav-logo:focus-visible .nav-logo-box > img { filter: grayscale(1) contrast(1.12); }
         .nav-logo:hover .nav-logo-censor, .nav-logo:focus-visible .nav-logo-censor { opacity: 1; }
@@ -176,12 +176,13 @@
             .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
         }
+        picture { display: contents; }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -206,14 +207,14 @@
 
     <!-- Grid posters -->
     <div class="posters-grid">
-        <div class="poster-item" data-lightbox-src="presion/cartel-oscuro.jpg"><img src="presion/cartel-oscuro.jpg" alt="Presión Sonora"></div>
-        <div class="poster-item" data-lightbox-src="presion/atico-mamaluna.jpg"><img src="presion/atico-mamaluna.jpg" alt="Ático Mamaluna"></div>
-        <div class="poster-item" data-lightbox-src="presion/cartel-claro.jpg"><img src="presion/cartel-claro.jpg" alt="Presión Sonora variante"></div>
+        <div class="poster-item" data-lightbox-src="presion/cartel-oscuro.jpg"><picture><source srcset="presion/cartel-oscuro.avif" type="image/avif"><source srcset="presion/cartel-oscuro.webp" type="image/webp"><img src="presion/cartel-oscuro.jpg" alt="Presión Sonora" decoding="async"></picture></div>
+        <div class="poster-item" data-lightbox-src="presion/atico-mamaluna.jpg"><picture><source srcset="presion/atico-mamaluna.avif" type="image/avif"><source srcset="presion/atico-mamaluna.webp" type="image/webp"><img src="presion/atico-mamaluna.jpg" alt="Ático Mamaluna" decoding="async" loading="lazy"></picture></div>
+        <div class="poster-item" data-lightbox-src="presion/cartel-claro.jpg"><picture><source srcset="presion/cartel-claro.avif" type="image/avif"><source srcset="presion/cartel-claro.webp" type="image/webp"><img src="presion/cartel-claro.jpg" alt="Presión Sonora variante" decoding="async" loading="lazy"></picture></div>
     </div>
 
     <div class="posters-pair">
-        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-2.jpg"><img src="presion/calablava-2.jpg" alt="Calablava día"></div>
-        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-3.jpg"><img src="presion/calablava-3.jpg" alt="Calablava noche"></div>
+        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-2.jpg"><picture><source srcset="presion/calablava-2.avif" type="image/avif"><source srcset="presion/calablava-2.webp" type="image/webp"><img src="presion/calablava-2.jpg" alt="Calablava día" decoding="async" loading="lazy"></picture></div>
+        <div class="poster-item poster-big" data-lightbox-src="presion/calablava-3.jpg"><picture><source srcset="presion/calablava-3.avif" type="image/avif"><source srcset="presion/calablava-3.webp" type="image/webp"><img src="presion/calablava-3.jpg" alt="Calablava noche" decoding="async" loading="lazy"></picture></div>
     </div>
 
     <div class="lightbox" id="lightbox">
@@ -239,6 +240,6 @@
             });
         })();
     </script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

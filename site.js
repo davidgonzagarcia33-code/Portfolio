@@ -61,6 +61,31 @@
         if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
 
+    /* ---------- Imagenes modernas (AVIF / WebP) ---------- */
+    /* DG.picture('ruta/foto.jpg', { alt, className, loading, fetchpriority })
+       -> { picture, img }. El navegador elige AVIF > WebP > original. */
+    DG.picture = function (src, opts) {
+        opts = opts || {};
+        var base = src.replace(/\.(jpe?g|png)$/i, '');
+        var pic = document.createElement('picture');
+        ['avif', 'webp'].forEach(function (fmt) {
+            var s = document.createElement('source');
+            s.type = 'image/' + fmt;
+            s.srcset = base + '.' + fmt;
+            pic.appendChild(s);
+        });
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = opts.alt || '';
+        if (opts.className) img.className = opts.className;
+        img.decoding = 'async';
+        if (opts.loading) img.loading = opts.loading;
+        if (opts.fetchpriority) img.setAttribute('fetchpriority', opts.fetchpriority);
+        if (opts.draggable === false) img.draggable = false;
+        pic.appendChild(img);
+        return { picture: pic, img: img };
+    };
+
     DG.lightbox = { open: open, close: close };
 
     /* Enlace automùtico: cualquier elemento con data-lightbox o data-lightbox-src */

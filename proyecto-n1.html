@@ -11,7 +11,7 @@
     <meta property="og:title" content="Next.1 — David González">
     <meta property="og:description" content="Sistema de marca y packaging para Next.1, nutrición deportiva.">
     <meta property="og:type" content="website">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -38,7 +38,7 @@
         .nav-logo-box { display: flex; align-items: center; justify-content: center; }
         .nav-logo-box { position: relative; width: 52px; height: 52px; overflow: hidden; flex: 0 0 auto; }
         .nav-logo-box > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; transition: filter 0.28s ease; }
-        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil.svg") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
+        .nav-logo-censor { position: absolute; inset: 0; background: url("perfil-nav.webp") center 18% / cover no-repeat; clip-path: inset(55% 0 25% 0); filter: url("#logo-pixel") grayscale(1) contrast(1.45); opacity: 0; pointer-events: none; transition: opacity 0.16s linear; }
         .nav-logo-fx { position: absolute; width: 0; height: 0; overflow: hidden; }
         .nav-logo:hover .nav-logo-box > img, .nav-logo:focus-visible .nav-logo-box > img { filter: grayscale(1) contrast(1.12); }
         .nav-logo:hover .nav-logo-censor, .nav-logo:focus-visible .nav-logo-censor { opacity: 1; }
@@ -170,12 +170,13 @@
             .zoom-info { flex-wrap: wrap; justify-content: center; bottom: 20px; }
             .back-btn { bottom: 20px; left: 20px; padding: 12px 24px; font-size: 11px; }
         }
+        picture { display: contents; }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="index.html" class="nav-logo">
-            <div class="nav-logo-box"><img src="perfil.svg" alt="David González"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
+            <div class="nav-logo-box"><img src="perfil-nav.webp" alt="David González" decoding="async"><span class="nav-logo-censor" aria-hidden="true"></span><svg class="nav-logo-fx" width="0" height="0" aria-hidden="true" focusable="false"><filter id="logo-pixel" primitiveUnits="userSpaceOnUse" x="-20%" y="-20%" width="140%" height="140%"><feFlood x="0" y="0" width="2" height="2"/><feComposite width="4" height="4"/><feTile result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology operator="dilate" radius="2"/></filter></svg></div>
         </a>
         <div class="nav-links">
             <button id="musicToggle" class="music-toggle" onclick="toggleBgMusic()" title="Reproducir música" aria-label="Reproducir/pausar música">&#9654;</button>
@@ -199,37 +200,37 @@
             </div>
 
             <div class="zoom-card" data-z="1" data-x="-28" data-y="-18" data-rot="-3" style="width:clamp(250px,28vw,420px); aspect-ratio:4/3;">
-                <img src="n1/proteina.jpg" alt="Next.1 Whey Protein" data-lightbox>
+                <picture><source srcset="n1/proteina.avif" type="image/avif"><source srcset="n1/proteina.webp" type="image/webp"><img src="n1/proteina.jpg" alt="Next.1 Whey Protein" data-lightbox decoding="async"></picture>
             </div>
             <div class="zoom-card" data-z="2" data-x="30" data-y="15" data-rot="4" style="width:clamp(280px,32vw,460px); aspect-ratio:4/3;">
-                <img src="n1/fast-grupo.jpg" alt="Fast Energy Gel línea" data-lightbox>
+                <picture><source srcset="n1/fast-grupo.avif" type="image/avif"><source srcset="n1/fast-grupo.webp" type="image/webp"><img src="n1/fast-grupo.jpg" alt="Fast Energy Gel línea" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="3" data-x="-8" data-y="-25" data-rot="-5" style="width:clamp(240px,26vw,400px); aspect-ratio:4/3;">
-                <img src="n1/long-grupo.jpg" alt="Long Energy Gel línea" data-lightbox>
+                <picture><source srcset="n1/long-grupo.avif" type="image/avif"><source srcset="n1/long-grupo.webp" type="image/webp"><img src="n1/long-grupo.jpg" alt="Long Energy Gel línea" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="4" data-x="-32" data-y="20" data-rot="6" style="width:clamp(230px,25vw,380px); aspect-ratio:4/3;">
-                <img src="n1/proteina-creatina.jpg" alt="Whey Protein + Creatina" data-lightbox>
+                <picture><source srcset="n1/proteina-creatina.avif" type="image/avif"><source srcset="n1/proteina-creatina.webp" type="image/webp"><img src="n1/proteina-creatina.jpg" alt="Whey Protein + Creatina" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="5" data-x="25" data-y="-22" data-rot="-4" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/fast-limon.jpg" alt="Fast Gel Limón" data-lightbox>
+                <picture><source srcset="n1/fast-limon.avif" type="image/avif"><source srcset="n1/fast-limon.webp" type="image/webp"><img src="n1/fast-limon.jpg" alt="Fast Gel Limón" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="6" data-x="10" data-y="28" data-rot="3" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/fast-green.jpg" alt="Fast Gel Power Green" data-lightbox>
+                <picture><source srcset="n1/fast-green.avif" type="image/avif"><source srcset="n1/fast-green.webp" type="image/webp"><img src="n1/fast-green.jpg" alt="Fast Gel Power Green" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="7" data-x="-30" data-y="-10" data-rot="-6" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/fast-pera.jpg" alt="Fast Gel Pera" data-lightbox>
+                <picture><source srcset="n1/fast-pera.avif" type="image/avif"><source srcset="n1/fast-pera.webp" type="image/webp"><img src="n1/fast-pera.jpg" alt="Fast Gel Pera" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="8" data-x="35" data-y="8" data-rot="5" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/long-limon.jpg" alt="Long Gel Limón" data-lightbox>
+                <picture><source srcset="n1/long-limon.avif" type="image/avif"><source srcset="n1/long-limon.webp" type="image/webp"><img src="n1/long-limon.jpg" alt="Long Gel Limón" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="9" data-x="-15" data-y="-28" data-rot="-2" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/long-pastelito.jpg" alt="Long Gel Pastelito" data-lightbox>
+                <picture><source srcset="n1/long-pastelito.avif" type="image/avif"><source srcset="n1/long-pastelito.webp" type="image/webp"><img src="n1/long-pastelito.jpg" alt="Long Gel Pastelito" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="10" data-x="20" data-y="25" data-rot="4" style="width:clamp(220px,24vw,370px); aspect-ratio:3/4;">
-                <img src="n1/long-chocolate.jpg" alt="Long Gel Chocolate" data-lightbox>
+                <picture><source srcset="n1/long-chocolate.avif" type="image/avif"><source srcset="n1/long-chocolate.webp" type="image/webp"><img src="n1/long-chocolate.jpg" alt="Long Gel Chocolate" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
             <div class="zoom-card" data-z="11" data-x="-25" data-y="15" data-rot="-5" style="width:clamp(240px,26vw,400px); aspect-ratio:4/3;">
-                <img src="n1/creatina.jpg" alt="Creatina + Magnesio" data-lightbox>
+                <picture><source srcset="n1/creatina.avif" type="image/avif"><source srcset="n1/creatina.webp" type="image/webp"><img src="n1/creatina.jpg" alt="Creatina + Magnesio" data-lightbox decoding="async" loading="lazy"></picture>
             </div>
 
             <div class="zoom-info" id="zoomInfo">
@@ -334,10 +335,10 @@
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
             document.querySelectorAll('[data-lightbox]').forEach(img => {
                 img.style.cursor = 'pointer';
-                img.addEventListener('click', () => openLightbox(img.src));
+                img.addEventListener('click', () => openLightbox(img.currentSrc || img.src));
             });
         })();
     </script>
-    <script src="persistent-music.js"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>

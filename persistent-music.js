@@ -5,15 +5,17 @@
     var KEY_TIME = 'bgMusicTime';
     var KEY_PLAYING = 'bgMusicPlaying';
 
+    var isPlaying = localStorage.getItem(KEY_PLAYING) === 'true';
+    var savedTime = parseFloat(localStorage.getItem(KEY_TIME));
+
+    // music.mp3 pesa ~27 MB: solo se descarga si la musica ya estaba sonando
+    // o cuando el usuario pulsa play (antes se precargaba en todas las paginas).
     var audio = document.createElement('audio');
     audio.id = 'bgMusicPersistent';
     audio.src = MUSIC_SRC;
-    audio.preload = 'auto';
+    audio.preload = (isPlaying && !isNaN(savedTime)) ? 'auto' : 'none';
     audio.style.display = 'none';
     document.body.appendChild(audio);
-
-    var isPlaying = localStorage.getItem(KEY_PLAYING) === 'true';
-    var savedTime = parseFloat(localStorage.getItem(KEY_TIME));
 
     if (isPlaying && !isNaN(savedTime)) {
         audio.currentTime = savedTime;

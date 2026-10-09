@@ -14,11 +14,12 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://davidgonzalezportfolio.vercel.app/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="perfil.svg" type="image/svg+xml">
+    <link rel="icon" href="perfil-icon.png" type="image/png">
     <link rel="canonical" href="https://davidgonzalezportfolio.vercel.app/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="character-poster.webp" type="image/webp" fetchpriority="high">
     <style>
         :root {
             --acid: #EEFF00;
@@ -442,7 +443,7 @@
             pointer-events: none;
         }
     </style>
-    <link rel="stylesheet" href="site.css?v=5">
+    <link rel="stylesheet" href="site.css?v=7">
 </head>
 <body>
     <!-- ── PANTALLA DE CARGA (minimal) ── -->
@@ -456,7 +457,7 @@
 
     <!-- ── CURSOR-TRACKING HERO ── -->
     <div class="cursor-hero" id="cursorHero">
-        <video id="trackingVideo" src="character-tracking.mp4?v=3" poster="character-poster.jpg" muted loop playsinline webkit-playsinline preload="auto"></video>
+        <video id="trackingVideo" src="character-tracking-web.mp4" poster="character-poster.webp" muted loop playsinline webkit-playsinline preload="auto"></video>
 
         <div class="hero-ui">
             <div class="hero-top">
@@ -732,7 +733,7 @@
             }, { passive: true });
         })();
     </script>
-    <script src="site.js?v=1"></script>
-    <script src="persistent-music.js"></script>
+    <script src="site.js?v=2"></script>
+    <script src="persistent-music.js?v=2"></script>
 </body>
 </html>
